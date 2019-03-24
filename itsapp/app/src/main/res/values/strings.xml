@@ -6,4 +6,9 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="lesson_title">Lesson Title</string>
+    <string name="upload_file">Upload file</string>
+    <string name="choose_file">Choose File</string>
+    <string name="add_new_lesson">Add new lesson</string>
+    <string name="add_lesson">Add lesson</string>
 </resources>
