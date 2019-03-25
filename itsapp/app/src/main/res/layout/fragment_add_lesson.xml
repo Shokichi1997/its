@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFF"
-        android:clickable="false"/>
+        android:clickable="false"
+        android:layout_margin="@dimen/margin_fragment"/>
+
+
+    <include layout="@layout/app_bar"
+        android:id="@+id/add_lesson_toolbar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:ignore="UselessParent">
-        <include layout="@layout/app_bar"
-            android:id="@+id/add_lesson_toolbar" />
+        tools:ignore="UselessParent"
+        android:layout_below="@id/add_lesson_toolbar"
+        android:layout_margin="@dimen/margin_fragment">
 
         <TextView
             android:layout_width="match_parent"
@@ -26,6 +31,7 @@
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="30sp"
+            android:textColor="@color/green_dark"
             />
 
         <TextView
@@ -35,6 +41,7 @@
             android:layout_height="wrap_content"
             android:text="@string/lesson_title"
             style="@style/text_style"
+            android:textColor="@color/green_light"
             />
 
         <EditText
@@ -50,6 +57,7 @@
             android:layout_height="wrap_content"
             android:text="@string/upload_file"
             style="@style/text_style"
+            android:textColor="@color/green_light"
             />
         <RelativeLayout
             android:layout_width="match_parent"
@@ -60,17 +68,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
+                android:enabled="false"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/btnUploadFile"
                 />
 
             <Button
-                android:id="@+id/btnUploadFile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/choose_file"
                 android:scaleType="fitCenter"
                 android:layout_alignParentEnd="true"
+                android:theme="@style/MyButton"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:id="@+id/btnUploadFile"
+                android:background="@drawable/shape_button"
+                android:drawableStart="@drawable/ic_attach_file_black_24dp"
+                android:textAlignment="center"
                 />
 
         </RelativeLayout>
@@ -80,7 +95,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/add_new_lesson"/>
+            android:text="@string/add_new_lesson"
+            android:textColor="@android:color/white"
+            android:background="@drawable/shape_button"/>
     </LinearLayout>
 
 
