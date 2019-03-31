@@ -77,7 +77,7 @@ public class FunctionsFragment extends Fragment {
         gridFunction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Fragment fragment = new AddLessonFragment();
+                Fragment fragment = new ChapterLessonFragment();
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.add(R.id.frContainer,fragment,"ADD_LESSON")
