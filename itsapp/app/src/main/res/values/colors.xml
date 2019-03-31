@@ -9,4 +9,5 @@
     <color name="green_light">#60ad5e</color>
     <color name="green_dark">#005005</color>
     <color name="white">#FFF</color>
+    <color name="signupColor">#066e8a</color>
 </resources>
