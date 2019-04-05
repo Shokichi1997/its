@@ -5,53 +5,56 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.TextView;
+
+import com.itsdl.androidtutorials.R;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class LessonAdapter extends BaseExpandableListAdapter {
 
-    private Context _context;
-    private List<String> _listDataHeader; // header titles
+
+    private Context context;
+    private List<String> listDataHeader; // header titles
     // child data in format of header title, child title
-    private HashMap<String, List<String>> _listDataChild;
+    private HashMap<String, List<String>> listDataChild;
 
     public LessonAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<String>> listChildData) {
-        this._context = context;
-        this._listDataHeader = listDataHeader;
-        this._listDataChild = listChildData;
+        this.context = context;
+        this.listDataHeader = listDataHeader;
+        this.listDataChild = listChildData;
     }
 
     @Override
     public int getGroupCount() {
-        return 0;
+        return listDataHeader.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return 0;
+        return listDataChild.get(listDataHeader.get(groupPosition)).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return null;
+        return listDataHeader.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this._listDataChild.get(this._listDataHeader.get(groupPosition))
-                .get(childPosition);
+      return listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
     }
 
     @Override
     public long getGroupId(int groupPosition) {
-        return 0;
+        return groupPosition;
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return 0;
+        return childPosition;
     }
 
     @Override
@@ -61,16 +64,26 @@ public class LessonAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        return null;
+        String lessonName=(String) getGroup(groupPosition);
+        LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView=inflater.inflate(R.layout.list_lesson_items,null);
+        TextView txtLesonName=convertView.findViewById(R.id.lblLessonName);
+        txtLesonName.setText(lessonName);
+        return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        return null;
+        String lessonItemName=(String) getChild(groupPosition,childPosition);
+        LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView=inflater.inflate(R.layout.list_lesson_items_item,null);
+        TextView txtLesonItemName=convertView.findViewById(R.id.lblLessonItemName);
+        txtLesonItemName.setText(lessonItemName);
+        return convertView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 }

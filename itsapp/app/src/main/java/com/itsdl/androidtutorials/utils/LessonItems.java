@@ -1,9 +1,12 @@
 package com.itsdl.androidtutorials.utils;
 
+import com.itsdl.androidtutorials.adapters.LessonAdapter;
+
 public class LessonItems {
     private  int idLesson;
     private  int idLessonItem;
     private  String lessonItemName;
+
 
     public LessonItems(int idLesson, int idLessonItem, String lessonItemName) {
         this.idLesson = idLesson;

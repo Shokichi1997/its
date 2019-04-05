@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,22 +23,35 @@ import java.util.ArrayList;
 public class ChapterLessonFragment extends Fragment {
     private ListView listChapterLesson;
     private Toolbar toolbar;
-
+    View root;
+    ArrayList<ChapterLesson> chapterLessons;
     public ChapterLessonFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_chapter_lesson,container,false);
+         root = inflater.inflate(R.layout.fragment_chapter_lesson,container,false);
 
+         getViews();
+         loadChpater();
+         setListChapterLessonItemClick();
+        return root;
+    }
+
+    private void getViews(){
+        //add tool bar
         toolbar = root.findViewById(R.id.chapter_lesson_toolbar);
         ((AppCompatActivity )getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Chapter Lesson");
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+         //anh xa ListChapterLesson
         listChapterLesson = root.findViewById(R.id.listChapterLesson);
-        ArrayList<ChapterLesson> chapterLessons = new ArrayList<>();
+        //
+
+    }
+    private void loadChpater(){
+        chapterLessons = new ArrayList<>();
         chapterLessons.add(new ChapterLesson
                 (R.drawable.ic_mood_black_24dp,"Android Introduce",false,1));
         chapterLessons.add(new ChapterLesson
@@ -61,6 +76,20 @@ public class ChapterLessonFragment extends Fragment {
 
         adapter.areAllItemsEnabled();
         adapter.isEnabled(1);
-        return root;
     }
+
+    private void setListChapterLessonItemClick(){
+        listChapterLesson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Fragment fragment = new LessonFragment();
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.add(R.id.frContainer,fragment,"LESSON_FRAGMENT")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+    }
+
 }

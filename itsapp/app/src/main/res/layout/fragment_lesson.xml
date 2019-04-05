@@ -15,13 +15,17 @@
     </include>
     <ExpandableListView
         android:id="@+id/expandLesson"
-        android:listSelector="@color/green"
+        android:listSelector="#6838b1"
         android:dividerHeight="1dp"
         android:divider="#c7b2b2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment"
         android:childDivider="#c7b2b2"
-        android:cacheColorHint="#00000000"/>
+        android:cacheColorHint="#00000000"
+        android:background="#8e41da"
+        android:layout_marginTop="10dp"
+
+        />
 
 </LinearLayout>
