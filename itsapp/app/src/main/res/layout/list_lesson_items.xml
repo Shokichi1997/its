@@ -3,16 +3,16 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp" 
-    android:background="#885ac1">
+    android:padding="15dp"
+    android:background="#dacece">
 
     <TextView
         android:id="@+id/lblLessonName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:textSize="17dp"
-        android:textColor="#fff"
+        android:layout_marginLeft="15dp"
+        android:textSize="20dp"
+        android:textColor="#000"
         android:text="Lesson"/>
 
 </LinearLayout>

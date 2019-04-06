@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".fragments.LessonFragment"
-    android:background="#f4f4f4" >
+
+   >
 
     <!-- TODO: Update blank fragment layout -->
     <include
@@ -15,7 +16,7 @@
     </include>
     <ExpandableListView
         android:id="@+id/expandLesson"
-        android:listSelector="#6838b1"
+        android:listSelector="#845dcc"
         android:dividerHeight="1dp"
         android:divider="#c7b2b2"
         android:layout_width="match_parent"
@@ -23,8 +24,8 @@
         android:text="@string/hello_blank_fragment"
         android:childDivider="#c7b2b2"
         android:cacheColorHint="#00000000"
-        android:background="#8e41da"
-        android:layout_marginTop="10dp"
+        android:background="#fff"
+
 
         />
 

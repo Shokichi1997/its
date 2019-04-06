@@ -18,16 +18,16 @@ public class SignUpRequest extends SeverRequest {
     protected Request prepare(Map<String, String> parameter) {
 
         String email = parameter.get("email");
-        String fullnsme = parameter.get("fullname");
+        String fullnsme = parameter.get("full_name");
         String password = parameter.get("password");
-        String gender = parameter.get("gender");
+
 
 
         RequestBody requestBody = new MultipartBody.Builder()
                 .addFormDataPart("email",email)
                 .addFormDataPart("fullnsme",fullnsme)
                 .addFormDataPart("password",password)
-                .addFormDataPart("gender", gender)
+
                 .setType(MultipartBody.FORM)
                 .build();
         Request request = new Request.Builder()

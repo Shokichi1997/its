@@ -58,5 +58,5 @@ public abstract class SeverRequest extends AsyncTask<Map<String, String>, Void, 
         mListener.completed(obj);
     }
 
-    static String URL = "https://ambchat.herokuapp.com/api/";
+    static String URL = "https://androidtutorialsits.herokuapp.com/api/";
 }
