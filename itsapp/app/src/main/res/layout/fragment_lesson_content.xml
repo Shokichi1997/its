@@ -11,30 +11,70 @@
         android:clickable="false"
         />
 
-    <include layout="@layout/app_bar"
-        android:id="@+id/add_content_toolbar" />
-
+    <ProgressBar
+        android:id="@+id/progressBarContent"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <WebView
         android:id="@+id/wv_lesson_content"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
 
     </WebView>
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navbottomLesson"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="0dp"
-        android:background="?android:attr/windowBackground"
+        android:id="@+id/navbottomLesson"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
-        app:menu="@menu/navigation_bottom">
+        android:background="@color/green">
 
-    </android.support.design.widget.BottomNavigationView>
+        <Button
+            android:id="@+id/btnPrevLesson"
+            android:drawableTop="@drawable/ic_navigate_before_black_24dp"
+            android:layout_width="0dp"
+            android:text="@string/prev_lesson"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="0dp"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:background="@color/green"
+            />
+        <Button
+            android:id="@+id/btnFeedbackLesson"
+            android:drawableTop="@drawable/ic_feedback_black_24dp"
+            android:layout_width="0dp"
+            android:text="@string/feedback"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:background="@color/green"
+            />
+        <Button
+            android:id="@+id/btnNextLesson"
+            android:drawableTop="@drawable/ic_navigate_next_black_24dp"
+            android:layout_width="0dp"
+            android:text="@string/next_lesson"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:background="@color/green"
+            />
+    </LinearLayout>
+
 </RelativeLayout>
