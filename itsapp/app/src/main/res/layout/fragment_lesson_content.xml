@@ -13,11 +13,11 @@
 
     <ProgressBar
         android:id="@+id/progressBarContent"
-        style="?android:attr/progressBarStyleLarge"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerInParent="true"
+       />
 
     <WebView
         android:id="@+id/wv_lesson_content"

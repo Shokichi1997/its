@@ -1,16 +1,17 @@
 package com.itsdl.androidtutorials.fragments;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,18 +25,19 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
     private final int COUNT_LESSON = 3;
     private Button btnPrevLesson, btnNextLesson, btnFeedbackLesson;
     ProgressBar progressBarContent;
+    private ProgressDialog mProgress;
+    private  View root;
+    String showOrHideWebViewInitiaUse = "show";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().requestWindowFeature(Window.FEATURE_PROGRESS);
-        getActivity().setProgressBarVisibility(true);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_lesson_content,container,false);
+        root = inflater.inflate(R.layout.fragment_lesson_content,container,false);
 
 
         //Bundle
@@ -59,13 +61,11 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
         btnFeedbackLesson = root.findViewById(R.id.btnFeedbackLesson);
         btnNextLesson = root.findViewById(R.id.btnNextLesson);
         btnPrevLesson = root.findViewById(R.id.btnPrevLesson);
+        progressBarContent = root.findViewById(R.id.progressBarContent);
 
         wv_lesson_content = root.findViewById(R.id.wv_lesson_content);
         wv_lesson_content.setWebViewClient(new WebViewClient());
         wv_lesson_content.loadUrl(url + lessonIDItem);
-
-
-        progressBarContent = root.findViewById(R.id.progressBarContent);
     }
 
     /**
@@ -84,58 +84,40 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
                 Toast.makeText(getContext(),"Prev",Toast.LENGTH_SHORT).show();
                 if(lessonIDItem-1>=1){
                     lessonIDItem--;
-                    wv_lesson_content.setWebViewClient(new WebViewClient());
                     wv_lesson_content.loadUrl(url+lessonIDItem);
-
-                    Toast.makeText(getContext(),String.valueOf(lessonIDItem),Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.btnFeedbackLesson:
                 //TODO
-                Toast.makeText(getContext(),"Feed",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnNextLesson:
-                Toast.makeText(getContext(),"Next",Toast.LENGTH_SHORT).show();
-                if(lessonIDItem+1<=COUNT_LESSON){
+                if(lessonIDItem+1<=COUNT_LESSON) {
                     lessonIDItem++;
-                    wv_lesson_content.setWebViewClient(new WebViewClient());
-                    wv_lesson_content.loadUrl(url+lessonIDItem);
+                    //wv_lesson_content.setWebViewClient(new WebViewClient());
+                    wv_lesson_content.loadUrl(url + lessonIDItem);
 
-                    Toast.makeText(getContext(),String.valueOf(lessonIDItem),Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
 
-
-    }
-    public void onProgressChanged (WebView view, int newProgress){
 
     }
 
     public class WebViewClient extends android.webkit.WebViewClient
     {
         @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-
-            // TODO Auto-generated method stub
-            super.onPageStarted(view, url, favicon);
+        public void onPageStarted(WebView view, String url, Bitmap favicon){
+            if(showOrHideWebViewInitiaUse.equals("show")){
+                view.setVisibility(wv_lesson_content.INVISIBLE);
+            }
         }
 
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-            // TODO Auto-generated method stub
-            view.loadUrl(url);
-            return true;
-        }
-        @Override
-        public void onPageFinished(WebView view, String url) {
-
-            // TODO Auto-generated method stub
-
-            super.onPageFinished(view, url);
+        public void onPageFinished(WebView view, String url){
+            showOrHideWebViewInitiaUse = "hide";
             progressBarContent.setVisibility(View.GONE);
-
+            view.setVisibility(wv_lesson_content.VISIBLE);
+            super.onPageFinished(view,url);
         }
 
     }
