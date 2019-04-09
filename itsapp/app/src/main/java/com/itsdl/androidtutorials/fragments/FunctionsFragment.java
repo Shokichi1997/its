@@ -58,12 +58,11 @@ public class FunctionsFragment extends Fragment {
 //        });
 
         ArrayList<FunctionUser> function = new ArrayList<>();
-        function.add(new FunctionUser(1,"Add lesson",true,R.drawable.ic_menu_gallery));
-        function.add(new FunctionUser(1,"Add lesson",true,R.drawable.ic_menu_gallery));
-        function.add(new FunctionUser(1,"Add lesson",true,R.drawable.ic_menu_gallery));
-        function.add(new FunctionUser(1,"Add lesson",true,R.drawable.ic_menu_gallery));
-        function.add(new FunctionUser(1,"Add lesson",true,R.drawable.ic_menu_gallery));
-        function.add(new FunctionUser(1,"Add lesson",true,R.drawable.ic_menu_gallery));
+        function.add(new FunctionUser(1,"Learning",true,R.drawable.learning));
+        function.add(new FunctionUser(2,"Quiz",true,R.drawable.quiz));
+        function.add(new FunctionUser(3,"Manager student",true,R.drawable.manager_student));
+        function.add(new FunctionUser(4,"Introduce",true,R.drawable.introduce));
+        function.add(new FunctionUser(5,"Logout",true,R.drawable.logout));
 
         ArrayAdapter adapter = new Functions_adapter(root.getContext(),function);
         gridFunction.setAdapter(adapter);
@@ -77,15 +76,56 @@ public class FunctionsFragment extends Fragment {
         gridFunction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Fragment fragment = new ContentMainFragment();
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.add(R.id.frContainer,fragment,"ADD_LESSON")
-                        .addToBackStack(null)
-                        .commit();
+                switch (position){
+                    case 0:
+                        Fragment chapterLessonFragment = new ChapterLessonFragment();
+                        showFragment(chapterLessonFragment,"CHAPTER");
+                        break;
+                    case 1:
+                        Fragment testLessonFragment = new TestLessonFragment();
+                        showFragment(testLessonFragment,"CHAPTER");
+                        break;
+                    case 2:
+                        //Todo
+                        break;
+                    case 3:
+                        //Todo
+                        break;
+                    case 4:
+                        if (getFragmentManager() != null) {
+                            Fragment loginFragment = getFragmentManager().findFragmentByTag("LOGIN");
+                            if(loginFragment!=null){
+                                FragmentManager fragmentManager = getFragmentManager();
+                                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                                transaction.replace(R.id.frContainer,loginFragment,"LOGIN")
+                                        .addToBackStack(null)
+                                        .commit();
+                            }
+                            else {
+                                LoginFragment fragment = new LoginFragment();
+                                FragmentManager fragmentManager = getFragmentManager();
+                                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                                transaction.replace(R.id.frContainer,fragment,"LOGIN")
+                                        .addToBackStack(null)
+                                        .commit();
+                            }
+                        }
+                        break;
+                    default:
+                        //TODO
+                        break;
+                }
 
             }
         });
+    }
+
+    private void showFragment(Fragment fragment,String tag) {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.frContainer,fragment,tag)
+                .addToBackStack(null)
+                .commit();
     }
 
 

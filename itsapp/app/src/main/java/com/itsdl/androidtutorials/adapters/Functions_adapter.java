@@ -42,8 +42,6 @@ public class Functions_adapter extends ArrayAdapter<FunctionUser> {
             imgFUIcon.setVisibility(View.GONE);
         }
 
-        TextView lblNameFU = listItemView.findViewById(R.id.lblFunctionNameItem);
-        lblNameFU.setText(currentFunctionUser.getFunction_name());
 
 
         return listItemView;

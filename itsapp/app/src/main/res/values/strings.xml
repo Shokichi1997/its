@@ -17,4 +17,9 @@
     <string name="prev_lesson">Prev lesson</string>
     <string name="feedback">Feedback</string>
     <string name="next_lesson">Next lesson</string>
+    <string name="new_problem">New problem</string>
+    <string name="check">Check</string>
+    <string name="hint">Hint</string>
+    <string name="solution">Solution</string>
+    <string name="problem">Problem:</string>
 </resources>
