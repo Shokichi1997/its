@@ -20,7 +20,6 @@ public class ChapterLessonAdapter extends ArrayAdapter<ChapterLesson> {
     public ChapterLessonAdapter(@NonNull Context context, @NonNull List<ChapterLesson> objects) {
         super(context, 0, objects);
     }
-
     @Override
     public boolean areAllItemsEnabled() {
         return false;
@@ -56,6 +55,7 @@ public class ChapterLessonAdapter extends ArrayAdapter<ChapterLesson> {
         ImageView imgLockChapter = listItemView.findViewById(R.id.imgLockChapter);
         if(isLock) {
             imgLockChapter.setImageResource(R.drawable.ic_lock_black_24dp);
+
         }//isLock
         else{
             imgLockChapter.setImageResource(R.drawable.ic_lock_open_black_24dp);

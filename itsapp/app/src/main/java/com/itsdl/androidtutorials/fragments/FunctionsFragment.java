@@ -90,6 +90,7 @@ public class FunctionsFragment extends Fragment {
                         break;
                     case 3:
                         //Todo
+
                         break;
                     case 4:
                         if (getFragmentManager() != null) {
