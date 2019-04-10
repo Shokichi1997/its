@@ -43,7 +43,6 @@ public class GetChapterRequest extends SeverRequest {
                              ob.getInt("chapter_id")
 
                     ));
-
             }
             return  arrChapter;
         }catch (Exception e){

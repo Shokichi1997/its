@@ -7,8 +7,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="false"
-        android:background="#FFF"/>
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:focusable="true"/>
 
     <include layout="@layout/app_bar"
         android:id="@+id/chapter_lesson_toolbar" />

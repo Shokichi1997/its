@@ -3,26 +3,17 @@ package com.itsdl.androidtutorials.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.adapters.Functions_adapter;
@@ -41,21 +32,6 @@ public class FunctionsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_functions,container,false);
 
         gridFunction = root.findViewById(R.id.gridFunction);
-
-//        toolbar = root.findViewById(R.id.function_toolbar);
-//        ((AppCompatActivity )getActivity()).setSupportActionBar(toolbar);
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("   Android Tutorials");
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setLogo(R.drawable.ic_menu_24dp);
-//        drawer = root.findViewById(R.id.drawer_layout);
-
-//        View logo = toolbar.getChildAt(1);
-//        logo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //mDrawerLayout.openDrawer(Gravity.LEFT);
-//
-//            }
-//        });
 
         ArrayList<FunctionUser> function = new ArrayList<>();
         function.add(new FunctionUser(1,"Learning",true,R.drawable.learning));
@@ -76,6 +52,7 @@ public class FunctionsFragment extends Fragment {
         gridFunction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 switch (position){
                     case 0:
                         Fragment chapterLessonFragment = new ChapterLessonFragment();
@@ -87,6 +64,8 @@ public class FunctionsFragment extends Fragment {
                         break;
                     case 2:
                         //Todo
+                        Fragment fragmentStudent = new StudentManagementFragment();
+                        showFragment(fragmentStudent,"CHAPTER");
                         break;
                     case 3:
                         //Todo
@@ -116,6 +95,8 @@ public class FunctionsFragment extends Fragment {
                         //TODO
                         break;
                 }
+
+
 
             }
         });

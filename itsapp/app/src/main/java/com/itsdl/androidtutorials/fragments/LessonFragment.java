@@ -12,10 +12,16 @@ import android.widget.Toolbar;
 
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.adapters.LessonAdapter;
+import com.itsdl.androidtutorials.networks.GetLessonRequest;
+import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.networks.SignInRequest;
+import com.itsdl.androidtutorials.utils.Lesson;
+import com.itsdl.androidtutorials.utils.LessonItems;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +33,8 @@ android.support.v7.widget.Toolbar toolbar;
     View root;
     private LessonAdapter lessonAdapter=null;
     ExpandableListView expandableListViewLesson;
+    ArrayList<Lesson> arr_Lessons=new ArrayList<>();
+    ArrayList<LessonItems> arr_LessonItems=new ArrayList<>();
     public LessonFragment() {
         // Required empty public constructor
     }
@@ -40,24 +48,25 @@ android.support.v7.widget.Toolbar toolbar;
         getViews();
 
         List<String> chapter =new ArrayList<>();
-        chapter.add("Chapter 1");
-        chapter.add("Chapter 2");
-        chapter.add("Chapter 3");
+        chapter.add("Lesson 1");
+        chapter.add("Lesson 2");
+        chapter.add("Lesson 3");
 
         List<String> listLessonItem1=new ArrayList<>();
-        listLessonItem1.add("Lesson 1");
-        listLessonItem1.add("Lesson 2");
-        listLessonItem1.add("Lesson 3");
+        listLessonItem1.add("Items 1");
+        listLessonItem1.add("Items 2");
+        listLessonItem1.add("Items 3");
         List<String> listLessonItem2=new ArrayList<>();
-        listLessonItem2.add("Lesson 1");
-        listLessonItem2.add("Lesson 2");
-        listLessonItem2.add("Lesson 3");
+        listLessonItem2.add("Items 1");
+        listLessonItem2.add("Items 2");
+        listLessonItem2.add("Items 3");
         List<String> listLessonItem3=new ArrayList<>();
-        listLessonItem3.add("Lesson 1");
-        listLessonItem3.add("Lesson 2");
-        listLessonItem3.add("Lesson 3");
+        listLessonItem3.add("Items 1");
+        listLessonItem3.add("Items 2");
+        listLessonItem3.add("Items 3");
 
-        HashMap<String,List<String>> listLessonItem = new HashMap<>(
+        loadLesson();
+     /*   HashMap<String,List<String>> listLessonItem = new HashMap<>(
 
 
 
@@ -67,7 +76,7 @@ android.support.v7.widget.Toolbar toolbar;
         listLessonItem.put(chapter.get(2),listLessonItem3);
 
         lessonAdapter=new LessonAdapter(getActivity().getBaseContext(),chapter,listLessonItem);
-        expandableListViewLesson.setAdapter(lessonAdapter);
+        expandableListViewLesson.setAdapter(lessonAdapter);*/
 
         return root;
     }
@@ -90,7 +99,41 @@ android.support.v7.widget.Toolbar toolbar;
 
         expandableListViewLesson=(ExpandableListView) root.findViewById(R.id.expandLesson);
 
+    }
 
+    public void loadLesson(){
+
+
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("chapter_id","2");
+
+        GetLessonRequest request=new GetLessonRequest(new SeverRequest.SeverRequestListener() {
+            @Override
+            public void completed(Object obj) {
+                if (obj != null) {
+                    ArrayList<Object> arr=(ArrayList<Object>)obj;
+                    arr_Lessons=(ArrayList<Lesson>) arr.get(0);
+                    arr_LessonItems=(ArrayList<LessonItems>) arr.get(1);
+                    HashMap<String,List<LessonItems>> listLessonItem = new HashMap<>();
+
+                    ArrayList<LessonItems> arr_lessonitemtoless=new ArrayList<>();
+                    for (int i=0;i<arr_Lessons.size();i++){
+                        for(int j=0;j<arr_LessonItems.size();j++){
+                            if(arr_Lessons.get(i).getIdLesson()==arr_LessonItems.get(j).getIdLesson()){
+                            arr_lessonitemtoless.add(arr_LessonItems.get(j));
+                            }
+                        }
+                        String key=String.valueOf(arr_Lessons.get(i).getIdLesson());
+                        listLessonItem.put(key,arr_lessonitemtoless);
+                        lessonAdapter=new LessonAdapter(getActivity().getBaseContext(),arr_Lessons,listLessonItem);
+                        expandableListViewLesson.setAdapter(lessonAdapter);
+                    }
+
+                }
+            }
+        });
+        request.execute(parameter);
+        //khong lam viec gi nua
     }
 
 

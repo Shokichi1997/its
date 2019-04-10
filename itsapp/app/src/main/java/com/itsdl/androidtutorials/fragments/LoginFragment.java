@@ -39,9 +39,7 @@ public class LoginFragment extends Fragment {
         return view;
     }
     public void getViews(){
-        toolbar = view.findViewById(R.id.login_app_bar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("LoginApp");
+
         edtEmail=view.findViewById(R.id.edtEmail);
         edtPssword=view.findViewById(R.id.edtPassword);
         btnSignUp=view.findViewById(R.id.btnSignUp);

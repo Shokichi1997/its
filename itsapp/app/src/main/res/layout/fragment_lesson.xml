@@ -18,7 +18,7 @@
         android:id="@+id/expandLesson"
         android:listSelector="#845dcc"
         android:dividerHeight="1dp"
-        android:divider="#c7b2b2"
+        android:divider="#d2d2d2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment"

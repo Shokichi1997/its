@@ -2,17 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="15dp"
-    android:background="#dacece">
-
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:background="#fcfcfc">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_single_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp" />
     <TextView
         android:id="@+id/lblLessonName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textColor="#000"
-        android:text="Lesson"/>
+        android:text="Lesson"
+        android:layout_gravity="center"
+        />
 
 </LinearLayout>
