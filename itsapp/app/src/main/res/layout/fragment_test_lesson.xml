@@ -52,7 +52,10 @@
         android:id="@+id/llAnswer"
         android:layout_below="@+id/llQuestion"
         android:orientation="vertical"
-        android:layout_above="@+id/llBottomFunctionTest">
+        android:layout_above="@+id/llBottomFunctionTest"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp">
+
 
     </LinearLayout>
 
@@ -71,7 +74,7 @@
             style="?android:attr/buttonBarButtonStyle"
             android:text="@string/new_problem"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="0dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="0dp"
@@ -87,7 +90,7 @@
             style="?android:attr/buttonBarButtonStyle"
             android:text="@string/check"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="0dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="0dp"
@@ -103,7 +106,7 @@
             android:text="@string/hint"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="0dp"
             android:layout_marginStart="0dp"
             android:textSize="12sp"
@@ -118,7 +121,7 @@
             style="?android:attr/buttonBarButtonStyle"
             android:text="@string/solution"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="0dp"
             android:layout_marginStart="0dp"
             android:textSize="12sp"

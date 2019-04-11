@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/green"
     app:titleTextColor="#ffffff"
+    android:theme="@style/AppTheme.AppBarOverlay"
     >
 
 </android.support.v7.widget.Toolbar>

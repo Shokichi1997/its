@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/green_dark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorSecondary">@color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -38,5 +37,9 @@
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">17sp</item>
         <item name="android:fontFamily">@font/arial</item>
+    </style>
+
+    <style name="toolBar">
+        <item name="android:textColorSecondary">#FFF</item>
     </style>
 </resources>
