@@ -29,6 +29,7 @@ import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.networks.GetProblemRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
 import com.itsdl.androidtutorials.utils.Answer;
+import com.itsdl.androidtutorials.utils.CustomDialog;
 import com.itsdl.androidtutorials.utils.Question;
 import com.itsdl.androidtutorials.utils.Result;
 
@@ -168,14 +169,19 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
                     RadioButton radioButton = new RadioButton(context);
                     radioButton.setText(answers.get(i).getContent());
                     radioButton.setId(index+i);
-                    radioButton.setTag("radio"+index+i);
-                    group.addView(radioButton);
+                    radioButton.setTag("radio"+(index+i));
+                    LinearLayout.LayoutParams paramsRadio = new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                    paramsRadio.bottomMargin = 15;
+                    group.addView(radioButton,paramsRadio);
                     break;
                 case 2:
                     final CheckBox box = new CheckBox(context);
                     box.setText(answers.get(i).getContent());
                     box.setId(index+i);
-                    box.setTag("checkbox"+index+i);
+
+                    box.setTag("checkbox"+(index+i));
+
                     box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -193,13 +199,19 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
                             }
                         }
                     });
-
-                    llAnswer.addView(box);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params.bottomMargin = 15;
+                    llAnswer.addView(box,params);
                     break;
                 case 3:
+                    TextView txtAnswer = new TextView(context);
+                    txtAnswer.setText("Answer: ");
                     edtAnswerUser = new EditText(context);
                     edtAnswerUser.setInputType(1);
                     edtAnswerUser.setId(index+i);
+                    edtAnswerUser.setPadding(8,8,8,8);
+                    llAnswer.addView(txtAnswer);
                     llAnswer.addView(edtAnswerUser);
                     break;
             }
@@ -232,15 +244,29 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
                     checkAnswerForCheckBox();
                     break;
                 case 3:
-                    if(edtAnswerUser!=null){
-                        String answerUser = edtAnswerUser.getText().toString();
-                        if(!answerUser.isEmpty()){
-                            Toast.makeText(getContext(),answerUser,Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                    checkAnswerForEditText();
                     break;
             }
         }
+    }
+
+    private void checkAnswerForEditText() {
+        if(edtAnswerUser!=null){
+            String answerUser = edtAnswerUser.getText().toString().trim();
+            if(!answerUser.isEmpty()){
+                ArrayList<Answer> answers = questionAll.getAnswers();
+                if(answerUser.equals(answers.get(0).getContent())){
+                    edtAnswerUser.setBackgroundColor(Color.GREEN);
+                }
+                else {
+                    edtAnswerUser.setBackgroundColor(Color.RED);
+                }
+                edtAnswerUser.setEnabled(false);
+                edtAnswerUser.setTextColor(Color.BLACK);
+                checkArr.clear();
+            }
+        }
+        return;
     }
 
     private void checkAnswerForCheckBox() {
@@ -253,17 +279,30 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
                 }
             }
             int numberTrue = 0;
-            for(int i = 0;i<trueAnswerBox.size();i++){
-                for(int id:checkArr){
-                    if(trueAnswerBox.get(i).equals(id)){
-                        numberTrue++;
+            for(int id:checkArr){
+                boolean isExist = false;
+                for(int i = 0;i<trueAnswerBox.size();i++){
+                    if(trueAnswerBox.get(i).equals(id-100)){
+                        isExist = true;
+                        break;
                     }
                 }
+                if(isExist){
+                    numberTrue++;
+                    root.findViewWithTag("checkbox"+id).setBackgroundColor(Color.GREEN);
+                }
+                else {
+                    root.findViewWithTag("checkbox"+id).setBackgroundColor(Color.RED);
+                }
             }
+            for(int i =0;i<answers.size();i++){
+                root.findViewWithTag("checkbox"+(100+i)).setClickable(false);
+            }
+
             if(numberTrue==answers.size()){
                 //todo
             }
-
+            checkArr.clear();
         }
     }
 
@@ -278,19 +317,44 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
                 }
             }
             if(checkArr.get(0)== trueAnswer){
-                root.findViewWithTag("radio"+100+trueAnswer).setBackgroundColor(Color.GREEN);
+                root.findViewWithTag("radio"+(100+trueAnswer)).setBackgroundColor(Color.GREEN);
             }
             else {
-                root.findViewWithTag("radio"+100+checkArr.get(0)).setBackgroundColor(Color.RED);
+                root.findViewWithTag("radio"+(100+checkArr.get(0))).setBackgroundColor(Color.RED);
             }
+
+            for(int i =0;i<answers.size();i++){
+                root.findViewWithTag("radio"+(100+i)).setClickable(false);
+            }
+            checkArr.clear();
         }
     }
 
     private void showHint() {
+        if(questionAll!=null){
+            CustomDialog dialog = new CustomDialog(context);
+            dialog.setLblMessageHint(questionAll.getHint());
+            dialog.show();
+        }
 
     }
 
     private void showSolution() {
+        if(questionAll!=null&&checkArr.isEmpty()){
+            ArrayList<Answer> ans= questionAll.getAnswers();
+            String answerTrue = "";
+            for(int i = 0;i< ans.size();i++){
+                if(ans.get(i).getResult()==1){
+                    answerTrue += ans.get(i).getContent()+"\n";
+                }
+            }
+            CustomDialog dialog = new CustomDialog(context);
+            dialog.setLblMessageHint(answerTrue);
+            dialog.setLblTitleHint("Solution");
+            dialog.setImgIconHint(R.drawable.tick_pink);
+            dialog.setBtnCloseHint(R.drawable.background_card_pink);
+            dialog.show();
+        }
 
     }
 

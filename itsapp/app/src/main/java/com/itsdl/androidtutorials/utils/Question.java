@@ -7,6 +7,7 @@ public class Question {
     private int question_id;
     private String content;
     private int type_qs;
+    private String hint;
     private ArrayList<Answer> answers = null;
 
     public Question(int question_id, String content, int type_qs) {
@@ -31,5 +32,9 @@ public class Question {
 
     public ArrayList<Answer> getAnswers() {
         return answers;
+    }
+
+    public String getHint() {
+        return hint;
     }
 }
