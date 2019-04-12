@@ -12,8 +12,8 @@
         android:orderInCategory="100"
         android:icon="@drawable/ic_delete_black_24dp"
         app:showAsAction="never"/>
-    <item android:id="@+id/copy_item"
-        android:title="Copy"
+    <item android:id="@+id/viewprofile"
+        android:title="View"
         android:orderInCategory="100"
         app:showAsAction="never"/>
 

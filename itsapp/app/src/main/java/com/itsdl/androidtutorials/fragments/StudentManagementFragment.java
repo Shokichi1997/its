@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
@@ -48,7 +50,6 @@ public class StudentManagementFragment extends Fragment {
         arr_users.add(new User(111,"Lam",null,-1,"buidanh97@gmail.com"));
         arr_users.add(new User(111,"Na",null,-1,"buidanh97@gmail.com"));
         arr_users.add(new User(111,"Thuong",null,-1,"buidanh97@gmail.com"));
-
         loadDanhSachHocVien(arr_users);
         return root;
     }
@@ -60,37 +61,33 @@ public class StudentManagementFragment extends Fragment {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Data Student");
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(getFragmentManager().getBackStackEntryCount()>0){
-                    getFragmentManager().popBackStack();
-                }//getFragmentManager().getBackStackEntryCount()>0
-            }
-        });
     }
-
     public void loadDanhSachHocVien(final List<User> arr_users){
         UserAdapter adapter = new UserAdapter(root.getContext(),arr_users);
         this.listStudent.setAdapter(adapter);
         //event item click
+        listStudent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(),"Xin chao",Toast.LENGTH_SHORT).show();
+                User us = arr_users.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putInt("UserID", us.getStudenCode());
+                UserProfileFragment fConv = new UserProfileFragment();
+                fConv.setArguments(bundle);
+                replaceFragment(fConv);
+            }
+        });
     }
     private void replaceFragment(Fragment fConv) {
         if(getChildFragmentManager()!=null){
             FragmentManager manager = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.frContainer, fConv,"chat");
+            transaction.replace(R.id.frContainer, fConv,"Details");
             transaction.addToBackStack(null);
             transaction.commit();
-             /*User us = arr_users.get(position);
-                Bundle bundle = new Bundle();
-                bundle.putInt("UserID", us.getStudenCode());
-                UserProfileFragment fConv = new UserProfileFragment();
-                fConv.setArguments(bundle);
-
-                replaceFragment(fConv);*/
         }
-
     }
+
 
 }

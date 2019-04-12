@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
+    android:descendantFocusability="blocksDescendants"
     android:layout_margin="@dimen/margin_fragment">
 
 
@@ -27,16 +28,20 @@
         android:paddingRight="8dp"
         android:text="Chuong 1" />
 
-    <ImageButton
-        android:id="@+id/imgShowPopup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/white"
-        android:layout_marginTop="0dp"
-        android:layout_marginLeft="0dp"
-        android:src="@drawable/ic_more_vert_black_24dp" />
+
+
+        <ImageButton
+            android:id="@+id/imgShowPopup"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/white"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:src="@drawable/ic_more_vert_black_24dp" />
+
 
     <TextView
         android:id="@+id/textView2"
@@ -46,6 +51,6 @@
         android:layout_alignStart="@+id/lblUserName"
         android:layout_marginStart="10dp"
         android:text="TextView"
-        tools:text="level" />
+        tools:text="level 100" />
 
 </RelativeLayout>
