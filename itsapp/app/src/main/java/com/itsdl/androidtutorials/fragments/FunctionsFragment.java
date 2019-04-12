@@ -69,7 +69,8 @@ public class FunctionsFragment extends Fragment {
                         break;
                     case 3:
                         //Todo
-
+                        Fragment a = new UserProfileFragment();
+                        showFragment(a,"CHAPTER");
                         break;
                     case 4:
                         if (getFragmentManager() != null) {

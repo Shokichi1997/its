@@ -3,12 +3,16 @@ package com.itsdl.androidtutorials.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.adapters.ChapterLessonAdapter;
@@ -51,7 +55,7 @@ public class StudentManagementFragment extends Fragment {
 
     public void getViews(){
        listStudent= root.findViewById(R.id.list_Student);
-       toolbar= root.findViewById(R.id.student_toolbar);
+       toolbar= root.findViewById(R.id.student_toolbar1);
         //set tool bar app
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Data Student");
@@ -66,9 +70,26 @@ public class StudentManagementFragment extends Fragment {
         });
     }
 
-    public void loadDanhSachHocVien(List<User> arr_users){
+    public void loadDanhSachHocVien(final List<User> arr_users){
         UserAdapter adapter = new UserAdapter(root.getContext(),arr_users);
         this.listStudent.setAdapter(adapter);
+        //event item click
+    }
+    private void replaceFragment(Fragment fConv) {
+        if(getChildFragmentManager()!=null){
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.frContainer, fConv,"chat");
+            transaction.addToBackStack(null);
+            transaction.commit();
+             /*User us = arr_users.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putInt("UserID", us.getStudenCode());
+                UserProfileFragment fConv = new UserProfileFragment();
+                fConv.setArguments(bundle);
+
+                replaceFragment(fConv);*/
+        }
 
     }
 

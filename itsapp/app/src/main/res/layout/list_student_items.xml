@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
@@ -16,15 +17,15 @@
 
     <TextView
         android:id="@+id/lblUserName"
+        style="@style/ChapterTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/imgIconAvatar"
-        android:layout_toStartOf="@+id/imgLockChapter"
-        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/imgIconAvatar"
+        android:layout_marginStart="56dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:text="Chuong 1"
-        style="@style/ChapterTitle"/>
+        android:text="Chuong 1" />
 
     <ImageButton
         android:id="@+id/imgShowPopup"
@@ -36,5 +37,15 @@
         android:layout_marginTop="0dp"
         android:layout_marginLeft="0dp"
         android:src="@drawable/ic_more_vert_black_24dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="79dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imgIconAvatar"
+        android:layout_alignStart="@+id/lblUserName"
+        android:layout_marginStart="10dp"
+        android:text="TextView"
+        tools:text="level" />
 
 </RelativeLayout>

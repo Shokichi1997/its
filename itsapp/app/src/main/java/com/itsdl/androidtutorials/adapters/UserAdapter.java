@@ -49,8 +49,9 @@ public class UserAdapter extends ArrayAdapter<User> {
         TextView lblUsername = listItemView.findViewById(R.id.lblUserName);
         lblUsername.setText(currentChapterLesson.getStudentName());
 
-        ImageButton showpopup=listItemView.findViewById(R.id.imgShowPopup);
+        final ImageButton showpopup=listItemView.findViewById(R.id.imgShowPopup);
         showpopup.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
