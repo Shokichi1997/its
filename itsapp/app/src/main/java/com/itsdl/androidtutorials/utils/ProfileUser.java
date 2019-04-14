@@ -1,5 +1,9 @@
 package com.itsdl.androidtutorials.utils;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
+
 public class ProfileUser {
     @SerializedName("student_code")
     public String student_code;
