@@ -22,8 +22,9 @@ public class GetProblemRequest extends SeverRequest {
     @Override
     protected Request prepare(Map<String, String> parameter) {
         String lessonID = parameter.get("lessonID");
+        String user_id = parameter.get("user_id");
         return new Request.Builder()
-                .url(URL + "getProblem.php?lesson_id="+lessonID)
+                .url(URL + "getProblem.php?lesson_id="+lessonID+"&user_id="+user_id)
                 .get()
                 .build();
     }

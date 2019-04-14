@@ -23,4 +23,8 @@
     <string name="solution">Solution</string>
     <string name="problem">Problem:</string>
     <string name="close">Close</string>
+    <string name="difficult_level">Difficult level:</string>
+    <string name="hard">Hard</string>
+    <string name="medium">Medium</string>
+    <string name="ease">Ease</string>
 </resources>

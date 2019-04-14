@@ -11,7 +11,7 @@
         android:background="@android:color/white"
         android:clickable="true"
         android:focusable="true"/>
-    <include layout="@layout/app_bar"
+    <include layout="@layout/toolbar_feed"
     android:id="@+id/test_toolbar" />
 
     <ProgressBar
@@ -22,10 +22,29 @@
         />
 
     <LinearLayout
+        android:id="@+id/llLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/test_toolbar"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/arial"
+            android:text="@string/difficult_level"
+            />
+        <TextView
+            android:id="@+id/lblLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/arialbd"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:layout_below="@id/test_toolbar"
+        android:layout_below="@id/llLevel"
         android:id="@+id/llQuestion">
         <TextView
             android:layout_width="wrap_content"

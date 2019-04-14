@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,8 +32,10 @@ import com.itsdl.androidtutorials.networks.GetProblemRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
 import com.itsdl.androidtutorials.utils.Answer;
 import com.itsdl.androidtutorials.utils.CustomDialog;
+import com.itsdl.androidtutorials.utils.ProfileUser;
 import com.itsdl.androidtutorials.utils.Question;
 import com.itsdl.androidtutorials.utils.Result;
+import com.itsdl.androidtutorials.utils.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +43,7 @@ import java.util.Map;
 
 public class TestLessonFragment extends Fragment implements View.OnClickListener{
     private Button btnNewProblem,btnCheckAnswer,btnHintQuestion,btnSolution;
-    private TextView lblProblem,lblQuestionContent;
+    private TextView lblProblem,lblQuestionContent,lblLevel;
     private LinearLayout llAnswer;
     private Toolbar toolbar;
     private ProgressBar progressBarProblem;
@@ -48,17 +52,18 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
     private ArrayList<Integer> checkArr = null;
     private EditText edtAnswerUser;
     private View root;
+    private boolean isAnswered;
+    private int problemNumber = 0;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_test_lesson,container,false);
-        addControls(root);
-        addEvents(root);
+        addControls();
+        addEvents();
         return root;
     }
-    /**addControls add Views to fragment
-     * @param root parent view contain views*/
-    private void addControls(View root) {
+    /**addControls add Views to fragment*/
+    private void addControls() {
         //add tool bar
         context = getContext();
         checkArr = new ArrayList<>();
@@ -71,6 +76,7 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
         btnNewProblem = root.findViewById(R.id.btnNewProblem);
         btnHintQuestion = root.findViewById(R.id.btnHintQuestion);
         btnSolution = root.findViewById(R.id.btnSolution);
+        lblLevel = root.findViewById(R.id.lblLevel);
 
         btnSolution.setOnClickListener(this);
         btnHintQuestion.setOnClickListener(this);
@@ -85,9 +91,8 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
         progressBarProblem.setVisibility(View.GONE);
     }
 
-    /**addEvents add event to view
-     * @param root parent view contain views*/
-    private void addEvents(View root) {
+    /**addEvents add event to view*/
+    private void addEvents() {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +106,8 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
         });
     }
 
+    /**
+     * onClick handler click button event  */
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -119,9 +126,12 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
         }
     }
 
+    /**
+     * addNewProblem get new problem in server */
     private void addNewProblem() {
         Map<String, String> parameter = new HashMap<>();
         parameter.put("lessonID", "1");
+        parameter.put("user_id", "1");
         progressBarProblem.setVisibility(View.VISIBLE);
         GetProblemRequest request = new GetProblemRequest(new SeverRequest.SeverRequestListener() {
             @Override
@@ -131,6 +141,7 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
                     if(res.getError()==0){
                         Question question = ( Question ) res.getData();
                         setContentProblem(question);
+                        setLabelLevel(question.getLevel());
                     }
                     else {
                         Toast.makeText(getContext(),"Create problem is error. Please to try again!",Toast.LENGTH_LONG).show();
@@ -142,7 +153,11 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
         request.execute(parameter);
     }
 
+    /**
+     * setContentProblem set question content */
     private void setContentProblem(Question question) {
+        problemNumber++;
+        lblProblem.setText("Problem #"+problemNumber+": ");
         initQuestionInfo(question);
         lblQuestionContent.setText(question.getContent());
         int type = question.getType_qs();
@@ -219,9 +234,29 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
 
     }
 
+    /**
+     * setLabelLevel set question difficult level*/
+    private void setLabelLevel(int level) {
+        if(level == 1){
+            lblLevel.setText(R.string.ease);
+            lblLevel.setTextColor(Color.GREEN);
+        }
+        else if(level == 2){
+            lblLevel.setText(R.string.medium);
+            lblLevel.setTextColor(Color.BLUE);
+        }
+        else if(level == 3){
+            lblLevel.setText(R.string.hard);
+            lblLevel.setTextColor(Color.RED);
+        }
+    }
+
+    /**
+     * initQuestionInfo int base of question*/
     private void initQuestionInfo(Question question) {
         questionAll = question;
         llAnswer.removeAllViews();
+        isAnswered = false;
         if(!checkArr.isEmpty()){
             checkArr.clear();
         }
@@ -230,9 +265,12 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
                 edtAnswerUser.setText("");
             }
 
-    }
+        }
+
     }
 
+    /**
+     * checkAnswer check answer of current question*/
     private void checkAnswer() {
         if(questionAll!=null){
             int type_qs = questionAll.getType_qs();
@@ -250,6 +288,8 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
         }
     }
 
+    /**
+     * checkAnswerForEditText check answer type of the question to fill in*/
     private void checkAnswerForEditText() {
         if(edtAnswerUser!=null){
             String answerUser = edtAnswerUser.getText().toString().trim();
@@ -257,18 +297,21 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
                 ArrayList<Answer> answers = questionAll.getAnswers();
                 if(answerUser.equals(answers.get(0).getContent())){
                     edtAnswerUser.setBackgroundColor(Color.GREEN);
+                    updateScoreLesson(1);
                 }
                 else {
                     edtAnswerUser.setBackgroundColor(Color.RED);
+                    updateScoreLesson(-1);
                 }
                 edtAnswerUser.setEnabled(false);
                 edtAnswerUser.setTextColor(Color.BLACK);
-                checkArr.clear();
+                isAnswered = true;
             }
         }
-        return;
     }
 
+    /**
+     * checkAnswerForCheckBox check answer type of the question has multi option*/
     private void checkAnswerForCheckBox() {
         if(!checkArr.isEmpty()){
             ArrayList<Answer> answers = questionAll.getAnswers();
@@ -300,12 +343,17 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
             }
 
             if(numberTrue==answers.size()){
-                //todo
+                updateScoreLesson(1);
             }
-            checkArr.clear();
+            else {
+                updateScoreLesson(-1);
+            }
+            isAnswered = true;
         }
     }
 
+    /**
+     * checkAnswerForRadioButton check answer type of the question has an option*/
     private void checkAnswerForRadioButton() {
         if(!checkArr.isEmpty()){
             ArrayList<Answer> answers = questionAll.getAnswers();
@@ -318,18 +366,22 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
             }
             if(checkArr.get(0)== trueAnswer){
                 root.findViewWithTag("radio"+(100+trueAnswer)).setBackgroundColor(Color.GREEN);
+                updateScoreLesson(1);
             }
             else {
                 root.findViewWithTag("radio"+(100+checkArr.get(0))).setBackgroundColor(Color.RED);
+                updateScoreLesson(-1);
             }
 
             for(int i =0;i<answers.size();i++){
                 root.findViewWithTag("radio"+(100+i)).setClickable(false);
             }
-            checkArr.clear();
+            isAnswered = true;
         }
     }
 
+    /**
+     * showHint show hint of current question*/
     private void showHint() {
         if(questionAll!=null){
             CustomDialog dialog = new CustomDialog(context);
@@ -339,8 +391,10 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
 
     }
 
+    /**
+     * showSolution show solution of current question*/
     private void showSolution() {
-        if(questionAll!=null&&checkArr.isEmpty()){
+        if(questionAll!=null&&isAnswered){
             ArrayList<Answer> ans= questionAll.getAnswers();
             String answerTrue = "";
             for(int i = 0;i< ans.size();i++){
@@ -355,7 +409,32 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
             dialog.setBtnCloseHint(R.drawable.background_card_pink);
             dialog.show();
         }
+    }
 
+    /**
+     * updateScoreLesson create request to update score in this lesson
+     * @param scoreProblem current question score*/
+    private void updateScoreLesson(float scoreProblem){
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("lesson_id", "1");
+        parameter.put("user_id", "1");
+        parameter.put("score", String.valueOf(scoreProblem));
+
+        GetProblemRequest request = new GetProblemRequest(new SeverRequest.SeverRequestListener() {
+            @Override
+            public void completed(Object obj) {
+                if(obj!=null){
+                    Result res = (Result) obj;
+                    if(res.getError()==0){
+                        Toast.makeText(getContext(),"Add score successfully!",Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Add score not successfully!",Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+        request.execute(parameter);
     }
 
 

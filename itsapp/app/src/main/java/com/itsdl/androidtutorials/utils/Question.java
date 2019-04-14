@@ -9,6 +9,7 @@ public class Question {
     private int type_qs;
     private String hint;
     private ArrayList<Answer> answers = null;
+    private int level;
 
     public Question(int question_id, String content, int type_qs) {
         this.question_id = question_id;
@@ -36,5 +37,9 @@ public class Question {
 
     public String getHint() {
         return hint;
+    }
+
+    public int getLevel() {
+        return level;
     }
 }
