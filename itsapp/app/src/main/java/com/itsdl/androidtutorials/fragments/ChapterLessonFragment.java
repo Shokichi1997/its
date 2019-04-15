@@ -82,14 +82,26 @@ public class ChapterLessonFragment extends Fragment {
         listChapterLesson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Fragment fragment = new LessonFragment();
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.add(R.id.frContainer,fragment,"LESSON_FRAGMENT")
-                        .addToBackStack(null)
-                        .commit();
+              loadLesson(chapterLessons.get(position).getIdChapter());
             }
         });
+    }
+
+    private void replaceFragment(Fragment fConv) {
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.frContainer, fConv, "LESSON_FRAGMENT");
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void loadLesson(int lessonID) {
+        int id = lessonID;
+        Bundle bundle = new Bundle();
+        bundle.putInt("lesson_id", id);
+        LessonFragment fConv = new LessonFragment();
+        fConv.setArguments(bundle);
+        replaceFragment(fConv);
     }
 
 }

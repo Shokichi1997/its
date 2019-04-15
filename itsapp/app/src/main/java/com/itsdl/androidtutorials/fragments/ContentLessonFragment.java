@@ -44,7 +44,7 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
 
 
 
-        //Bundle
+        //get Bundle
         Bundle args = getArguments();
         lessonIDItem = 1;
         if(args!=null && args.containsKey("lesson_item_id")){

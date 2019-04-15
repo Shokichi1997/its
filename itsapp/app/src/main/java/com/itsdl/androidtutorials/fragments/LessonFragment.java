@@ -40,7 +40,7 @@ public class LessonFragment extends Fragment {
     ExpandableListView expandableListViewLesson;
     ArrayList<Lesson> arr_Lessons = new ArrayList<>();
     ArrayList<LessonItems> arr_LessonItems = new ArrayList<>();
-
+    int lessonID=1;
     public LessonFragment() {
         // Required empty public constructor
     }
@@ -52,7 +52,13 @@ public class LessonFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_lesson, container, false);
 
         getViews();
-        loadLesson();
+        //Bundle
+        Bundle args = getArguments();
+        lessonID = 1;
+        if(args!=null && args.containsKey("lesson_id")){
+            lessonID = args.getInt("lesson_id");
+        }
+        loadLesson(lessonID);
         return root;
     }
 
@@ -75,9 +81,9 @@ public class LessonFragment extends Fragment {
         expandableListViewLesson = (ExpandableListView) root.findViewById(R.id.expandLesson);
     }
 
-    public void loadLesson() {
+    public void loadLesson(int lessonID) {
         Map<String, String> parameter = new HashMap<>();
-        parameter.put("chapter_id", "2");
+        parameter.put("chapter_id", String.valueOf(lessonID));
         GetLessonRequest request = new GetLessonRequest(new SeverRequest.SeverRequestListener() {
             @Override
             public void completed(Object obj) {
@@ -98,7 +104,7 @@ public class LessonFragment extends Fragment {
                         }
                         listLessonItem.put(listLessonName.get(i), arr_lessonitemtoLesson);
                     }
-                    //load data
+                    //load data-error rack app
                     lessonAdapter = new LessonAdapter(getActivity().getBaseContext(), listLessonName, listLessonItem);
                     expandableListViewLesson.setAdapter(lessonAdapter);
                     //add event

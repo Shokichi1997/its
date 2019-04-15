@@ -7,8 +7,6 @@
     android:background="@mipmap/back"
     android:gravity="center"
     tools:context=".fragments.LoginFragment">
-
-
        <ImageView
            android:layout_width="90dp"
            android:layout_height="wrap_content"
