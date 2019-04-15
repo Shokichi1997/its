@@ -18,11 +18,11 @@ public class LessonAdapter extends BaseExpandableListAdapter {
 
 
     private Context context;
-    private List<Lesson> listDataHeader; // header titles
+    private List<String> listDataHeader; // header titles
     // child data in format of header title, child title
-    private HashMap<String, List<LessonItems>> listDataChild;
+    private HashMap<String,List<LessonItems>> listDataChild;
 
-    public LessonAdapter(Context context, List<Lesson> listDataHeader,
+    public LessonAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<LessonItems>> listChildData) {
         this.context = context;
         this.listDataHeader = listDataHeader;
@@ -37,6 +37,7 @@ public class LessonAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
         return listDataChild.get(listDataHeader.get(groupPosition)).size();
+
     }
 
     @Override
@@ -66,21 +67,21 @@ public class LessonAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        Lesson lesson=(Lesson) getGroup(groupPosition);
+        String lesson=(String) getGroup(groupPosition);
         LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView=inflater.inflate(R.layout.list_lesson_items,null);
         TextView txtLesonName=convertView.findViewById(R.id.lblLessonName);
-        txtLesonName.setText(lesson.getLessonName());
+        txtLesonName.setText(lesson);
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-       /* LessonItems lessonItem=(LessonItems) getChild(groupPosition,childPosition);
+        LessonItems lessonItem=(LessonItems) getChild(groupPosition,childPosition);
         LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView=inflater.inflate(R.layout.list_lesson_items_item,null);
         TextView txtLesonItemName=convertView.findViewById(R.id.lblLessonItemName);
-        txtLesonItemName.setText(lessonItem.getLessonItemName());*/
+        txtLesonItemName.setText(lessonItem.getLessonItemName());
         return convertView;
     }
 

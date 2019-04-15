@@ -24,12 +24,12 @@ public class SignInRequest extends SeverRequest {
 
     @Override
     protected Request prepare(Map<String, String> parameter) {
-        String user = parameter.get("email");
+        String user = parameter.get("student_code");
         String password = parameter.get("password");
 
 
         RequestBody requestBody = new MultipartBody.Builder()
-                .addFormDataPart("email", user)
+                .addFormDataPart("student_code", user)
                 .addFormDataPart("password", password)
                 .setType(MultipartBody.FORM)
                 .build();

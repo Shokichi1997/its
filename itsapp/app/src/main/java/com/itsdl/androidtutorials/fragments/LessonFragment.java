@@ -103,32 +103,32 @@ android.support.v7.widget.Toolbar toolbar;
 
     public void loadLesson(){
 
-
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("chapter_id","2");
+      Map<String,String> parameter=new HashMap<>();
+      parameter.put("chapter_id","2");
 
         GetLessonRequest request=new GetLessonRequest(new SeverRequest.SeverRequestListener() {
             @Override
             public void completed(Object obj) {
                 if (obj != null) {
                     ArrayList<Object> arr=(ArrayList<Object>)obj;
+
                     arr_Lessons=(ArrayList<Lesson>) arr.get(0);
                     arr_LessonItems=(ArrayList<LessonItems>) arr.get(1);
-                    HashMap<String,List<LessonItems>> listLessonItem = new HashMap<>();
 
-                    ArrayList<LessonItems> arr_lessonitemtoless=new ArrayList<>();
+                    List<String> listLessonName=new ArrayList<>();
+                    HashMap<String,List<LessonItems>> listLessonItem = new HashMap<>();
                     for (int i=0;i<arr_Lessons.size();i++){
+                       listLessonName.add(arr_Lessons.get(i).getLessonName());
+                        ArrayList<LessonItems> arr_lessonitemtoLesson=new ArrayList<>();
                         for(int j=0;j<arr_LessonItems.size();j++){
                             if(arr_Lessons.get(i).getIdLesson()==arr_LessonItems.get(j).getIdLesson()){
-                            arr_lessonitemtoless.add(arr_LessonItems.get(j));
+                            arr_lessonitemtoLesson.add(arr_LessonItems.get(j));
                             }
                         }
-                        String key=String.valueOf(arr_Lessons.get(i).getIdLesson());
-                        listLessonItem.put(key,arr_lessonitemtoless);
-                        lessonAdapter=new LessonAdapter(getActivity().getBaseContext(),arr_Lessons,listLessonItem);
-                        expandableListViewLesson.setAdapter(lessonAdapter);
+                       listLessonItem.put(listLessonName.get(i),arr_lessonitemtoLesson);
                     }
-
+                    lessonAdapter=new LessonAdapter(getActivity().getBaseContext(),listLessonName,listLessonItem);
+                    expandableListViewLesson.setAdapter(lessonAdapter);
                 }
             }
         });
@@ -136,5 +136,14 @@ android.support.v7.widget.Toolbar toolbar;
         //khong lam viec gi nua
     }
 
+    private void setExpandableListViewLessonClick(){
+        expandableListViewLesson.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+               // Log.e(TAG, "onChildClick: " + listHeader.get(groupPosition) + ", " + mData.get(listHeader.get(groupPosition)).get(childPosition).getName());
 
+                return false;
+            }
+        });
+    }
 }
