@@ -50,16 +50,15 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
         if(args!=null && args.containsKey("lesson_item_id")){
             lessonIDItem = args.getInt("lesson_item_id");
         }
-
-        addControl(root);
+        addControl();
         addEvents();
         return root;
     }
 
     /**
      * addControl: add controls with layout
-     * @param root view contain control in layout*/
-    private void addControl(View root) {
+     *  root view contain control in layout*/
+    private void addControl() {
         //add bottomNavigationView
         //bottomNavigationView = root.findViewById(R.id.navbottomLesson);
         btnFeedbackLesson = root.findViewById(R.id.btnFeedbackLesson);
@@ -69,7 +68,7 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
 
         wv_lesson_content = root.findViewById(R.id.wv_lesson_content);
         wv_lesson_content.setWebViewClient(new WebViewClient());
-        wv_lesson_content.loadUrl(url + lessonIDItem);
+        wv_lesson_content.loadUrl(url+lessonIDItem);
     }
 
     /**
