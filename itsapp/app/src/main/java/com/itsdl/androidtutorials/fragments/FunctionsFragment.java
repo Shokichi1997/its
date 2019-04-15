@@ -65,6 +65,7 @@ public class FunctionsFragment extends Fragment {
                     case 2:
                         //Todo
                         Fragment fragmentStudent = new StudentManagementFragment();
+                        //Fragment fragmentStudent = new StudentManagementFragment();
                         showFragment(fragmentStudent,"STUDENT_MANAGER");
                         break;
                     case 3:
@@ -78,6 +79,7 @@ public class FunctionsFragment extends Fragment {
                             if(loginFragment!=null){
                                 FragmentManager fragmentManager = getFragmentManager();
                                 FragmentTransaction transaction = fragmentManager.beginTransaction();
+                                fragmentManager.popBackStack();
                                 transaction.replace(R.id.frContainer,loginFragment,"LOGIN")
                                         .addToBackStack(null)
                                         .commit();
@@ -86,6 +88,7 @@ public class FunctionsFragment extends Fragment {
                                 LoginFragment fragment = new LoginFragment();
                                 FragmentManager fragmentManager = getFragmentManager();
                                 FragmentTransaction transaction = fragmentManager.beginTransaction();
+                                fragmentManager.popBackStack();
                                 transaction.replace(R.id.frContainer,fragment,"LOGIN")
                                         .addToBackStack(null)
                                         .commit();

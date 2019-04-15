@@ -65,6 +65,11 @@ public class MainActivity extends AppCompatActivity
             //getSupportFragmentManager().popBackStack();
             System.exit(0);
         }
+        if(getSupportFragmentManager().findFragmentById(R.id.frContainer) != null){
+            if (getSupportFragmentManager().findFragmentById(R.id.frContainer).getTag().equals("LOGIN")){
+                System.exit(0);
+            }
+        }
 
     }
 

@@ -2,6 +2,7 @@ package com.itsdl.androidtutorials.fragments;
 
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,14 +10,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
+
 
 public class ContentLessonFragment extends Fragment implements View.OnClickListener{
     private WebView wv_lesson_content;
@@ -25,7 +27,6 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
     private final int COUNT_LESSON = 3;
     private Button btnPrevLesson, btnNextLesson, btnFeedbackLesson;
     ProgressBar progressBarContent;
-    private ProgressDialog mProgress;
     private  View root;
     String showOrHideWebViewInitiaUse = "show";
 
@@ -42,7 +43,6 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
         root = inflater.inflate(R.layout.fragment_lesson_content,container,false);
 
 
-    
 
         //Bundle
         Bundle args = getArguments();
@@ -67,8 +67,12 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
         progressBarContent = root.findViewById(R.id.progressBarContent);
 
         wv_lesson_content = root.findViewById(R.id.wv_lesson_content);
-        wv_lesson_content.setWebViewClient(new WebViewClient());
-        wv_lesson_content.loadUrl(url+lessonIDItem);
+        wv_lesson_content.setWebViewClient(new WebViewClientCustomer());
+        //wv_lesson_content.setWebChromeClient(new WebChromeClient());
+        WebSettings settings = wv_lesson_content.getSettings();
+        settings.setBuiltInZoomControls(true);
+        settings.setDisplayZoomControls(false);
+        wv_lesson_content.loadUrl(url + lessonIDItem);
     }
 
     /**
@@ -96,9 +100,7 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
             case R.id.btnNextLesson:
                 if(lessonIDItem+1<=COUNT_LESSON) {
                     lessonIDItem++;
-                    //wv_lesson_content.setWebViewClient(new WebViewClient());
                     wv_lesson_content.loadUrl(url + lessonIDItem);
-
                 }
                 break;
         }
@@ -106,10 +108,12 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
 
     }
 
-    public class WebViewClient extends android.webkit.WebViewClient
+    public class WebViewClientCustomer extends android.webkit.WebViewClient
     {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon){
+            super.onPageStarted(view, url, favicon);
+            progressBarContent.setVisibility(View.VISIBLE);
             if(showOrHideWebViewInitiaUse.equals("show")){
                 view.setVisibility(wv_lesson_content.INVISIBLE);
             }
@@ -121,6 +125,11 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
             progressBarContent.setVisibility(View.GONE);
             view.setVisibility(wv_lesson_content.VISIBLE);
             super.onPageFinished(view,url);
+        }
+
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError er) {
+            handler.proceed();
         }
 
     }

@@ -123,7 +123,7 @@ public class LessonFragment extends Fragment {
     }
 
     private void replaceFragment(Fragment fConv) {
-        FragmentManager manager = getChildFragmentManager();
+        FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.frContainer, fConv, "LessonItemContent");
         transaction.addToBackStack(null);
