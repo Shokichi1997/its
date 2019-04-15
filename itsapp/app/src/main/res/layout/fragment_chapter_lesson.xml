@@ -21,7 +21,7 @@
         android:layout_below="@+id/chapter_lesson_toolbar"
         android:divider="#e5e5e5"
         android:dividerHeight="6dp"
-        android:background="@drawable/background_card">
+        android:background="@drawable/background_card_list">
 
     </ListView>
 </RelativeLayout>

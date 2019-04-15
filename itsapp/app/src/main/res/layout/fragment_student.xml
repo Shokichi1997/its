@@ -42,7 +42,7 @@
         android:layout_marginTop="10dp"
         android:layout_margin="10dp"
         android:dividerHeight="6dp"
-        android:background="@drawable/background_card"
+        android:background="@drawable/background_card_list"
 
      >
 

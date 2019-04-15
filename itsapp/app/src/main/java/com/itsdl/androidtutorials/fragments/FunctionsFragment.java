@@ -59,18 +59,18 @@ public class FunctionsFragment extends Fragment {
                         showFragment(chapterLessonFragment,"CHAPTER");
                         break;
                     case 1:
-                        Fragment testLessonFragment = new TestLessonFragment();
-                        showFragment(testLessonFragment,"CHAPTER");
+                        Fragment testLessonFragment = new SelectLessonTestFragment();
+                        showFragment(testLessonFragment,"SELECT_LESSON");
                         break;
                     case 2:
                         //Todo
                         Fragment fragmentStudent = new StudentManagementFragment();
-                        showFragment(fragmentStudent,"CHAPTER");
+                        showFragment(fragmentStudent,"STUDENT_MANAGER");
                         break;
                     case 3:
                         //Todo
                         Fragment a = new UserProfileFragment();
-                        showFragment(a,"CHAPTER");
+                        showFragment(a,"USER_PROFILE");
                         break;
                     case 4:
                         if (getFragmentManager() != null) {

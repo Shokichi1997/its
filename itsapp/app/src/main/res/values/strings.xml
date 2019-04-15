@@ -27,4 +27,6 @@
     <string name="hard">Hard</string>
     <string name="medium">Medium</string>
     <string name="ease">Ease</string>
+    <string name="ok">ok</string>
+    <string name="select_lesson">SELECT LESSON</string>
 </resources>
