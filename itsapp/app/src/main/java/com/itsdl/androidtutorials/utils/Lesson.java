@@ -1,57 +1,54 @@
 package com.itsdl.androidtutorials.utils;
 
 public class Lesson {
-   private int idChapTer;
-   private int idLesson;
-   private int iconLesson;
-   private boolean isLock;
-   private String lessonName;
+   private int chapter_id;
+   private int lesson_id;
+   private String lesson_icon;
+   private String lesson_name;
 
-    public Lesson(int idChapTer, int idLesson, int iconLesson, boolean isLock, String lessonName) {
-        this.idChapTer = idChapTer;
-        this.idLesson = idLesson;
-        this.iconLesson = iconLesson;
-        this.isLock = isLock;
-        this.lessonName = lessonName;
+    public Lesson(int chapter_id, int lesson_id, String lesson_icon, String lesson_name) {
+        this.chapter_id = chapter_id;
+        this.lesson_id = lesson_id;
+        this.lesson_icon = lesson_icon;
+        this.lesson_name = lesson_name;
     }
 
-    public int getIdChapTer() {
-        return idChapTer;
+    public Lesson(int lesson_id, String lesson_name) {
+        this.lesson_id = lesson_id;
+        this.lesson_name = lesson_name;
     }
 
-    public int getIdLesson() {
-        return idLesson;
+    public int getChapter_id() {
+        return chapter_id;
     }
 
-    public int getIconLesson() {
-        return iconLesson;
+    public int getLesson_id() {
+        return lesson_id;
     }
 
-    public boolean isLock() {
-        return isLock;
+    public String getLesson_icon() {
+        return lesson_icon;
     }
 
-    public String getLessonName() {
-        return lessonName;
+
+    public String getLesson_name() {
+        return lesson_name;
     }
 
-    public void setIdChapTer(int idChapTer) {
-        this.idChapTer = idChapTer;
+    public void setChapter_id(int chapter_id) {
+        this.chapter_id = chapter_id;
     }
 
-    public void setIdLesson(int idLesson) {
-        this.idLesson = idLesson;
+    public void setLesson_id(int lesson_id) {
+        this.lesson_id = lesson_id;
     }
 
-    public void setIconLesson(int iconLesson) {
-        this.iconLesson = iconLesson;
+    public void setLesson_icon(String lesson_icon) {
+        this.lesson_icon = lesson_icon;
     }
 
-    public void setLock(boolean lock) {
-        isLock = lock;
-    }
 
-    public void setLessonName(String lessonName) {
-        this.lessonName = lessonName;
+    public void setLesson_name(String lesson_name) {
+        this.lesson_name = lesson_name;
     }
 }

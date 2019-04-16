@@ -11,17 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.itsdl.androidtutorials.R;
-import com.itsdl.androidtutorials.activities.MainActivity;
 import com.itsdl.androidtutorials.adapters.LessonAdapter;
 import com.itsdl.androidtutorials.networks.GetLessonRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
-import com.itsdl.androidtutorials.networks.SignInRequest;
 import com.itsdl.androidtutorials.utils.Lesson;
 import com.itsdl.androidtutorials.utils.LessonItems;
-import com.itsdl.androidtutorials.utils.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,10 +91,10 @@ public class LessonFragment extends Fragment {
                     List<String> listLessonName = new ArrayList<>();
                     HashMap<String, List<LessonItems>> listLessonItem = new HashMap<>();
                     for (int i = 0; i < arr_Lessons.size(); i++) {
-                        listLessonName.add(arr_Lessons.get(i).getLessonName());
+                        listLessonName.add(arr_Lessons.get(i).getLesson_name());
                         ArrayList<LessonItems> arr_lessonitemtoLesson = new ArrayList<>();
                         for (int j = 0; j < arr_LessonItems.size(); j++) {
-                            if (arr_Lessons.get(i).getIdLesson() == arr_LessonItems.get(j).getIdLesson()) {
+                            if (arr_Lessons.get(i).getLesson_id() == arr_LessonItems.get(j).getIdLesson()) {
                                 arr_lessonitemtoLesson.add(arr_LessonItems.get(j));
                             }
                         }

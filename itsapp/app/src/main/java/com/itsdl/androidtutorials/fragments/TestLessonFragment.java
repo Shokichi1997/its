@@ -54,10 +54,24 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
     private View root;
     private boolean isAnswered;
     private int problemNumber = 0;
+    private int lesson_id;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_test_lesson,container,false);
+        Bundle args = getArguments();
+        if(args!=null && args.containsKey("lesson_id")){
+            lesson_id = args.getInt("lesson_id");
+        }
+        else {
+            lesson_id = 1;
+        }
         addControls();
         addEvents();
         return root;
@@ -130,7 +144,7 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
      * addNewProblem get new problem in server */
     private void addNewProblem() {
         Map<String, String> parameter = new HashMap<>();
-        parameter.put("lessonID", "1");
+        parameter.put("lessonID", String.valueOf(lesson_id));
         parameter.put("user_id", "1");
         progressBarProblem.setVisibility(View.VISIBLE);
         GetProblemRequest request = new GetProblemRequest(new SeverRequest.SeverRequestListener() {

@@ -51,11 +51,9 @@ public class GetLessonRequest extends SeverRequest {
                         Lesson ls=new Lesson(
                                 l.getInt("chapter_id"),
                                 l.getInt("lesson_id"),
-                               0,
-                                false,
+                               "",
                                 l.getString("lesson_name")
                         );
-
                         arr_lesson.add(ls);
                     }
                     if(i==1){
@@ -64,7 +62,6 @@ public class GetLessonRequest extends SeverRequest {
                                 l.getInt("lesson_id"),
                                 l.getInt("lesson_item_id"),
                                 l.getString("lesson_item_name")
-
                         );
                         arr_items.add(les_items);
                     }

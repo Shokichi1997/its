@@ -11,6 +11,14 @@
         android:background="@drawable/background"
         android:focusable="true"/>
 
+
+    <ProgressBar
+        android:id="@+id/progressBarSelectLesson"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
     <include layout="@layout/app_bar"
         android:id="@+id/toolbar" />
 

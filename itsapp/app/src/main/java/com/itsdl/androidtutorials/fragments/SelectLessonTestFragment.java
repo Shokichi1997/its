@@ -1,5 +1,6 @@
 package com.itsdl.androidtutorials.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,20 +11,32 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
+import com.itsdl.androidtutorials.networks.GetOpeningLessonRequest;
+import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.utils.Global;
+import com.itsdl.androidtutorials.utils.Lesson;
+import com.itsdl.androidtutorials.utils.Result;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SelectLessonTestFragment extends Fragment {
     private Spinner spnLesson;
     private Toolbar toolbar;
     private Button btnSelectLesson;
+    private ProgressBar progressBarSelectLesson;
+    private Context context;
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,41 +44,69 @@ public class SelectLessonTestFragment extends Fragment {
         addControls(root);
         addEvents();
         return root;
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if(Global.numberOpenningLesson > Global.lessons.size()){
+            callRequestGetOpeningLesson();
+        }
+        else {
+            if(Global.lessons.size()>0){
+                addDataToSpinner();
+            }
+        }
+    }
+
+    private void callRequestGetOpeningLesson() {
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("user_id", "1");
+        progressBarSelectLesson.setVisibility(View.VISIBLE);
+        GetOpeningLessonRequest request = new GetOpeningLessonRequest(new SeverRequest.SeverRequestListener() {
+            @Override
+            public void completed(Object obj) {
+                if(obj!=null){
+                    Result res = (Result) obj;
+                    if(res.getError()==0){
+                        Object lessons =  res.getData();
+                        Global.lessons.clear();
+                        Global.lessons = ( ArrayList<Lesson> ) lessons;
+                        if(Global.lessons.size()>0){
+                            addDataToSpinner();
+                        }
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Get opening fail. Please to try again!",Toast.LENGTH_LONG).show();
+                    }
+                }
+                progressBarSelectLesson.setVisibility(View.GONE);
+            }
+        });
+        request.execute(parameter);
+    }
+
+    private void addDataToSpinner(){
+        ArrayList<String> s = new ArrayList<>();
+        for(Lesson lesson : Global.lessons){
+            s.add(lesson.getLesson_name());
+        }
+        spnLesson.setAdapter(new ArrayAdapter<>(context,
+                R.layout.support_simple_spinner_dropdown_item,s));
+
+
     }
 
     private void addControls(View root) {
-        List<String> s = new ArrayList<>();
+        context = getContext();
         btnSelectLesson = root.findViewById(R.id.btnSelectLesson);
         toolbar = root.findViewById(R.id.toolbar);
         ((AppCompatActivity )getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Problem - Quiz");
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        s.add("aadsssssssssssssssssssssssssssssss");
-        s.add("báddddddddddddddddddddddddddddddđabcknfds12fds1fdsfsf1f22222");
-        s.add("c");
-        s.add("aadsssssssssssssssssssssssssssssss");
-        s.add("báddddddddddddddddddddddddddddddđabcknfds12fds1fdsfsf1f22222");
-        s.add("c");
-        s.add("aadsssssssssssssssssssssssssssssss");
-        s.add("báddddddddddddddddddddddddddddddđabcknfds12fds1fdsfsf1f22222");
-        s.add("c");
-        s.add("aadsssssssssssssssssssssssssssssss");
-        s.add("báddddddddddddddddddddddddddddddđabcknfds12fds1fdsfsf1f22222");
-        s.add("c");
-        s.add("aadsssssssssssssssssssssssssssssss");
-        s.add("báddddddddddddddddddddddddddddddđabcknfds12fds1fdsfsf1f22222");
-        s.add("c");
-        s.add("aadsssssssssssssssssssssssssssssss");
-        s.add("báddddddddddddddddddddddddddddddđabcknfds12fds1fdsfsf1f22222");
-        s.add("c");
-        s.add("aadsssssssssssssssssssssssssssssss");
-        s.add("báddddddddddddddddddddddddddddddđabcknfds12fds1fdsfsf1f22222");
-        s.add("c");
-        s.add("aadsssssssssssssssssssssssssssssss");
-        s.add("báddddddddddddddddddddddddddddddđabcknfds12fds1fdsfsf1f22222");
-        s.add("c");
         spnLesson = root.findViewById(R.id.spnLesson);
-        spnLesson.setAdapter(new ArrayAdapter<String>(getContext(),R.layout.support_simple_spinner_dropdown_item,s));
+        progressBarSelectLesson = root.findViewById(R.id.progressBarSelectLesson);
     }
 
     private void addEvents() {
@@ -84,11 +125,26 @@ public class SelectLessonTestFragment extends Fragment {
         btnSelectLesson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new TestLessonFragment();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.add(R.id.frContainer,fragment,"PROBLEM")
-                        .addToBackStack("PROBLEM")
-                        .commit();
+                //Get lesson_id in spinner
+                int selected = spnLesson.getSelectedItemPosition();
+                if(selected<0){
+                    Toast.makeText(context,"You dont choose lesson to test",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Fragment fragment = new TestLessonFragment();
+                    Bundle args = new Bundle();
+                    int lesson_id = 1;
+                    if(Global.lessons.get(selected) != null){
+                        lesson_id = Global.lessons.get(selected).getLesson_id();
+                    }
+                    args.putInt("lesson_id",lesson_id);
+                    fragment.setArguments(args);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.add(R.id.frContainer,fragment,"PROBLEM")
+                            .addToBackStack("PROBLEM")
+                            .commit();
+                }
+
             }
         });
     }
