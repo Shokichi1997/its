@@ -101,10 +101,16 @@ public class LessonFragment extends Fragment {
                         listLessonItem.put(listLessonName.get(i), arr_lessonitemtoLesson);
                     }
                     //load data-error rack app
-                    lessonAdapter = new LessonAdapter(getActivity().getBaseContext(), listLessonName, listLessonItem);
-                    expandableListViewLesson.setAdapter(lessonAdapter);
-                    //add event
-                    setExpandableListViewLessonClick(listLessonName, listLessonItem);
+                    try{
+                        lessonAdapter = new LessonAdapter(getActivity().getBaseContext(), listLessonName, listLessonItem);
+                        expandableListViewLesson.setAdapter(lessonAdapter);
+                        //add event
+                        setExpandableListViewLessonClick(listLessonName, listLessonItem);
+                    }
+                    catch (Exception e){
+
+                    }
+
                 }
             }
         });

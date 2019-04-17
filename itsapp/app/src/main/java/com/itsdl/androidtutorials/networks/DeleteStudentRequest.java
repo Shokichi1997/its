@@ -16,7 +16,7 @@ public class DeleteStudentRequest extends SeverRequest {
     protected Request prepare(Map<String, String> parameter) {
        String user_id=parameter.get("user_id");
        Request request=new Request.Builder()
-               .url("delete_student.php?user_id="+user_id)
+               .url(URL+"delete_student.php?user_id="+user_id)
                .get()
                .build();
        return request;

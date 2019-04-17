@@ -22,10 +22,15 @@ import android.widget.Toast;
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.activities.MainActivity;
 import com.itsdl.androidtutorials.fragments.UserProfileFragment;
+import com.itsdl.androidtutorials.networks.DeleteStudentRequest;
+import com.itsdl.androidtutorials.networks.SeverRequest;
 import com.itsdl.androidtutorials.utils.ChapterLesson;
+import com.itsdl.androidtutorials.utils.Result;
 import com.itsdl.androidtutorials.utils.User;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserAdapter extends ArrayAdapter<User> {
     public UserAdapter(@NonNull Context context, @NonNull List<User> objects) {
@@ -46,10 +51,10 @@ public class UserAdapter extends ArrayAdapter<User> {
         if(listItemView==null){
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_student_items,parent,false);
         }
-        final User currentChapterLesson = getItem(position);
+        final User currentStudent = getItem(position);
         ImageView imgChapterIcon = listItemView.findViewById(R.id.imgIconChapter);
         TextView lblUsername = listItemView.findViewById(R.id.lblUserName);
-        lblUsername.setText(currentChapterLesson.getStudentName());
+        lblUsername.setText(currentStudent.getStudentName());
         final ImageButton showpopup=listItemView.findViewById(R.id.imgShowPopup);
         showpopup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,16 +70,17 @@ public class UserAdapter extends ArrayAdapter<User> {
                         int i = item.getItemId();
                         if (i == R.id.update) {
                             //do something
-                            function(currentChapterLesson);
+                            function(currentStudent);
                             return true;
                         }
                         else if (i == R.id.delete){
                             //do something
+                            deleteStudent(currentStudent.getStudenCode());
                             return true;
                         }
                         else if (i == R.id.viewprofile) {
                             //do something
-                            function(currentChapterLesson);
+                            function(currentStudent);
                             return true;
                         }
                         else {
@@ -102,12 +108,32 @@ public class UserAdapter extends ArrayAdapter<User> {
         User us = currentChapterLesson;
         Bundle bundle = new Bundle();
         bundle.putInt("UserID", us.getStudenCode());
+        bundle.putString("FullName",us.getStudentName());
+        bundle.putString("Email",us.getEmail());
         UserProfileFragment fConv = new UserProfileFragment();
         fConv.setArguments(bundle);
         replaceFragment(fConv);
     }
      private void deleteStudent(int userID){
+         Map<String,String> parameter=new HashMap<>();
+         parameter.put("user_id",String.valueOf(userID));
 
+         DeleteStudentRequest request=new DeleteStudentRequest(new SeverRequest.SeverRequestListener() {
+             @Override
+             public void completed(Object obj) {
+                 if(obj!=null){
+                     Result res=(Result) obj;
+                     if(res.getError()==0){
+                         //Sucdess
+                         Toast.makeText(getContext(),"Success",Toast.LENGTH_LONG).show();
+                     }else{
+                         //Delete student error
+                         Toast.makeText(getContext(),"Delete error",Toast.LENGTH_LONG).show();
+                     }
+                 }
+             }
+         });
+         request.execute(parameter);
      }
 
 }

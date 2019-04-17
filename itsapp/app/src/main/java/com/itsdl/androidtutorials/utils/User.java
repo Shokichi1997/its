@@ -16,7 +16,7 @@ public class User {
         this.gender = gender;
         this.email = email;
     }
-
+    public  User(){};
     public int getStudenCode() {
         return studenCode;
     }

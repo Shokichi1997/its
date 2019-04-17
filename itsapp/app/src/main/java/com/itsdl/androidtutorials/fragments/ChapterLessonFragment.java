@@ -53,23 +53,20 @@ public class ChapterLessonFragment extends Fragment {
     private void loadChpater(){
         chapterLessons = new ArrayList<>();
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_mood_black_24dp,"Android Introduce",false,1));
+                (R.drawable.chapter41,"Chapter 01 - Introduction to Mobile Programming",false,1));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_menu_slideshow,"Fragment",false,1));
+                (R.drawable.chap2,"Chapter 02. - Development Environment",false,2));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_mood_black_24dp,"Activity",false,2));
+                (R.drawable.ui,"Chapter 03 - User Interfaces",false,3));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_menu_24dp,"Animation",false,3));
+                (R.drawable.chapter41,"Chapter 04 - Dialog and Menu",false,4));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_mood_black_24dp,"Menu context",true,4));
+                (R.drawable.chap5,"Chapter 05 - Intents",true,5));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_mood_black_24dp,"Network",true,5));
+                (R.drawable.chap6,"Chapter 06 - Life Cycle",true,6));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_mood_black_24dp,"Interface",true,6));
-        chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_mood_black_24dp,"Layout",true,7));
-        chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_mood_black_24dp,"Services",true,8));
+                (R.drawable.chap7,"Chapter 07 - Saving Data",true,7));
+
 
         ChapterLessonAdapter adapter = new ChapterLessonAdapter(root.getContext(),chapterLessons);
         this.listChapterLesson.setAdapter(adapter);
