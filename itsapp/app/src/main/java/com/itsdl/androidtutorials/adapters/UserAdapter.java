@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -28,13 +30,19 @@ import com.itsdl.androidtutorials.utils.ChapterLesson;
 import com.itsdl.androidtutorials.utils.Result;
 import com.itsdl.androidtutorials.utils.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserAdapter extends ArrayAdapter<User> {
+public class UserAdapter extends ArrayAdapter<User> implements Filterable {
+    ValueFilter valueFilter;
+    List<User> mStringFilterList;
+    List<User> mData;
     public UserAdapter(@NonNull Context context, @NonNull List<User> objects) {
         super(context, 0, objects);
+        mData=objects;
+        mStringFilterList=objects;
     }
     @Override
     public boolean areAllItemsEnabled() {
@@ -54,7 +62,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         final User currentStudent = getItem(position);
         ImageView imgChapterIcon = listItemView.findViewById(R.id.imgIconChapter);
         TextView lblUsername = listItemView.findViewById(R.id.lblUserName);
-        lblUsername.setText(currentStudent.getStudentName());
+        lblUsername.setText(currentStudent.getFull_name());
         final ImageButton showpopup=listItemView.findViewById(R.id.imgShowPopup);
         showpopup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +83,7 @@ public class UserAdapter extends ArrayAdapter<User> {
                         }
                         else if (i == R.id.delete){
                             //do something
-                            deleteStudent(currentStudent.getStudenCode());
+                            deleteStudent(currentStudent.getUser_id());
                             return true;
                         }
                         else if (i == R.id.viewprofile) {
@@ -94,7 +102,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         return listItemView;
     }
 
-     private void replaceFragment(Fragment fConv) {
+    private void replaceFragment(Fragment fConv) {
          MainActivity myActivity=(MainActivity) getContext();
             FragmentManager manager = myActivity.getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
@@ -107,14 +115,15 @@ public class UserAdapter extends ArrayAdapter<User> {
         Toast.makeText(getContext(),"Click me",Toast.LENGTH_SHORT).show();
         User us = currentChapterLesson;
         Bundle bundle = new Bundle();
-        bundle.putInt("UserID", us.getStudenCode());
-        bundle.putString("FullName",us.getStudentName());
+        bundle.putInt("UserID", us.getUser_id());
+        bundle.putString("FullName",us.getFull_name());
         bundle.putString("Email",us.getEmail());
         UserProfileFragment fConv = new UserProfileFragment();
         fConv.setArguments(bundle);
         replaceFragment(fConv);
     }
-     private void deleteStudent(int userID){
+
+    private void deleteStudent(int userID){
          Map<String,String> parameter=new HashMap<>();
          parameter.put("user_id",String.valueOf(userID));
 
@@ -125,6 +134,7 @@ public class UserAdapter extends ArrayAdapter<User> {
                      Result res=(Result) obj;
                      if(res.getError()==0){
                          //Sucdess
+
                          Toast.makeText(getContext(),"Success",Toast.LENGTH_LONG).show();
                      }else{
                          //Delete student error
@@ -136,4 +146,49 @@ public class UserAdapter extends ArrayAdapter<User> {
          request.execute(parameter);
      }
 
+    @Override
+    public int getCount() {
+        //tra ve so view duoc tao
+        return super.getCount();
+    }
+
+
+    @Override
+    public Filter getFilter() {
+        if (valueFilter == null) {
+            valueFilter = new ValueFilter();
+        }
+        return valueFilter;
+    }
+
+    private class ValueFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+
+            if (constraint != null && constraint.length() > 0) {
+                List<User> filterList = new ArrayList<>();
+                for (int i = 0; i < mStringFilterList.size(); i++) {
+                    if ((mStringFilterList.get(i).getFull_name().toUpperCase()).contains(constraint.toString().toUpperCase())) {
+                        filterList.add(mStringFilterList.get(i));
+                    }
+                }
+                results.count = filterList.size();
+                results.values = filterList;
+            } else {
+                results.count = mStringFilterList.size();
+                results.values = mStringFilterList;
+            }
+            return results;
+
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint,
+                                      FilterResults results) {
+            mData = (List<User>) results.values;
+            notifyDataSetChanged();
+        }
+
+    }
 }

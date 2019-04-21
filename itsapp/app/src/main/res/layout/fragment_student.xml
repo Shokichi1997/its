@@ -21,14 +21,30 @@
             android:layout_height="wrap_content"
             android:id="@+id/student_toolbar1"
             app:titleTextColor="@color/white"
-            android:background="#33a642"
+            android:background="@color/green"
             >
-            <SearchView
+            <LinearLayout
+                android:id="@+id/not"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-               >
-            </SearchView>
+                android:orientation="horizontal"
+                >
+                <android.support.v7.widget.SearchView
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/search"/>
+                <ImageButton
+                    android:id="@+id/ibtnAddStudent"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/green"
+                    android:src="@drawable/ic_person_add_black_24dp"
+                    />
+            </LinearLayout>
+
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
@@ -43,7 +59,6 @@
         android:layout_margin="10dp"
         android:dividerHeight="6dp"
         android:background="@drawable/background_card_list"
-
      >
 
     </ListView>

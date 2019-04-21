@@ -38,6 +38,7 @@ public class UserProfileFragment extends Fragment {
         getViews();
         getProfileUser();
         loadProUser();
+        //
         return root;
     }
     public void getViews(){
@@ -61,14 +62,14 @@ public class UserProfileFragment extends Fragment {
         Bundle args = getArguments();
 
         if(args!=null && args.containsKey("FullName")){
-            user.setStudentName(args.getString("FullName"));
+            user.setFull_name(args.getString("FullName"));
         }
         if(args!=null && args.containsKey("Email")){
             user.setEmail(args.getString("Email"));
         }
     }
     public void loadProUser(){
-        edtStudentName.setText(user.getStudentName());
+        edtStudentName.setText(user.getFull_name());
         edtEmail.setText(user.getEmail());
     }
 }

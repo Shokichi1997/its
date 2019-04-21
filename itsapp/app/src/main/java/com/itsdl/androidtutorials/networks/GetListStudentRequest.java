@@ -21,8 +21,9 @@ public class GetListStudentRequest extends SeverRequest {
     @Override
     protected Request prepare(Map<String, String> parameter) {
        Request request=new Request.Builder()
-               .url("get_list_student.php")
+               .url(URL+"get_list_student.php")
                .get()
+               .addHeader("Content-Type", "application/json")
                .build();
        return  request;
     }
@@ -32,8 +33,8 @@ public class GetListStudentRequest extends SeverRequest {
             Gson gson=new Gson();
             Result res=gson.fromJson(data,Result.class);
             JSONObject json=new JSONObject(data);
-            JSONObject object= json.getJSONObject(data);
-            JSONArray jsonArray = object.getJSONArray("data");
+          //  JSONObject object= json.getJSONObject(data);
+            JSONArray jsonArray = json.getJSONArray("data");
             ArrayList<User> arr_users=new ArrayList<>();
             for(int i=0;i<jsonArray.length();i++){
                 JSONObject jsonUser=jsonArray.getJSONObject(i);
