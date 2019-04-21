@@ -18,6 +18,7 @@ import android.widget.GridView;
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.adapters.Functions_adapter;
 import com.itsdl.androidtutorials.utils.FunctionUser;
+import com.itsdl.androidtutorials.utils.Global;
 
 import java.util.ArrayList;
 
@@ -55,32 +56,32 @@ public class FunctionsFragment extends Fragment {
 
                 switch (position){
                     case 0:
-                        Fragment chapterLessonFragment = new ChapterLessonFragment();
-                        showFragment(chapterLessonFragment,"CHAPTER");
+                        Fragment contentMainFragment = new ContentMainFragment();
+                        showFragment(contentMainFragment, Global.MAIN_CONTENT);
                         break;
                     case 1:
                         Fragment testLessonFragment = new SelectLessonTestFragment();
-                        showFragment(testLessonFragment,"SELECT_LESSON");
+                        showFragment(testLessonFragment,Global.SELECT_LESSON);
                         break;
                     case 2:
                         //Todo
                         Fragment fragmentStudent = new StudentManagementFragment();
                         //Fragment fragmentStudent = new StudentManagementFragment();
-                        showFragment(fragmentStudent,"STUDENT_MANAGER");
+                        showFragment(fragmentStudent,Global.STUDENT_MANAGER);
                         break;
                     case 3:
                         //Todo
                         Fragment a = new UserProfileFragment();
-                        showFragment(a,"USER_PROFILE");
+                        showFragment(a,Global.USER_PROFILE);
                         break;
                     case 4:
                         if (getFragmentManager() != null) {
-                            Fragment loginFragment = getFragmentManager().findFragmentByTag("LOGIN");
+                            Fragment loginFragment = getFragmentManager().findFragmentByTag(Global.LOGIN);
                             if(loginFragment!=null){
                                 FragmentManager fragmentManager = getFragmentManager();
                                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                                 fragmentManager.popBackStack();
-                                transaction.replace(R.id.frContainer,loginFragment,"LOGIN")
+                                transaction.replace(R.id.frContainer,loginFragment,Global.LOGIN)
                                         .addToBackStack(null)
                                         .commit();
                             }
@@ -89,7 +90,7 @@ public class FunctionsFragment extends Fragment {
                                 FragmentManager fragmentManager = getFragmentManager();
                                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                                 fragmentManager.popBackStack();
-                                transaction.replace(R.id.frContainer,fragment,"LOGIN")
+                                transaction.replace(R.id.frContainer,fragment,Global.LOGIN)
                                         .addToBackStack(null)
                                         .commit();
                             }

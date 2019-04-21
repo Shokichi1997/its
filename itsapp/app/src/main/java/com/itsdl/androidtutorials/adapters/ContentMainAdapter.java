@@ -5,12 +5,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.itsdl.androidtutorials.fragments.ChapterLessonFragment;
 import com.itsdl.androidtutorials.fragments.ContentLessonFragment;
 import com.itsdl.androidtutorials.fragments.ExampleLessonFragment;
 import com.itsdl.androidtutorials.fragments.TestLessonFragment;
 
 public class ContentMainAdapter extends FragmentStatePagerAdapter {
-    private static final int NUM_PAGES = 3;
+    private static final int NUM_PAGES = 2;
     public ContentMainAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -18,12 +19,11 @@ public class ContentMainAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int i) {
         if(i==0){
-            return new ContentLessonFragment();
+            return new ChapterLessonFragment();
         }
-        else if(i==1){
+        else{
             return new ExampleLessonFragment();
         }
-        else return new TestLessonFragment();
     }
 
     @Override
@@ -36,13 +36,10 @@ public class ContentMainAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         String title;
         if(position==0){
-            title = "Lesson";
+            title = "Chapters";
         }
-        else if(position == 1){
-            title = "Example";
-        }
-        else {
-            title = "Quiz";
+        else{
+            title = "Examples";
         }
         return title;
     }
