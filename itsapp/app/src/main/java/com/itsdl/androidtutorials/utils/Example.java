@@ -1,19 +1,22 @@
 package com.itsdl.androidtutorials.utils;
 
-public class Example {
-    private String name;
-    private String java_code;
-    private String xml_code;
-    private int icon;
 
-    public Example(String name, String java_code, String xml_code,int icon) {
+public class Example {
+    private int id;
+    private String name;
+    private String icon;
+
+    public Example(int id, String name,String icon) {
+        this.id = id;
         this.name = name;
-        this.java_code = java_code;
-        this.xml_code = xml_code;
         this.icon = icon;
     }
 
-    public int getIcon() {
+    public int getId() {
+        return id;
+    }
+
+    public String getIcon() {
         return icon;
     }
 

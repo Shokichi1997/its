@@ -11,9 +11,6 @@
         android:clickable="true"
         android:focusable="true"/>
 
-    <include layout="@layout/app_bar"
-        android:id="@+id/chapter_lesson_toolbar" />
-
     <ListView
         android:id="@+id/listChapterLesson"
         android:layout_width="match_parent"

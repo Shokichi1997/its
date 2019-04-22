@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
@@ -36,6 +38,7 @@ public class LessonFragment extends Fragment {
     ExpandableListView expandableListViewLesson;
     ArrayList<Lesson> arr_Lessons = new ArrayList<>();
     ArrayList<LessonItems> arr_LessonItems = new ArrayList<>();
+    private ProgressBar progressBarLesson;
     int lessonID=1;
     public LessonFragment() {
         // Required empty public constructor
@@ -51,6 +54,7 @@ public class LessonFragment extends Fragment {
         //Bundle
         Bundle args = getArguments();
         lessonID = 1;
+        ImageView im = root.findViewById(R.id.imgExampleItem);
         if(args!=null && args.containsKey("lesson_id")){
             lessonID = args.getInt("lesson_id");
         }
@@ -65,6 +69,7 @@ public class LessonFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Lesson");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        progressBarLesson = root.findViewById(R.id.progressBarLesson);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +85,7 @@ public class LessonFragment extends Fragment {
     public void loadLesson(int lessonID) {
         Map<String, String> parameter = new HashMap<>();
         parameter.put("chapter_id", String.valueOf(lessonID));
+        progressBarLesson.setVisibility(View.VISIBLE);
         GetLessonRequest request = new GetLessonRequest(new SeverRequest.SeverRequestListener() {
             @Override
             public void completed(Object obj) {
@@ -108,10 +114,9 @@ public class LessonFragment extends Fragment {
                         setExpandableListViewLessonClick(listLessonName, listLessonItem);
                     }
                     catch (Exception e){
-
                     }
-
                 }
+                progressBarLesson.setVisibility(View.GONE);
             }
         });
         request.execute(parameter);
@@ -133,7 +138,7 @@ public class LessonFragment extends Fragment {
     private void replaceFragment(Fragment fConv) {
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.frContainer, fConv, "LessonItemContent");
+        transaction.add(R.id.frContainer, fConv, "LessonItemContent");
         transaction.addToBackStack(null);
         transaction.commit();
     }

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 public class ChapterLessonFragment extends Fragment {
     private ListView listChapterLesson;
-    private Toolbar toolbar;
     View root;
     ArrayList<ChapterLesson> chapterLessons;
     public ChapterLessonFragment() {
@@ -40,11 +39,6 @@ public class ChapterLessonFragment extends Fragment {
     }
 
     private void getViews(){
-        //add tool bar
-        toolbar = root.findViewById(R.id.chapter_lesson_toolbar);
-        ((AppCompatActivity )getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Chapter Lesson");
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
          //anh xa ListChapterLesson
         listChapterLesson = root.findViewById(R.id.listChapterLesson);
         //
@@ -53,19 +47,19 @@ public class ChapterLessonFragment extends Fragment {
     private void loadChpater(){
         chapterLessons = new ArrayList<>();
         chapterLessons.add(new ChapterLesson
-                (R.drawable.chapter41,"Chapter 01 - Introduction to Mobile Programming",false,1));
+                (R.drawable.ic_menu_24dp,"Chapter 01 - Introduction to Mobile Programming",false,1));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.chap2,"Chapter 02. - Development Environment",false,2));
+                (R.drawable.ic_menu_24dp,"Chapter 02. - Development Environment",false,2));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ui,"Chapter 03 - User Interfaces",false,3));
+                (R.drawable.ic_menu_24dp,"Chapter 03 - User Interfaces",false,3));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.chapter41,"Chapter 04 - Dialog and Menu",false,4));
+                (R.drawable.ic_menu_24dp,"Chapter 04 - Dialog and Menu",false,4));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.chap5,"Chapter 05 - Intents",true,5));
+                (R.drawable.ic_menu_24dp,"Chapter 05 - Intents",true,5));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.chap6,"Chapter 06 - Life Cycle",true,6));
+                (R.drawable.ic_menu_24dp,"Chapter 06 - Life Cycle",true,6));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.chap7,"Chapter 07 - Saving Data",true,7));
+                (R.drawable.ic_menu_24dp,"Chapter 07 - Saving Data",true,7));
 
 
         ChapterLessonAdapter adapter = new ChapterLessonAdapter(root.getContext(),chapterLessons);
@@ -87,7 +81,7 @@ public class ChapterLessonFragment extends Fragment {
     private void replaceFragment(Fragment fConv) {
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.frContainer, fConv, "LESSON_FRAGMENT");
+        transaction.add(R.id.frContainer, fConv, "LESSON_FRAGMENT");
         transaction.addToBackStack(null);
         transaction.commit();
     }
