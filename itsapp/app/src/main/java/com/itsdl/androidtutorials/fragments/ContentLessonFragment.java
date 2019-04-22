@@ -88,7 +88,6 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnPrevLesson:
-                Toast.makeText(getContext(),"Prev",Toast.LENGTH_SHORT).show();
                 if(lessonIDItem-1>=1){
                     lessonIDItem--;
                     wv_lesson_content.loadUrl(url+lessonIDItem);

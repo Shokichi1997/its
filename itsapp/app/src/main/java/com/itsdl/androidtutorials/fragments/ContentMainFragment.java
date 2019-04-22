@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,14 +38,23 @@ public class ContentMainFragment extends Fragment {
         //add tool bar
         toolbar = root.findViewById(R.id.add_content_toolbar);
         ((AppCompatActivity )getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Lesson");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Learning");
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack();
+                }
+            }
+        });
 
         vpContent = root.findViewById(R.id.vpContent);
         tabContent = root.findViewById(R.id.tabContent);
-        ContentMainAdapter adapter = new ContentMainAdapter(getFragmentManager());
+        ContentMainAdapter adapter = new ContentMainAdapter(getActivity().getSupportFragmentManager());
         vpContent.setAdapter(adapter);
-        vpContent.setOffscreenPageLimit(3);
+        vpContent.setOffscreenPageLimit(2);
         tabContent.setupWithViewPager(vpContent);
     }
 
