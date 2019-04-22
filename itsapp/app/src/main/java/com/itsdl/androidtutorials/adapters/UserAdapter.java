@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
@@ -33,33 +34,43 @@ import com.itsdl.androidtutorials.utils.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-public class UserAdapter extends ArrayAdapter<User> implements Filterable {
-    ValueFilter valueFilter;
-    List<User> mStringFilterList;
-    List<User> mData;
-    public UserAdapter(@NonNull Context context, @NonNull List<User> objects) {
-        super(context, 0, objects);
-        mData=objects;
-        mStringFilterList=objects;
+public class UserAdapter extends BaseAdapter implements Filterable {
+
+    public Context context;
+    public ArrayList<User> employeeArrayList;
+    public ArrayList<User> orig;
+
+    public UserAdapter(Context context, ArrayList<User> employeeArrayList) {
+        super();
+        this.context = context;
+        this.employeeArrayList = employeeArrayList;
+    }
+
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
     @Override
-    public boolean areAllItemsEnabled() {
-        return false;
+    public int getCount() {
+        return employeeArrayList.size();
     }
     @Override
-    public boolean isEnabled(int position) {
-        return super.isEnabled(position);
+    public Object getItem(int position) {
+        return employeeArrayList.get(position);
     }
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public long getItemId(int position) {
+        return position;
+    }
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
         if(listItemView==null){
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_student_items,parent,false);
+            listItemView = LayoutInflater.from(context).inflate(R.layout.list_student_items,parent,false);
         }
-        final User currentStudent = getItem(position);
+        final User currentStudent = (User) getItem(position);
         ImageView imgChapterIcon = listItemView.findViewById(R.id.imgIconChapter);
         TextView lblUsername = listItemView.findViewById(R.id.lblUserName);
         lblUsername.setText(currentStudent.getFull_name());
@@ -67,11 +78,7 @@ public class UserAdapter extends ArrayAdapter<User> implements Filterable {
         showpopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               /* PopupMenu popup = new PopupMenu(getContext(), v);
-                //  popup.setOnMenuItemClickListener();
-                popup.inflate(R.menu.popup_menu);*/
-                final PopupMenu popup = new PopupMenu(getContext(), showpopup);
+                final PopupMenu popup = new PopupMenu(context, showpopup);
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
@@ -84,6 +91,7 @@ public class UserAdapter extends ArrayAdapter<User> implements Filterable {
                         else if (i == R.id.delete){
                             //do something
                             deleteStudent(currentStudent.getUser_id());
+                            notifyDataSetChanged();
                             return true;
                         }
                         else if (i == R.id.viewprofile) {
@@ -101,18 +109,51 @@ public class UserAdapter extends ArrayAdapter<User> implements Filterable {
         });
         return listItemView;
     }
+    @Override
+ //USER SEARCH VIEW
+    public Filter getFilter() {
+     return new Filter() {
 
-    private void replaceFragment(Fragment fConv) {
-         MainActivity myActivity=(MainActivity) getContext();
-            FragmentManager manager = myActivity.getSupportFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.frContainer, fConv,"Details");
-            transaction.addToBackStack(null);
-            transaction.commit();
+         @Override
+         protected FilterResults performFiltering(CharSequence constraint) {
+             final FilterResults oReturn = new FilterResults();
+             final ArrayList<User> results = new ArrayList<User>();
+             if (orig == null)
+                 orig = employeeArrayList;
+             if (constraint != null) {
+                 if (orig != null && orig.size() > 0) {
+                     for (final User g : orig) {
+                         if (g.getFull_name().toLowerCase()
+                                 .contains(constraint.toString().toLowerCase()))
+                             results.add(g);
+                     }
+                 }
+                 oReturn.values = results;
+             }
+             return oReturn;
+         }
+
+         @SuppressWarnings("unchecked")
+         @Override
+         protected void publishResults(CharSequence constraint,
+                                       FilterResults results) {
+             employeeArrayList = (ArrayList<User>) results.values;
+             notifyDataSetChanged();
+         }
+     };
     }
+  // FUNCTION ADD
+    private void replaceFragment(Fragment fConv) {
+      MainActivity myActivity=(MainActivity)context;
+      FragmentManager manager = myActivity.getSupportFragmentManager();
+      FragmentTransaction transaction = manager.beginTransaction();
+      transaction.replace(R.id.frContainer, fConv,"Details");
+      transaction.addToBackStack(null);
+      transaction.commit();
+  }
 
     private void function(User currentChapterLesson){
-        Toast.makeText(getContext(),"Click me",Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"Click me",Toast.LENGTH_SHORT).show();
         User us = currentChapterLesson;
         Bundle bundle = new Bundle();
         bundle.putInt("UserID", us.getUser_id());
@@ -124,71 +165,26 @@ public class UserAdapter extends ArrayAdapter<User> implements Filterable {
     }
 
     private void deleteStudent(int userID){
-         Map<String,String> parameter=new HashMap<>();
-         parameter.put("user_id",String.valueOf(userID));
+        Map<String,String> parameter=new HashMap<>();
+        parameter.put("user_id",String.valueOf(userID));
 
-         DeleteStudentRequest request=new DeleteStudentRequest(new SeverRequest.SeverRequestListener() {
-             @Override
-             public void completed(Object obj) {
-                 if(obj!=null){
-                     Result res=(Result) obj;
-                     if(res.getError()==0){
-                         //Sucdess
+        DeleteStudentRequest request=new DeleteStudentRequest(new SeverRequest.SeverRequestListener() {
+            @Override
+            public void completed(Object obj) {
+                if(obj!=null){
+                    Result res=(Result) obj;
+                    if(res.getError()==0){
+                        //Sucdess
+                        notifyDataSetChanged();
+                        Toast.makeText(context,"Success",Toast.LENGTH_LONG).show();
 
-                         Toast.makeText(getContext(),"Success",Toast.LENGTH_LONG).show();
-                     }else{
-                         //Delete student error
-                         Toast.makeText(getContext(),"Delete error",Toast.LENGTH_LONG).show();
-                     }
-                 }
-             }
-         });
-         request.execute(parameter);
-     }
-
-    @Override
-    public int getCount() {
-        //tra ve so view duoc tao
-        return super.getCount();
-    }
-
-
-    @Override
-    public Filter getFilter() {
-        if (valueFilter == null) {
-            valueFilter = new ValueFilter();
-        }
-        return valueFilter;
-    }
-
-    private class ValueFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-
-            if (constraint != null && constraint.length() > 0) {
-                List<User> filterList = new ArrayList<>();
-                for (int i = 0; i < mStringFilterList.size(); i++) {
-                    if ((mStringFilterList.get(i).getFull_name().toUpperCase()).contains(constraint.toString().toUpperCase())) {
-                        filterList.add(mStringFilterList.get(i));
+                    }else{
+                        //Delete student error
+                        Toast.makeText(context,"Delete error",Toast.LENGTH_LONG).show();
                     }
                 }
-                results.count = filterList.size();
-                results.values = filterList;
-            } else {
-                results.count = mStringFilterList.size();
-                results.values = mStringFilterList;
             }
-            return results;
-
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint,
-                                      FilterResults results) {
-            mData = (List<User>) results.values;
-            notifyDataSetChanged();
-        }
-
+        });
+        request.execute(parameter);
     }
 }

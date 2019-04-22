@@ -40,7 +40,7 @@ public class LoginFragment extends Fragment {
     }
     public void getViews(){
 
-        edtEmail=view.findViewById(R.id.edtEmail);
+        edtEmail=view.findViewById(R.id.edtStudentCode);
         edtPssword=view.findViewById(R.id.edtPassword);
         btnSignUp=view.findViewById(R.id.btnSignUp);
         btnLogin=view.findViewById(R.id.btnLogin);

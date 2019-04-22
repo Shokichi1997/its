@@ -12,7 +12,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/hinhavatar"
+        android:src="@drawable/ic_account_circle_black_24dp"
         android:id="@+id/imgIconAvatar"
         android:layout_alignParentStart="true"/>
 
@@ -27,10 +27,7 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:text="Chuong 1" />
-
-
-
-        <ImageButton
+     <ImageButton
             android:id="@+id/imgShowPopup"
             android:layout_width="50dp"
             android:layout_height="match_parent"
@@ -41,8 +38,6 @@
             android:focusableInTouchMode="false"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_more_vert_black_24dp" />
-
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="79dp"

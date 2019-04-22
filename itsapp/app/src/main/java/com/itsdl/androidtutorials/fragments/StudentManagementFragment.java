@@ -1,6 +1,7 @@
 package com.itsdl.androidtutorials.fragments;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,11 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
@@ -28,6 +31,7 @@ import com.itsdl.androidtutorials.adapters.ChapterLessonAdapter;
 import com.itsdl.androidtutorials.adapters.UserAdapter;
 import com.itsdl.androidtutorials.networks.GetListStudentRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.utils.Example;
 import com.itsdl.androidtutorials.utils.Result;
 import com.itsdl.androidtutorials.utils.User;
 
@@ -39,15 +43,16 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StudentManagementFragment extends Fragment
+public class StudentManagementFragment extends Fragment implements AddStudentDialog.ExampleDialogListener
  {
 
    View root;
    ListView listStudent;
    Toolbar toolbar;
-   ArrayList<User> list_student;
    UserAdapter adapter;
    android.support.v7.widget.SearchView searchView;
+   ImageButton imgAddstudent;
+   TextView textView;
     public StudentManagementFragment() {
         // Required empty public constructor
     }
@@ -59,11 +64,6 @@ public class StudentManagementFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        try {
-            adapter.notifyDataSetChanged();
-        }catch (Exception e){
-
-        }
     }
 
     @Override
@@ -75,7 +75,6 @@ public class StudentManagementFragment extends Fragment
         getViews();
         getlistStudent();
         setupSearchView();
-
         return root;
     }
 
@@ -86,17 +85,26 @@ public class StudentManagementFragment extends Fragment
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Data student");
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        searchView=root.findViewById(R.id.search);
-
+         searchView=root.findViewById(R.id.search);
+         //set color search view
+        ImageView icon = searchView.findViewById(android.support.v7.appcompat.R.id.search_button);
+        icon.setColorFilter(Color.WHITE);
+        //button add student
+        imgAddstudent =(ImageButton) root.findViewById(R.id.ibtnAddStudent);
+         textView=root.findViewById(R.id.test);
+        imgAddstudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
     }
-
-    public void loadDanhSachHocVien(final ArrayList<User> data){
+     public void loadDanhSachHocVien(final ArrayList<User> data){
         //load danhs sach hoc vien vafo list view
-
         adapter = new UserAdapter(root.getContext(),data);
         listStudent.setAdapter(adapter);
+        listStudent.setTextFilterEnabled(true);
         // event listviewStudent item click
-
         listStudent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -107,8 +115,6 @@ public class StudentManagementFragment extends Fragment
                 UserProfileFragment fConv = new UserProfileFragment();
                 fConv.setArguments(bundle);
                 replaceFragment(fConv);
-
-
             }
         });
 
@@ -146,28 +152,39 @@ public class StudentManagementFragment extends Fragment
 
      private void setupSearchView()
      {
+        // searchView.setIconifiedByDefault(false);
+        // mSearchView.setOnQueryTextListener(this);
+        // searchView.setSubmitButtonEnabled(true);
          searchView.setQueryHint("Search Here");
        //  searchView.setIconifiedByDefault(false);
          searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
              @Override
              public boolean onQueryTextSubmit(String s) {
+                 //nhan enter or button search se search
                  return false;
              }
-
              @Override
              public boolean onQueryTextChange(String s) {
                  if (TextUtils.isEmpty(s.toString())) {
                      listStudent.clearTextFilter();
                  } else {
-                     Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
-                     adapter.getFilter().filter(s);
-                    // listStudent.setFilterText(s.toString());
+                      adapter.getFilter().filter(s);
+                     //listStudent.setFilterText(s.toString());
                  }
                  return true;
              }
          });
        //  searchView.setSubmitButtonEnabled(true);
-
      }
 
+     private void openDialog() {
+         AddStudentDialog addStudentDialog = new AddStudentDialog();
+         addStudentDialog.show(getActivity().getSupportFragmentManager(), "AddStudentDialog");
+     }
+
+     @Override
+     public void applyTexts(String student_code, String email) {
+
+         textView.setText("chay ko");
+     }
  }
