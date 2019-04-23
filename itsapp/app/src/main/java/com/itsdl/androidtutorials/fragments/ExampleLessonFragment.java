@@ -107,7 +107,6 @@ public class ExampleLessonFragment extends Fragment {
         recExamples.setItemAnimator(new DefaultItemAnimator());
         recExamples.setAdapter(adapter);
         adapter.setOnItemClickListener(onClickListener);
-
     }
 
 }

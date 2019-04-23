@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
+
 
     <View
         android:layout_width="match_parent"
@@ -11,72 +11,33 @@
         android:clickable="true"
         android:focusable="true"/>
 
-    <ProgressBar
-        android:id="@+id/progressBarContent"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-       />
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/contentLesson_toolbar"/>
 
-    <WebView
-        android:id="@+id/wv_lesson_content"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/navbottomLesson"
-        android:padding="8dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="0dp"
+        android:layout_below="@+id/progressBarContent">
 
-    </WebView>
-    <LinearLayout
+        <WebView
+            android:id="@+id/wv_lesson_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </WebView>
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBarContent"
+        android:layout_below="@id/contentLesson_toolbar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/navbottomLesson"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:background="@color/green">
-
-        <Button
-            android:id="@+id/btnPrevLesson"
-            android:drawableTop="@drawable/ic_navigate_before_black_24dp"
-            android:layout_width="0dp"
-            android:text="@string/prev_lesson"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="0dp"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:background="@color/green"
-            />
-        <Button
-            android:id="@+id/btnFeedbackLesson"
-            android:drawableTop="@drawable/ic_feedback_black_24dp"
-            android:layout_width="0dp"
-            android:text="@string/feedback"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_marginStart="0dp"
-            android:textSize="12sp"
-            android:textColor="@android:color/white"
-            android:background="@color/green"
-            />
-        <Button
-            android:id="@+id/btnNextLesson"
-            android:drawableTop="@drawable/ic_navigate_next_black_24dp"
-            android:layout_width="0dp"
-            android:text="@string/next_lesson"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_marginStart="0dp"
-            android:textSize="12sp"
-            android:textColor="@android:color/white"
-            android:background="@color/green"
-            />
-    </LinearLayout>
+        android:layout_height="15dp"
+        android:indeterminate="true"
+        />
 
 </RelativeLayout>

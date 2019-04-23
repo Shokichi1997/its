@@ -13,15 +13,24 @@
         layout="@layout/app_bar"
         android:id="@+id/example_toolbar"/>
 
-    <WebView
-        android:id="@+id/wv_example_content"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
+        android:paddingStart="16dp"
+        android:paddingEnd="0dp"
         android:layout_below="@id/example_toolbar"
-        android:padding="8dp">
+        >
 
-    </WebView>
+        <WebView
+            android:id="@+id/wv_example_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+
+            android:padding="8dp">
+
+        </WebView>
+    </RelativeLayout>
 
     <ProgressBar
     android:id="@+id/progressBarExampleContent"

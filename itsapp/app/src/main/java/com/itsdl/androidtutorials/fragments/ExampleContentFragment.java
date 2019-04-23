@@ -48,8 +48,6 @@ public class ExampleContentFragment extends Fragment{
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressBarExampleContent = root.findViewById(R.id.progressBarExampleContent);
-        progressBarExampleContent.setVisibility(View.INVISIBLE);
-
         example_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

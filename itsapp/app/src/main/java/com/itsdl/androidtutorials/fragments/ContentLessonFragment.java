@@ -7,10 +7,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -20,15 +24,15 @@ import android.widget.Toast;
 import com.itsdl.androidtutorials.R;
 
 
-public class ContentLessonFragment extends Fragment implements View.OnClickListener{
+public class ContentLessonFragment extends Fragment{
     private WebView wv_lesson_content;
     private int lessonIDItem;
     private final String url = "https://itstutorials.000webhostapp.com/7-2?lesson=";
-    private final int COUNT_LESSON = 3;
-    private Button btnPrevLesson, btnNextLesson, btnFeedbackLesson;
     ProgressBar progressBarContent;
     private  View root;
     String showOrHideWebViewInitiaUse = "show";
+    private Toolbar toolbar;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,17 +43,7 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         root = inflater.inflate(R.layout.fragment_lesson_content,container,false);
-
-
-
-        //get Bundle
-        Bundle args = getArguments();
-        lessonIDItem = 1;
-        if(args!=null && args.containsKey("lesson_item_id")){
-            lessonIDItem = args.getInt("lesson_item_id");
-        }
         addControl();
         addEvents();
         return root;
@@ -59,52 +53,43 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
      * addControl: add controls with layout
      *  root view contain control in layout*/
     private void addControl() {
-        //add bottomNavigationView
-        //bottomNavigationView = root.findViewById(R.id.navbottomLesson);
-        btnFeedbackLesson = root.findViewById(R.id.btnFeedbackLesson);
-        btnNextLesson = root.findViewById(R.id.btnNextLesson);
-        btnPrevLesson = root.findViewById(R.id.btnPrevLesson);
+        //get Bundle
+        Bundle args = getArguments();
+        lessonIDItem = 1;
+        if(args!=null && args.containsKey("lesson_item_id")){
+            lessonIDItem = args.getInt("lesson_item_id");
+        }
+        toolbar = root.findViewById(R.id.contentLesson_toolbar);
+        ((AppCompatActivity ) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Lesson");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         progressBarContent = root.findViewById(R.id.progressBarContent);
+        progressBarContent.setMax(100);
+        progressBarContent.setProgress(1);
+        progressBarContent.incrementProgressBy(2);
 
         wv_lesson_content = root.findViewById(R.id.wv_lesson_content);
         wv_lesson_content.setWebViewClient(new WebViewClientCustomer());
-        //wv_lesson_content.setWebChromeClient(new WebChromeClient());
         WebSettings settings = wv_lesson_content.getSettings();
+        settings.setSupportZoom(true);
         settings.setBuiltInZoomControls(true);
         settings.setDisplayZoomControls(false);
+        settings.setJavaScriptEnabled(true);
         wv_lesson_content.loadUrl(url + lessonIDItem);
     }
 
     /**
      * addEvents: add events to handle event click*/
     private void addEvents() {
-        btnPrevLesson.setOnClickListener(this);
-        btnNextLesson.setOnClickListener(this);
-        btnFeedbackLesson.setOnClickListener(this);
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btnPrevLesson:
-                if(lessonIDItem-1>=1){
-                    lessonIDItem--;
-                    wv_lesson_content.loadUrl(url+lessonIDItem);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack();
                 }
-                break;
-            case R.id.btnFeedbackLesson:
-                //TODO
-                break;
-            case R.id.btnNextLesson:
-                if(lessonIDItem+1<=COUNT_LESSON) {
-                    lessonIDItem++;
-                    wv_lesson_content.loadUrl(url + lessonIDItem);
-                }
-                break;
-        }
-
-
+            }
+        });
     }
 
     public class WebViewClientCustomer extends android.webkit.WebViewClient
@@ -130,6 +115,5 @@ public class ContentLessonFragment extends Fragment implements View.OnClickListe
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError er) {
             handler.proceed();
         }
-
     }
 }
