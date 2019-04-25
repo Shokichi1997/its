@@ -127,8 +127,10 @@ public class SelectLessonTestFragment extends Fragment {
             public void onClick(View v) {
                 //Get lesson_id in spinner
                 int selected = spnLesson.getSelectedItemPosition();
+                String lesson_name = null;
                 if(selected<0){
                     Toast.makeText(context,"You dont choose lesson to test",Toast.LENGTH_SHORT).show();
+
                 }
                 else {
                     Fragment fragment = new TestLessonFragment();
@@ -136,8 +138,11 @@ public class SelectLessonTestFragment extends Fragment {
                     int lesson_id = 1;
                     if(Global.lessons.get(selected) != null){
                         lesson_id = Global.lessons.get(selected).getLesson_id();
+                        lesson_name=Global.lessons.get(selected).getLesson_name();
                     }
                     args.putInt("lesson_id",lesson_id);
+                    args.putString("lesson_name",lesson_name);
+
                     fragment.setArguments(args);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.add(R.id.frContainer,fragment,"PROBLEM")

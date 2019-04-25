@@ -1,8 +1,10 @@
 package com.itsdl.androidtutorials.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -55,12 +58,52 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
     private boolean isAnswered;
     private int problemNumber = 0;
     private int lesson_id;
-
+    private String lesson_name;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+       inflater.inflate(R.menu.feedback_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_feedback:
+                // Not implemented here
+                composeEmail(ProfileUser.getInstance().getEmail(),"Phan Hoi Dap An",lesson_name);
+                return false;
+            default:
+                break;
+        }
+
+        return false;
+    }
+    public void composeEmail(String addresses, String subject,String lesson_name) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:its@example.com"));; // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, addresses);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, lesson_name +
+                "\n"+
+                "------------NOT DELETE----------"
+                +"\n"
+        );
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +111,7 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
         Bundle args = getArguments();
         if(args!=null && args.containsKey("lesson_id")){
             lesson_id = args.getInt("lesson_id");
+            lesson_name=args.getString("lesson_name");
         }
         else {
             lesson_id = 1;

@@ -129,7 +129,9 @@ public class LessonFragment extends Fragment {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Toast.makeText(getContext(), listChild.get(listGroup.get(groupPosition)).get(childPosition).getIdLessonItem() + "", Toast.LENGTH_LONG).show();
-                loadContentLessonItem(listChild.get(listGroup.get(groupPosition)).get(childPosition).getIdLessonItem());
+                loadContentLessonItem(listChild.get(listGroup.get(groupPosition)).get(childPosition).getIdLessonItem(),
+                                      listChild.get(listGroup.get(groupPosition)).get(childPosition).getLessonItemName()
+                                     );
                 return false;
             }
         });
@@ -143,10 +145,11 @@ public class LessonFragment extends Fragment {
         transaction.commit();
     }
 
-    private void loadContentLessonItem(int lessonItemID) {
+    private void loadContentLessonItem(int lessonItemID,String lesson_item_name) {
         int id = lessonItemID;
         Bundle bundle = new Bundle();
         bundle.putInt("lesson_item_id", id);
+        bundle.putString("lesson_item_name",lesson_item_name);
         ContentLessonFragment fConv = new ContentLessonFragment();
         fConv.setArguments(bundle);
         replaceFragment(fConv);

@@ -43,7 +43,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StudentManagementFragment extends Fragment implements AddStudentDialog.ExampleDialogListener
+public class StudentManagementFragment extends Fragment
  {
 
    View root;
@@ -91,7 +91,7 @@ public class StudentManagementFragment extends Fragment implements AddStudentDia
         icon.setColorFilter(Color.WHITE);
         //button add student
         imgAddstudent =(ImageButton) root.findViewById(R.id.ibtnAddStudent);
-         textView=root.findViewById(R.id.test);
+
         imgAddstudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,9 +182,5 @@ public class StudentManagementFragment extends Fragment implements AddStudentDia
          addStudentDialog.show(getActivity().getSupportFragmentManager(), "AddStudentDialog");
      }
 
-     @Override
-     public void applyTexts(String student_code, String email) {
 
-         textView.setText("chay ko");
-     }
  }

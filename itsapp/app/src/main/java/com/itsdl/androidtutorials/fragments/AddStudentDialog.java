@@ -9,14 +9,21 @@ import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
+import com.itsdl.androidtutorials.networks.AddStudentRequest;
+import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.utils.Result;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class AddStudentDialog extends AppCompatDialogFragment {
     private EditText edtStudentCode;
     private EditText edtEmail;
-    private ExampleDialogListener listener;
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -38,29 +45,34 @@ public class AddStudentDialog extends AppCompatDialogFragment {
                         String student_code = edtStudentCode.getText().toString();
                         String email = edtEmail.getText().toString();
                         try {
-                            listener.applyTexts(student_code, email);
+                              addStudent(student_code);
                         }catch (Exception e){
 
                         }
-
-
                     }
                 });
         edtStudentCode = view.findViewById(R.id.edt_student_code);
         edtEmail = view.findViewById(R.id.edit_email);
         return builder.create();
     }
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            listener = (ExampleDialogListener) context;
-        } catch (ClassCastException e) {
-         /*   throw new ClassCastException(context.toString() +
-              "must implement ExampleDialogListener");*/
-        }
-    }
-    public interface ExampleDialogListener {
-        void applyTexts(String student_code, String email);
+
+    public void addStudent(String student_code) {
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("student_code", student_code);
+        AddStudentRequest request = new AddStudentRequest(new SeverRequest.SeverRequestListener() {
+            @Override
+            public void completed(Object obj) {
+                if(obj!=null){
+                    Result res=(Result) obj;
+                    if(res.getError()==0){
+
+                    }
+                    else{
+                        Toast.makeText(getContext(),"Error",Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+        request.execute(parameter);
     }
 }

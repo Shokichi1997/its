@@ -9,32 +9,25 @@ import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-public class UpdateStudentRequest extends SeverRequest {
-    public UpdateStudentRequest(SeverRequestListener listener) {
+public class AddStudentRequest extends SeverRequest {
+    public AddStudentRequest(SeverRequestListener listener) {
         super(listener);
     }
 
     @Override
     protected Request prepare(Map<String, String> parameter) {
-        String user_id=parameter.get("user_id");
-        String full_name=parameter.get("full_name");
-        String email=parameter.get("email");
-        String password=parameter.get("password");
-
+       String student_code=parameter.get("student_code");
         RequestBody body =new MultipartBody.Builder()
-                .addFormDataPart("user_id",user_id)
-                .addFormDataPart("password",password)
-                .addFormDataPart("email",email)
-                .addFormDataPart("full_name",full_name)
+                .addFormDataPart("student_code",student_code)
                 .setType(MultipartBody.FORM)
                 .build();
-         Request request =new Request.Builder()
-                 .url(URL+"update_user_info.php")
-                 .post(body)
-                 .addHeader("Content-Type", "application/json")
-                 .build();
-
+        Request request =new Request.Builder()
+                .url(URL+"add_student.php")
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .build();
         return request;
+
     }
 
     @Override
