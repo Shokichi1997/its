@@ -45,28 +45,27 @@ public class UserProfileFragment extends Fragment {
         //add tool bar
         toolbar=root.findViewById(R.id.app_bar_profile_user);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Student Data");
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         edtEmail       = root.findViewById(R.id.pemail);
         edtStudentName = root.findViewById(R.id.pfname);
         edtnumberPhone = root.findViewById(R.id.pphonenb);
         btnSave        = root.findViewById(R.id.btsave);
-
-
     }
 
     public void getProfileUser(){
         //get Bundle
+        String student_name = "Student Data";
         user=new User();
         Bundle args = getArguments();
 
         if(args!=null && args.containsKey("FullName")){
             user.setFull_name(args.getString("FullName"));
+            student_name = args.getString("FullName");
         }
         if(args!=null && args.containsKey("Email")){
             user.setEmail(args.getString("Email"));
         }
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(student_name);
     }
     public void loadProUser(){
         edtStudentName.setText(user.getFull_name());

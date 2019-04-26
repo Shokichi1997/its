@@ -442,8 +442,14 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
      * showHint show hint of current question*/
     private void showHint() {
         if(questionAll!=null){
-            CustomDialog dialog = new CustomDialog(context);
+            final CustomDialog dialog = new CustomDialog(context);
             dialog.setLblMessageHint(questionAll.getHint());
+            dialog.setEventsClose(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
             dialog.show();
         }
 
@@ -460,12 +466,19 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
                     answerTrue += ans.get(i).getContent()+"\n";
                 }
             }
-            CustomDialog dialog = new CustomDialog(context);
+            final CustomDialog dialog = new CustomDialog(context);
             dialog.setLblMessageHint(answerTrue);
             dialog.setLblTitleHint("Solution");
             dialog.setImgIconHint(R.drawable.tick_pink);
             dialog.setBtnCloseHint(R.drawable.background_card_pink);
+            dialog.setEventsClose(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
             dialog.show();
+
         }
     }
 

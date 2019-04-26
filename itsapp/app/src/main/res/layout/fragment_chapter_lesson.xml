@@ -11,13 +11,17 @@
         android:clickable="true"
         android:focusable="true"/>
 
-    <ListView
-        android:id="@+id/listChapterLesson"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/chapter_lesson_toolbar"
-        android:divider="#e5e5e5"
-        android:dividerHeight="6dp"
-        android:background="@drawable/background_card_list">
-    </ListView>
+        android:fillViewport="true">
+        <ListView
+            android:id="@+id/listChapterLesson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="#e5e5e5"
+            android:dividerHeight="6dp"
+            android:background="@drawable/background_card_list">
+        </ListView>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

@@ -22,9 +22,10 @@ public class GetLessonRequest extends SeverRequest {
     @Override
     protected Request prepare(Map<String, String> parameter) {
         String chapter_id = parameter.get("chapter_id");
-
+        String user_id = parameter.get("user_id");
         RequestBody requestBody = new MultipartBody.Builder()
                 .addFormDataPart("chapter_id", chapter_id)
+                .addFormDataPart("user_id",user_id)
                 .setType(MultipartBody.FORM)
                 .build();
         Request request = new Request.Builder()
