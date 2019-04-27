@@ -23,7 +23,6 @@ public class CustomDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_hint);
         addControls();
-        addEvents();
     }
 
     public void setLblTitleHint(String titleHint) {
@@ -48,12 +47,7 @@ public class CustomDialog extends Dialog {
         setCanceledOnTouchOutside(false);
     }
 
-    private void addEvents() {
-        btnCloseHint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+    public void setEventsClose(View.OnClickListener onClickListener) {
+        btnCloseHint.setOnClickListener(onClickListener);
     }
 }

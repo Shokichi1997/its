@@ -47,19 +47,19 @@ public class ChapterLessonFragment extends Fragment {
     private void loadChpater(){
         chapterLessons = new ArrayList<>();
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_menu_24dp,"Chapter 01 - Introduction to Mobile Programming",false,1));
+                (R.drawable.chapter1,"Chapter 01 - Introduction to Mobile Programming",false,1));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_menu_24dp,"Chapter 02. - Development Environment",false,2));
+                (R.drawable.chapter2,"Chapter 02 - Building Interactive Apps: Apps That Do Something",false,2));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_menu_24dp,"Chapter 03 - User Interfaces",false,3));
+                (R.drawable.chapter3,"Chapter 03 - State Your Intent",false,3));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_menu_24dp,"Chapter 04 - Dialog and Menu",false,4));
+                (R.drawable.chapter4,"Chapter 04 - The Activity Lifecycle: Being an Activity",false,4));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_menu_24dp,"Chapter 05 - Intents",true,5));
+                (R.drawable.chapter5,"Chapter 5 - The User Interface: Enjoy the View",true,5));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_menu_24dp,"Chapter 06 - Life Cycle",true,6));
+                (R.drawable.chapter6,"Chapter 6 - List Views and Adapters: Getting Organized",true,6));
         chapterLessons.add(new ChapterLesson
-                (R.drawable.ic_menu_24dp,"Chapter 07 - Saving Data",true,7));
+                (R.drawable.chapter7,"Chapter 7 - Fragments: Make it Modular",true,7));
 
 
         ChapterLessonAdapter adapter = new ChapterLessonAdapter(root.getContext(),chapterLessons);

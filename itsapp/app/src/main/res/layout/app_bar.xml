@@ -8,6 +8,8 @@
     android:background="@color/green"
     app:titleTextColor="#ffffff"
     android:theme="@style/AppTheme.AppBarOverlay"
+    app:layout_scrollFlags="scroll|enterAlways"
     >
+
 
 </android.support.v7.widget.Toolbar>

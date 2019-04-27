@@ -112,6 +112,8 @@ public class StudentManagementFragment extends Fragment
                 User us = data.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putInt("UserID", us.getUser_id());
+                bundle.putString("FullName",us.getFull_name());
+                bundle.putString("Email",us.getEmail());
                 UserProfileFragment fConv = new UserProfileFragment();
                 fConv.setArguments(bundle);
                 replaceFragment(fConv);
@@ -124,7 +126,7 @@ public class StudentManagementFragment extends Fragment
         if(getChildFragmentManager()!=null){
             FragmentManager manager = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.frContainer, fConv,"Details");
+            transaction.add(R.id.frContainer, fConv,"Details");
             transaction.addToBackStack(null);
             transaction.commit();
         }

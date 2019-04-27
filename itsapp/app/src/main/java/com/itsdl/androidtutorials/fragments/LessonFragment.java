@@ -18,6 +18,7 @@ import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.adapters.LessonAdapter;
 import com.itsdl.androidtutorials.networks.GetLessonRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.utils.CustomDialog;
 import com.itsdl.androidtutorials.utils.Lesson;
 import com.itsdl.androidtutorials.utils.LessonItems;
 
@@ -85,6 +86,8 @@ public class LessonFragment extends Fragment {
     public void loadLesson(int lessonID) {
         Map<String, String> parameter = new HashMap<>();
         parameter.put("chapter_id", String.valueOf(lessonID));
+        // @TODO get user_id
+        parameter.put("user_id","1");
         progressBarLesson.setVisibility(View.VISIBLE);
         GetLessonRequest request = new GetLessonRequest(new SeverRequest.SeverRequestListener() {
             @Override
@@ -115,12 +118,32 @@ public class LessonFragment extends Fragment {
                     }
                     catch (Exception e){
                     }
+                }else{
+                    showDialogChapterIsNotOpened();
+
                 }
                 progressBarLesson.setVisibility(View.GONE);
             }
         });
         request.execute(parameter);
         //khong lam viec gi nua
+    }
+
+    private void showDialogChapterIsNotOpened() {
+        final CustomDialog dialog = new CustomDialog(getContext());
+        dialog.setLblMessageHint("This chapter is not opened. Please learn and pass the test of the previous lesson!");
+        dialog.setLblTitleHint("Notification");
+        dialog.setImgIconHint(R.drawable.tick_green);
+        dialog.setBtnCloseHint(R.drawable.background_card);
+        dialog.setEventsClose(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                manager.popBackStack();
+            }
+        });
+        dialog.show();
     }
 
     //su kien click ExpandableListView
@@ -132,6 +155,13 @@ public class LessonFragment extends Fragment {
                 loadContentLessonItem(listChild.get(listGroup.get(groupPosition)).get(childPosition).getIdLessonItem(),
                                       listChild.get(listGroup.get(groupPosition)).get(childPosition).getLessonItemName()
                                      );
+                return false;
+            }
+        });
+
+        expandableListViewLesson.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 return false;
             }
         });
