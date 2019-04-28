@@ -11,43 +11,44 @@ import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.utils.Lesson;
 import com.itsdl.androidtutorials.utils.LessonItems;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LessonAdapter extends BaseExpandableListAdapter {
 
 
     private Context context;
-    private List<String> listDataHeader; // header titles
-    // child data in format of header title, child title
-    private HashMap<String,List<LessonItems>> listDataChild;
+    private List<Lesson> groups;
 
-    public LessonAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<LessonItems>> listChildData) {
+    public LessonAdapter(Context context, ArrayList<Lesson> groups){
         this.context = context;
-        this.listDataHeader = listDataHeader;
-        this.listDataChild = listChildData;
+        this.groups = groups;
+    }
+
+    public void addItem(LessonItems item, Lesson group) {
+        if (!groups.contains(group)) {
+            groups.add(group);
+        }
+        int index = groups.indexOf(group);
+        ArrayList<LessonItems> ch = groups.get(index).getLesson_item_list();
+        ch.add(item);
+        groups.get(index).setLesson_item_list(ch);
     }
 
     @Override
     public int getGroupCount() {
-        return listDataHeader.size();
-    }
-
-    @Override
-    public int getChildrenCount(int groupPosition) {
-        return listDataChild.get(listDataHeader.get(groupPosition)).size();
-
+        return groups.size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return listDataHeader.get(groupPosition);
+        return groups.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-      return listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
+        ArrayList<LessonItems> chList = groups.get(groupPosition).getLesson_item_list();
+        return chList.get(childPosition);
     }
 
     @Override
@@ -67,21 +68,25 @@ public class LessonAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String lesson=(String) getGroup(groupPosition);
-        LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView=inflater.inflate(R.layout.list_lesson_items,null);
+        Lesson group = (Lesson ) getGroup(groupPosition);
+        if (convertView == null) {
+            LayoutInflater inf = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            convertView = inf.inflate(R.layout.list_lesson_items, null);
+        }
         TextView txtLesonName=convertView.findViewById(R.id.lblLessonName);
-        txtLesonName.setText(lesson);
+        txtLesonName.setText(group.getLesson_name());
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        LessonItems lessonItem=(LessonItems) getChild(groupPosition,childPosition);
-        LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView=inflater.inflate(R.layout.list_lesson_items_item,null);
+        LessonItems child = ( LessonItems ) getChild(groupPosition, childPosition);
+        if (convertView == null) {
+            LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = infalInflater.inflate(R.layout.list_lesson_items_item, null);
+        }
         TextView txtLesonItemName=convertView.findViewById(R.id.lblLessonItemName);
-        txtLesonItemName.setText(lessonItem.getLessonItemName());
+        txtLesonItemName.setText(child.getLessonItemName());
         return convertView;
     }
 
@@ -89,4 +94,10 @@ public class LessonAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+    public int getChildrenCount(int groupPosition) {
+        ArrayList<LessonItems> chList = groups.get(groupPosition).getLesson_item_list();
+        return chList.size();
+    }
+
 }

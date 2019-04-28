@@ -1,9 +1,9 @@
 package com.itsdl.androidtutorials.networks;
 
-import com.google.gson.JsonObject;
-import com.itsdl.androidtutorials.utils.ChapterLesson;
+import com.google.gson.Gson;
 import com.itsdl.androidtutorials.utils.Lesson;
 import com.itsdl.androidtutorials.utils.LessonItems;
+import com.itsdl.androidtutorials.utils.Result;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,7 +29,7 @@ public class GetLessonRequest extends SeverRequest {
                 .setType(MultipartBody.FORM)
                 .build();
         Request request = new Request.Builder()
-                .url("https://androidtutorialsits.herokuapp.com/api/get_lesson.php")
+                .url("https://androidtutorialsits.herokuapp.com/api/test.php")
                 .post(requestBody)
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -38,40 +38,28 @@ public class GetLessonRequest extends SeverRequest {
     @Override
     protected Object process(String data) {
         try {
-            ArrayList<Object> arrData=new ArrayList<Object>();
-            ArrayList<Lesson> arr_lesson=new ArrayList<Lesson>();
-            ArrayList<LessonItems> arr_items=new ArrayList<LessonItems>();
+            Gson gson=new Gson();
+            Result res=gson.fromJson(data,Result.class);
+
             JSONObject json=new JSONObject(data);
-
-            JSONArray array_data=json.getJSONArray("data") ;
-            for(int i=0;i<array_data.length();i++){
-                JSONArray ob=array_data.getJSONArray(i);
-                for(int j=0;j<ob.length();j++){
-                    if (i == 0) {
-                        JSONObject l=ob.getJSONObject(j);
-                        Lesson ls=new Lesson(
-                                l.getInt("chapter_id"),
-                                l.getInt("lesson_id"),
-                               "",
-                                l.getString("lesson_name")
-                        );
-                        arr_lesson.add(ls);
-                    }
-                    if(i==1){
-                        JSONObject l=ob.getJSONObject(j);
-                        LessonItems les_items=new LessonItems(
-                                l.getInt("lesson_id"),
-                                l.getInt("lesson_item_id"),
-                                l.getString("lesson_item_name")
-                        );
-                        arr_items.add(les_items);
-                    }
+            JSONArray jsonArray = json.getJSONArray("data");
+            ArrayList<Lesson> lessons =new ArrayList<>();
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject jsonLesson =jsonArray.getJSONObject(i);
+                Lesson lesson = gson.fromJson(String.valueOf(jsonLesson),Lesson.class);
+                JSONArray lessonItemJson =  jsonLesson.getJSONArray("lesson_item_list");
+                ArrayList<LessonItems> lessonItemList = new ArrayList<>();
+                for(int j=0;j<lessonItemJson.length();j++){
+                    JSONObject jsonLessonItem =lessonItemJson.getJSONObject(j);
+                    LessonItems lessonItems = gson.fromJson(String.valueOf(jsonLessonItem),LessonItems.class);
+                    lessonItemList.add(lessonItems);
                 }
-
+                lesson.setLesson_item_list(lessonItemList);
+                lessons.add(lesson);
             }
-            arrData.add(arr_lesson);
-            arrData.add(arr_items);
-            return  arrData;
+            res.setData(lessons);
+            return res;
+
         }catch (Exception e){
             e.printStackTrace();
         }

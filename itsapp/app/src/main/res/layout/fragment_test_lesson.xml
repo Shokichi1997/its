@@ -11,7 +11,7 @@
         android:background="@android:color/white"
         android:clickable="true"
         android:focusable="true"/>
-    <include layout="@layout/toolbar_feed"
+    <include layout="@layout/app_bar"
     android:id="@+id/test_toolbar" />
 
     <ProgressBar
