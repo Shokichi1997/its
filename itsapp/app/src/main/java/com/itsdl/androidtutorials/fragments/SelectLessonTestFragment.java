@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.networks.GetOpeningLessonRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.utils.CustomDialog;
 import com.itsdl.androidtutorials.utils.Global;
 import com.itsdl.androidtutorials.utils.Lesson;
 import com.itsdl.androidtutorials.utils.Result;
@@ -56,6 +57,9 @@ public class SelectLessonTestFragment extends Fragment {
         else {
             if(Global.lessons.size()>0){
                 addDataToSpinner();
+            }
+            else {
+                showDialogNonChooseLesson("You must study first");
             }
         }
     }
@@ -129,8 +133,8 @@ public class SelectLessonTestFragment extends Fragment {
                 int selected = spnLesson.getSelectedItemPosition();
                 String lesson_name = null;
                 if(selected<0){
-                    Toast.makeText(context,"You dont choose lesson to test",Toast.LENGTH_SHORT).show();
-
+                    String message = "You must choose a lesson to test!";
+                    showDialogNonChooseLesson(message);
                 }
                 else {
                     Fragment fragment = new TestLessonFragment();
@@ -152,5 +156,20 @@ public class SelectLessonTestFragment extends Fragment {
 
             }
         });
+    }
+
+    private void showDialogNonChooseLesson(String message) {
+        final CustomDialog dialog = new CustomDialog(getContext());
+        dialog.setLblMessageHint(message);
+        dialog.setLblTitleHint("Notification");
+        dialog.setImgIconHint(R.drawable.tick_green);
+        dialog.setBtnCloseHint(R.drawable.background_card);
+        dialog.setEventsClose(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

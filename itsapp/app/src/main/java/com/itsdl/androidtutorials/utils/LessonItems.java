@@ -1,10 +1,13 @@
 package com.itsdl.androidtutorials.utils;
 
-import com.itsdl.androidtutorials.adapters.LessonAdapter;
+import com.google.gson.annotations.SerializedName;
 
 public class LessonItems {
+    @SerializedName("lesson_id")
     private  int idLesson;
+    @SerializedName("lesson_item_id")
     private  int idLessonItem;
+    @SerializedName("lesson_item_name")
     private  String lessonItemName;
 
 

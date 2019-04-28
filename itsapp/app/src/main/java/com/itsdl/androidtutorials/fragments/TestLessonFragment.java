@@ -205,10 +205,28 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
                         Toast.makeText(getContext(),"Create problem is error. Please to try again!",Toast.LENGTH_LONG).show();
                     }
                 }
+                else {
+                    showDialogNonChooseLesson("This lesson has no questions");
+                }
                 progressBarProblem.setVisibility(View.GONE);
             }
         });
         request.execute(parameter);
+    }
+
+    private void showDialogNonChooseLesson(String message) {
+        final CustomDialog dialog = new CustomDialog(getContext());
+        dialog.setLblMessageHint(message);
+        dialog.setLblTitleHint("Notification");
+        dialog.setImgIconHint(R.drawable.tick_green);
+        dialog.setBtnCloseHint(R.drawable.background_card);
+        dialog.setEventsClose(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     /**

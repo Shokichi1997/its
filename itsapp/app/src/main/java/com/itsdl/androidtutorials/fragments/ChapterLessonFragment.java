@@ -86,10 +86,10 @@ public class ChapterLessonFragment extends Fragment {
         transaction.commit();
     }
 
-    private void loadLesson(int lessonID) {
-        int id = lessonID;
+    private void loadLesson(int chapter_id) {
+        int id = chapter_id;
         Bundle bundle = new Bundle();
-        bundle.putInt("lesson_id", id);
+        bundle.putInt("chapter_id", id);
         LessonFragment fConv = new LessonFragment();
         fConv.setArguments(bundle);
         replaceFragment(fConv);
