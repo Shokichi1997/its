@@ -45,7 +45,7 @@
            android:textColorHint="@color/white"
            android:drawablePadding="14dp"
            android:padding="11dp"
-           android:drawableLeft="@drawable/ic_lock_black_24dp"
+           android:drawableLeft="@drawable/ic_lock_black2_24dp"
            android:background="@drawable/shapeemail"/>
        <LinearLayout
         android:layout_width="match_parent"
@@ -69,7 +69,7 @@
             android:text="Forget password"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:drawableLeft="@drawable/ic_lock_open_black_24dp"
+            android:drawableLeft="@drawable/ic_lock_open_black2_24dp"
             android:gravity="center"
             android:drawablePadding="4dp"
             android:padding="8dp"

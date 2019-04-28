@@ -26,6 +26,7 @@ public class UserProfileFragment extends Fragment {
     EditText edtnumberPhone;
     Button btnSave;
     User user;
+    EditText edtDateCreate;
     public UserProfileFragment() {
         // Required empty public constructor
     }
@@ -49,6 +50,7 @@ public class UserProfileFragment extends Fragment {
         edtEmail       = root.findViewById(R.id.pemail);
         edtStudentName = root.findViewById(R.id.pfname);
         edtnumberPhone = root.findViewById(R.id.pphonenb);
+        edtDateCreate  = root.findViewById(R.id.pDateCreate);
         btnSave        = root.findViewById(R.id.btsave);
     }
 
