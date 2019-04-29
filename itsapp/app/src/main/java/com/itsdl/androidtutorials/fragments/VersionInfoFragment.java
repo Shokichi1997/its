@@ -12,10 +12,10 @@ import com.itsdl.androidtutorials.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VersionInforFragment extends Fragment {
+public class VersionInfoFragment extends Fragment {
 
 
-    public VersionInforFragment() {
+    public VersionInfoFragment() {
         // Required empty public constructor
     }
 

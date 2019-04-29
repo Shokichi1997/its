@@ -88,17 +88,4 @@
            android:shadowColor="@android:color/transparent"
            android:padding="15dp"
            android:background="@drawable/shapelogin" />
-       <Button
-        android:id="@+id/btnSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="SIGN UP"
-        android:layout_gravity="center"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="10dp"
-        android:shadowColor="@android:color/transparent"
-        android:padding="15dp"
-        android:background="@drawable/shapesignup"
-        />
 </LinearLayout>

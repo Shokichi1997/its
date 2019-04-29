@@ -1,12 +1,9 @@
 package com.itsdl.androidtutorials.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,13 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
+import com.itsdl.androidtutorials.fragments.ChangePasswordFragment;
 import com.itsdl.androidtutorials.fragments.FunctionsFragment;
+import com.itsdl.androidtutorials.fragments.HelpFragment;
+import com.itsdl.androidtutorials.fragments.LoginFragment;
 import com.itsdl.androidtutorials.fragments.UserProfileFragment;
-import com.itsdl.androidtutorials.utils.ProfileUser;
+import com.itsdl.androidtutorials.fragments.VersionInfoFragment;
+import com.itsdl.androidtutorials.utils.Global;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,10 +46,10 @@ public class MainActivity extends AppCompatActivity
 
 
         //Test adapter
-        Fragment fragment = new FunctionsFragment();
+        Fragment fragment = new LoginFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.frContainer2,fragment,"FUNCTIONS")
-                .addToBackStack("FUNCTIONS")
+        transaction.add(R.id.frContainer,fragment, Global.LOGIN)
+                .addToBackStack(Global.LOGIN)
                 .commit();
 
     }
@@ -125,24 +125,30 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void navInfo() {
+        VersionInfoFragment fragment = new VersionInfoFragment();
+        replaceFragment(fragment,"VERSION");
     }
 
     private void navHelp() {
+        HelpFragment fragment = new HelpFragment();
+        replaceFragment(fragment,"HELP");
     }
 
     private void navPassword() {
+        ChangePasswordFragment fragment = new ChangePasswordFragment();
+        replaceFragment(fragment,"CHANGE_PASS");
     }
 
     private void navProfile() {
         UserProfileFragment fConv = new UserProfileFragment();
-        replaceFragment(fConv);
+        replaceFragment(fConv,"Profile");
     }
 
-    private void replaceFragment(Fragment fConv) {
+    private void replaceFragment(Fragment fConv,String tag) {
         if(getSupportFragmentManager()!=null){
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.add(R.id.frContainer, fConv,"Profile");
+            transaction.add(R.id.frContainer, fConv,tag);
             transaction.addToBackStack(null);
             transaction.commit();
         }

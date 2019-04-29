@@ -51,7 +51,7 @@ public class SelectLessonTestFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(Global.numberOpenningLesson > Global.lessons.size()){
+        if(Global.numberOpenningLesson > Global.lessons.size() || Global.lessons.size()==0){
             callRequestGetOpeningLesson();
         }
         else {

@@ -31,4 +31,10 @@
     <string name="select_lesson">SELECT LESSON</string>
     <string name="cancel">Cancel</string>
     <string name="update_pass">Update pass</string>
+    <string name="profile">Profile</string>
+    <string name="change_password">Change password</string>
+    <string name="info">Info</string>
+    <string name="version_info">Version info</string>
+    <string name="help">help</string>
+    <string name="support">Support</string>
 </resources>
