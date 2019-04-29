@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.fragments.FunctionsFragment;
+import com.itsdl.androidtutorials.fragments.UserProfileFragment;
+import com.itsdl.androidtutorials.utils.ProfileUser;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+
+
         toggle.syncState();
 
         NavigationView navigationView = ( NavigationView ) findViewById(R.id.nav_view);
@@ -101,22 +106,45 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_profile) {
+            navProfile();
+        } else if (id == R.id.nav_password) {
+            navPassword();
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_help) {
+            navHelp();
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_info) {
+            navInfo();
 
         }
 
         DrawerLayout drawer = ( DrawerLayout ) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void navInfo() {
+    }
+
+    private void navHelp() {
+    }
+
+    private void navPassword() {
+    }
+
+    private void navProfile() {
+        UserProfileFragment fConv = new UserProfileFragment();
+        replaceFragment(fConv);
+    }
+
+    private void replaceFragment(Fragment fConv) {
+        if(getSupportFragmentManager()!=null){
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.add(R.id.frContainer, fConv,"Profile");
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
     }
 }
