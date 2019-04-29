@@ -29,4 +29,10 @@
     <string name="ease">Ease</string>
     <string name="ok">ok</string>
     <string name="select_lesson">SELECT LESSON</string>
+    <string name="profile">Profile</string>
+    <string name="change_password">Change password</string>
+    <string name="info">Info</string>
+    <string name="version_info">Version info</string>
+    <string name="help">Help</string>
+    <string name="support">Support</string>
 </resources>
