@@ -9,10 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.itsdl.androidtutorials.R;
+import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.networks.UpdateStudentRequest;
+import com.itsdl.androidtutorials.utils.Result;
 import com.itsdl.androidtutorials.utils.User;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,10 +31,12 @@ public class UserProfileFragment extends Fragment {
     android.support.v7.widget.Toolbar toolbar;
     EditText edtStudentName;
     EditText edtEmail;
-    EditText edtnumberPhone;
+    EditText edtStudentCode;
     Button btnSave;
     User user;
     EditText edtDateCreate;
+    String date=null;
+    Button btnClear;
     public UserProfileFragment() {
         // Required empty public constructor
     }
@@ -39,7 +49,21 @@ public class UserProfileFragment extends Fragment {
         getViews();
         getProfileUser();
         loadProUser();
-        //
+        //event button
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateProfileUser();
+            }
+        });
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtEmail.setText("");
+                edtStudentName.setText("");
+                edtStudentCode.setText("");
+            }
+        });
         return root;
     }
     public void getViews(){
@@ -47,11 +71,20 @@ public class UserProfileFragment extends Fragment {
         toolbar=root.findViewById(R.id.app_bar_profile_user);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack();
+                }
+            }
+        });
         edtEmail       = root.findViewById(R.id.pemail);
         edtStudentName = root.findViewById(R.id.pfname);
-        edtnumberPhone = root.findViewById(R.id.pphonenb);
+        edtStudentCode = root.findViewById(R.id.pStudenCode);
         edtDateCreate  = root.findViewById(R.id.pDateCreate);
         btnSave        = root.findViewById(R.id.btsave);
+        btnClear       = root.findViewById(R.id.btnClear);
     }
 
     public void getProfileUser(){
@@ -59,7 +92,10 @@ public class UserProfileFragment extends Fragment {
         String student_name = "Student Data";
         user=new User();
         Bundle args = getArguments();
+        if(args!=null && args.containsKey("UserID")){
+            user.setUser_id(args.getInt("UserID"));
 
+        }
         if(args!=null && args.containsKey("FullName")){
             user.setFull_name(args.getString("FullName"));
             student_name = args.getString("FullName");
@@ -67,10 +103,53 @@ public class UserProfileFragment extends Fragment {
         if(args!=null && args.containsKey("Email")){
             user.setEmail(args.getString("Email"));
         }
+        if(args!=null && args.containsKey("StudentCode")){
+            user.setStudent_code(args.getString("StudentCode"));
+        }
+        if(args!=null && args.containsKey("DateCreate")){
+           date=args.getString("DateCreate");
+           // user.setDate_create(Date.parse());
+        }
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(student_name);
     }
     public void loadProUser(){
         edtStudentName.setText(user.getFull_name());
         edtEmail.setText(user.getEmail());
+        edtStudentCode.setText(user.getStudent_code());
+        edtDateCreate.setText(date);
+
+    }
+    public void updateProfileUser(){
+        if(checkDataInput()==true){
+            Map<String,String> parameter=new HashMap<>();
+            parameter.put("user_id",String.valueOf(user.getUser_id()));
+            parameter.put("full_name",edtStudentName.getText().toString());
+            parameter.put("email",edtEmail.getText().toString());
+            parameter.put("student_code",edtStudentCode.getText().toString());
+
+            UpdateStudentRequest request= new UpdateStudentRequest(new SeverRequest.SeverRequestListener() {
+                @Override
+                public void completed(Object obj) {
+                    Result res=(Result) obj;
+                    if(obj!=null){
+                        if(res.getError()==0){
+                            Toast.makeText(getContext(),"Update success",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    else{
+
+                    }
+                }
+            });
+            request.execute(parameter);
+        }else {
+            Toast.makeText(getContext(),"Enter data error",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public boolean checkDataInput(){
+        return  edtStudentName.getText().toString()!=null&&
+                edtStudentCode.getText().toString()!=null&&
+                edtEmail.getText().toString()!=null;
     }
 }

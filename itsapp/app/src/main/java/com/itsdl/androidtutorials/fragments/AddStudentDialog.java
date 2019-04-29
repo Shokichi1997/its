@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.networks.AddStudentRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.utils.CustomDialog;
 import com.itsdl.androidtutorials.utils.Result;
 
 import java.util.HashMap;
@@ -42,12 +43,20 @@ public class AddStudentDialog extends AppCompatDialogFragment {
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String student_code = edtStudentCode.getText().toString();
-                        String email = edtEmail.getText().toString();
+                        String email="";
                         try {
-                              addStudent(student_code);
-                        }catch (Exception e){
+                            if(!edtEmail.getText().toString().isEmpty()){
+                                email= edtEmail.getText().toString();
+                            }
+                            if(!edtStudentCode.getText().toString().isEmpty()){
+                                String student_code = edtStudentCode.getText().toString();
+                                addStudent(student_code,email);
+                            }
+                            else{
+                                showDialog("Student code not is empty");
+                            }
 
+                        }catch (Exception e){
                         }
                     }
                 });
@@ -56,16 +65,17 @@ public class AddStudentDialog extends AppCompatDialogFragment {
         return builder.create();
     }
 
-    public void addStudent(String student_code) {
+    public void addStudent(String student_code,String email) {
         Map<String, String> parameter = new HashMap<>();
         parameter.put("student_code", student_code);
+        parameter.put("email",email);
         AddStudentRequest request = new AddStudentRequest(new SeverRequest.SeverRequestListener() {
             @Override
             public void completed(Object obj) {
                 if(obj!=null){
                     Result res=(Result) obj;
                     if(res.getError()==0){
-
+                      // Toast.makeText(getContext(),"Add stdent success",Toast.LENGTH_LONG).show();
                     }
                     else{
                         Toast.makeText(getContext(),"Error",Toast.LENGTH_LONG).show();
@@ -74,5 +84,20 @@ public class AddStudentDialog extends AppCompatDialogFragment {
             }
         });
         request.execute(parameter);
+    }
+
+    private void showDialog(String message) {
+        final CustomDialog dialog = new CustomDialog(getContext());
+        dialog.setLblMessageHint(message);
+        dialog.setLblTitleHint("Notification");
+        dialog.setImgIconHint(R.drawable.tick_green);
+        dialog.setBtnCloseHint(R.drawable.background_card);
+        dialog.setEventsClose(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

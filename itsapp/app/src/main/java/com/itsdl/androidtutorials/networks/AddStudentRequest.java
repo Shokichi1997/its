@@ -17,8 +17,10 @@ public class AddStudentRequest extends SeverRequest {
     @Override
     protected Request prepare(Map<String, String> parameter) {
        String student_code=parameter.get("student_code");
+       String email       =parameter.get("email");
         RequestBody body =new MultipartBody.Builder()
                 .addFormDataPart("student_code",student_code)
+                .addFormDataPart("email",email)
                 .setType(MultipartBody.FORM)
                 .build();
         Request request =new Request.Builder()
@@ -27,7 +29,6 @@ public class AddStudentRequest extends SeverRequest {
                 .addHeader("Content-Type", "application/json")
                 .build();
         return request;
-
     }
 
     @Override

@@ -85,6 +85,14 @@ public class StudentManagementFragment extends Fragment
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Data student");
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack();
+                }
+            }
+        });
          searchView=root.findViewById(R.id.search);
          //set color search view
         ImageView icon = searchView.findViewById(android.support.v7.appcompat.R.id.search_button);
@@ -114,6 +122,8 @@ public class StudentManagementFragment extends Fragment
                 bundle.putInt("UserID", us.getUser_id());
                 bundle.putString("FullName",us.getFull_name());
                 bundle.putString("Email",us.getEmail());
+                bundle.putString("StudentCode",us.getStudent_code());
+                bundle.putString("DateCreate",String.valueOf(us.getDate_create()));
                 UserProfileFragment fConv = new UserProfileFragment();
                 fConv.setArguments(bundle);
                 replaceFragment(fConv);
@@ -145,7 +155,6 @@ public class StudentManagementFragment extends Fragment
                     loadDanhSachHocVien(arr_users);
 
                 }else{
-
                 }
             }
         });

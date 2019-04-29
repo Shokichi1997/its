@@ -228,12 +228,12 @@
                             android:textColor="@color/white" />
 
                         <Button
-                            android:id="@+id/btnReset"
+                            android:id="@+id/btnClear"
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="10dp"
                             android:background="#6860dc"
-                            android:text="Reset"
+                            android:text="Refresh"
                             android:textColor="@color/white" />
                     </LinearLayout>
 

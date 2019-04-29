@@ -16,20 +16,20 @@ public class UpdateStudentRequest extends SeverRequest {
 
     @Override
     protected Request prepare(Map<String, String> parameter) {
-        String user_id=parameter.get("user_id");
-        String full_name=parameter.get("full_name");
-        String email=parameter.get("email");
-        String password=parameter.get("password");
+        String user_id      = parameter.get("user_id");
+        String full_name    = parameter.get("full_name");
+        String email        = parameter.get("email");
+        String student_code = parameter.get("student_code");
 
         RequestBody body =new MultipartBody.Builder()
                 .addFormDataPart("user_id",user_id)
-                .addFormDataPart("password",password)
+                .addFormDataPart("student_code",student_code)
                 .addFormDataPart("email",email)
                 .addFormDataPart("full_name",full_name)
                 .setType(MultipartBody.FORM)
                 .build();
          Request request =new Request.Builder()
-                 .url(URL+"update_user_info.php")
+                 .url(URL+"update_student_info.php")
                  .post(body)
                  .addHeader("Content-Type", "application/json")
                  .build();
@@ -47,4 +47,6 @@ public class UpdateStudentRequest extends SeverRequest {
             return  null;
         }
     }
+
+
 }

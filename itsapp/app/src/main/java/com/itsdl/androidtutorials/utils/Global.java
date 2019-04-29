@@ -12,6 +12,7 @@ public class Global {
     public static final String SELECT_LESSON = "SELECT_LESSON";
     public static final String STUDENT_MANAGER = "STUDENT_MANAGER";
     public static final String USER_PROFILE = "USER_PROFILE";
+    public static final String INTRODUCE = "INTRODUCE";
     public static final String LOGIN = "LOGIN";
     public static final String EXAMPLE_CONTENT = "EXAMPLE_CONTENT";
 }

@@ -67,20 +67,20 @@ public class LessonFragment extends Fragment {
 
     private void getViews() {
         //add tool bar
-        toolbar = root.findViewById(R.id.lesson_toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Lesson");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar = root.findViewById(R.id.lesson_toolbar);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Lesson");
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        progressBarLesson = root.findViewById(R.id.progressBarLesson);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStack();
+            progressBarLesson = root.findViewById(R.id.progressBarLesson);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (getFragmentManager().getBackStackEntryCount() > 0) {
+                        getFragmentManager().popBackStack();
+                    }
                 }
-            }
-        });
+            });
         //
         expandableListViewLesson = (ExpandableListView) root.findViewById(R.id.expandLesson);
     }
