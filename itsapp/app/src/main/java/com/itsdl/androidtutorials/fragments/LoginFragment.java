@@ -1,6 +1,7 @@
 package com.itsdl.androidtutorials.fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +17,11 @@ import android.widget.EditText;
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.utils.CustomDialog;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -25,6 +31,9 @@ public class LoginFragment extends Fragment {
    EditText edtEmail,edtPssword;
    CheckBox ckbRemember;
    Toolbar toolbar;
+   String student_code;
+   String password;
+    private ProgressDialog mLoginProgress;
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -41,10 +50,11 @@ public class LoginFragment extends Fragment {
     }
     public void getViews(){
 
-        edtEmail=view.findViewById(R.id.edtStudentCode);
+        edtStudentCode=view.findViewById(R.id.edtStudentCode);
         edtPssword=view.findViewById(R.id.edtPassword);
         btnLogin=view.findViewById(R.id.btnLogin);
         ckbRemember=view.findViewById(R.id.ckbRemember);
+        mLoginProgress = new ProgressDialog(getContext());
     }
 
     private void addEvents() {
