@@ -19,6 +19,7 @@ import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.adapters.Functions_adapter;
 import com.itsdl.androidtutorials.utils.FunctionUser;
 import com.itsdl.androidtutorials.utils.Global;
+import com.itsdl.androidtutorials.utils.ProfileUser;
 
 import java.util.ArrayList;
 
@@ -33,13 +34,21 @@ public class FunctionsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_functions,container,false);
 
         gridFunction = root.findViewById(R.id.gridFunction);
-
         ArrayList<FunctionUser> function = new ArrayList<>();
-        function.add(new FunctionUser(1,"Learning",true,R.drawable.learning));
-        function.add(new FunctionUser(2,"Quiz",true,R.drawable.quiz));
-        function.add(new FunctionUser(3,"Manager student",true,R.drawable.manager_student));
-        function.add(new FunctionUser(4,"Introduce",true,R.drawable.introduce));
-        function.add(new FunctionUser(5,"Logout",true,R.drawable.logout));
+        if(ProfileUser.getInstance().getRole()==3){
+            function.add(new FunctionUser(1,"Learning",true,R.drawable.learning));
+            function.add(new FunctionUser(2,"Quiz",true,R.drawable.quiz));
+            function.add(new FunctionUser(4,"Introduce",true,R.drawable.introduce));
+            function.add(new FunctionUser(5,"Logout",true,R.drawable.logout));
+        }else{
+            function.add(new FunctionUser(1,"Learning",true,R.drawable.learning));
+            function.add(new FunctionUser(2,"Quiz",true,R.drawable.quiz));
+            function.add(new FunctionUser(3,"Manager student",true,R.drawable.manager_student));
+            function.add(new FunctionUser(4,"Introduce",true,R.drawable.introduce));
+            function.add(new FunctionUser(5,"Logout",true,R.drawable.logout));
+        }
+
+
 
         ArrayAdapter adapter = new Functions_adapter(root.getContext(),function);
         gridFunction.setAdapter(adapter);

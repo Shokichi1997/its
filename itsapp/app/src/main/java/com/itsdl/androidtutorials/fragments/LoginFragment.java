@@ -4,6 +4,7 @@ package com.itsdl.androidtutorials.fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +16,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.itsdl.androidtutorials.R;
+import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.networks.SignInRequest;
 import com.itsdl.androidtutorials.utils.CustomDialog;
+import com.itsdl.androidtutorials.utils.Extension;
+import com.itsdl.androidtutorials.utils.ProfileUser;
+import com.itsdl.androidtutorials.utils.Result;
+import com.itsdl.androidtutorials.utils.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -28,7 +35,7 @@ import java.util.Map;
 public class LoginFragment extends Fragment {
    View view;
    Button btnLogin;
-   EditText edtEmail,edtPssword;
+   EditText edtStudentCode,edtPassword;
    CheckBox ckbRemember;
    Toolbar toolbar;
    String student_code;
@@ -51,7 +58,7 @@ public class LoginFragment extends Fragment {
     public void getViews(){
 
         edtStudentCode=view.findViewById(R.id.edtStudentCode);
-        edtPssword=view.findViewById(R.id.edtPassword);
+        edtPassword=view.findViewById(R.id.edtPassword);
         btnLogin=view.findViewById(R.id.btnLogin);
         ckbRemember=view.findViewById(R.id.ckbRemember);
         mLoginProgress = new ProgressDialog(getContext());
@@ -63,8 +70,10 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 /***Kiểm tra email và password trống
                  trông => call showMessage(message) và return*/
-
+                logIn();
                 /**request => thành công call goToFunctionsMain()*/
+               // goToFunctionsMain();
+
             }
         });
     }
@@ -72,6 +81,10 @@ public class LoginFragment extends Fragment {
     public void goToFunctionsMain(){
         Fragment fragment = new FunctionsFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment login=getActivity().getSupportFragmentManager().findFragmentById(R.id.frContainer);
+        if(login!=null){
+            transaction.remove(login);
+        }
         transaction.add(R.id.frContainer2,fragment,"FUNCTIONS")
                 .addToBackStack("FUNCTIONS")
                 .commit();
@@ -91,4 +104,66 @@ public class LoginFragment extends Fragment {
         });
         dialog.show();
     }
+    public void logIn(){
+        if(!edtStudentCode.getText().toString().isEmpty()&&!edtPassword.getText().toString().isEmpty()){
+            mLoginProgress.setTitle("Logging In");
+            mLoginProgress.setMessage("Please wait while we check your account.");
+            mLoginProgress.setCanceledOnTouchOutside(false);
+            student_code = edtStudentCode.getText().toString().trim();
+            password = edtPassword.getText().toString().trim();
+            String sha256OfPassword = "";
+
+            try {
+                sha256OfPassword = SHA256(password);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            Map<String, String> parameter = new HashMap<>();
+            parameter.put("student_code", student_code);
+            parameter.put("password", sha256OfPassword);
+            mLoginProgress.show();
+
+            SignInRequest request =new SignInRequest(new SeverRequest.SeverRequestListener() {
+                @Override
+                public void completed(Object obj) {
+                    if(obj!=null){
+                        Result res=(Result) obj;
+                        if(res.getError()==0&&res.getData()!=null){
+                            User user=(User) res.getData();
+
+                            ProfileUser profileUser=ProfileUser.getInstance();
+                            profileUser.setFull_name(user.getFull_name());
+                            profileUser.setDate_create(user.getDate_create());
+                            profileUser.setEmail(user.getEmail());
+                            profileUser.setUser_id(user.getUser_id());
+                            profileUser.setStudent_code(user.getStudent_code());
+                            profileUser.setRole(user.getRole());
+                            FunctionsFragment fConv = new FunctionsFragment();
+
+
+                            goToFunctionsMain();
+                        }
+
+
+                    }else{
+
+                    }
+                    mLoginProgress.dismiss();
+                }
+            });
+            request.execute(parameter);
+        }else{
+            showMessage("Student code and Password is not empty ");
+            return;
+        }
+
+    }
+    public static String SHA256(String pass) throws NoSuchAlgorithmException {
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        messageDigest.update(pass.getBytes());
+        byte[] digest = messageDigest.digest();
+        return Extension.toHexString(digest);
+    }
+
+
 }

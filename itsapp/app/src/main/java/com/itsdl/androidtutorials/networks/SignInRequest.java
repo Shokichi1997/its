@@ -4,6 +4,7 @@ package com.itsdl.androidtutorials.networks;
 import com.google.gson.Gson;
 import com.itsdl.androidtutorials.utils.ProfileUser;
 import com.itsdl.androidtutorials.utils.Result;
+import com.itsdl.androidtutorials.utils.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +53,7 @@ public class SignInRequest extends SeverRequest {
             JSONObject json = null;
             json = new JSONObject(data);
             JSONObject object= json.getJSONObject("data"); //Có thể bị Value null at data
-            ProfileUser profile = gson.fromJson(String.valueOf(object), ProfileUser.class);
+            User profile = gson.fromJson(String.valueOf(object), User.class);
             res.setData(profile);
 
             return res;

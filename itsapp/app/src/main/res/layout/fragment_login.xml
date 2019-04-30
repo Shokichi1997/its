@@ -19,7 +19,7 @@
            android:layout_height="50dp"
            android:padding="15dp"
            android:drawablePadding="10dp"
-           android:hint="Email"
+           android:hint="Student code"
            android:inputType="text"
            android:layout_gravity="center"
            android:layout_marginLeft="30dp"

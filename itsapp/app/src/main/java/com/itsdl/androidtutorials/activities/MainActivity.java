@@ -25,7 +25,7 @@ import com.itsdl.androidtutorials.utils.Global;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = ( Toolbar ) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = ( DrawerLayout ) findViewById(R.id.drawer_layout);
+        drawer = ( DrawerLayout ) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = ( DrawerLayout ) findViewById(R.id.drawer_layout);
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
