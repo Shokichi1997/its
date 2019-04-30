@@ -44,16 +44,17 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StudentManagementFragment extends Fragment
+public class StudentManagementFragment extends Fragment implements AddStudentDialog.ExampleDialogListener
  {
 
    View root;
    ListView listStudent;
    Toolbar toolbar;
-   UserAdapter adapter;
+   public UserAdapter adapter;
    android.support.v7.widget.SearchView searchView;
    ImageButton imgAddstudent;
    TextView textView;
+
     public StudentManagementFragment() {
         // Required empty public constructor
     }
@@ -108,6 +109,7 @@ public class StudentManagementFragment extends Fragment
             @Override
             public void onClick(View v) {
                 openDialog();
+                getlistStudent();
             }
         });
     }
@@ -195,7 +197,12 @@ public class StudentManagementFragment extends Fragment
      private void openDialog() {
          AddStudentDialog addStudentDialog = new AddStudentDialog();
          addStudentDialog.show(getActivity().getSupportFragmentManager(), "AddStudentDialog");
+
      }
 
 
+     @Override
+     public void applyTexts(String username, String password) {
+         Toast.makeText(getContext(),username,Toast.LENGTH_LONG).show();
+     }
  }

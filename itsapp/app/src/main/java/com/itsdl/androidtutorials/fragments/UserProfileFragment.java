@@ -3,6 +3,8 @@ package com.itsdl.androidtutorials.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.itsdl.androidtutorials.R;
+import com.itsdl.androidtutorials.activities.MainActivity;
 import com.itsdl.androidtutorials.networks.SeverRequest;
 import com.itsdl.androidtutorials.networks.UpdateStudentRequest;
 import com.itsdl.androidtutorials.utils.DrawerLocker;
@@ -27,7 +30,6 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 public class UserProfileFragment extends Fragment {
-
     View root;
     android.support.v7.widget.Toolbar toolbar;
     EditText edtStudentName;
@@ -138,6 +140,8 @@ public class UserProfileFragment extends Fragment {
                     if(obj!=null){
                         if(res.getError()==0){
                             Toast.makeText(getContext(),"Update success",Toast.LENGTH_LONG).show();
+                            StudentManagementFragment fConv=new StudentManagementFragment();
+                            replaceFragment(fConv);
                         }
                     }
                     else{
@@ -155,5 +159,13 @@ public class UserProfileFragment extends Fragment {
         return  edtStudentName.getText().toString()!=null&&
                 edtStudentCode.getText().toString()!=null&&
                 edtEmail.getText().toString()!=null;
+    }
+    private void replaceFragment(Fragment fConv) {
+
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.frContainer, fConv,"Details");
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

@@ -40,13 +40,13 @@ import java.util.Map;
 public class UserAdapter extends BaseAdapter implements Filterable {
 
     public Context context;
-    public ArrayList<User> employeeArrayList;
+    public ArrayList<User> userArrayList;
     public ArrayList<User> orig;
 
-    public UserAdapter(Context context, ArrayList<User> employeeArrayList) {
+    public UserAdapter(Context context, ArrayList<User> userArrayList) {
         super();
         this.context = context;
-        this.employeeArrayList = employeeArrayList;
+        this.userArrayList = userArrayList;
     }
 
     public void notifyDataSetChanged() {
@@ -54,18 +54,18 @@ public class UserAdapter extends BaseAdapter implements Filterable {
     }
     @Override
     public int getCount() {
-        return employeeArrayList.size();
+        return userArrayList.size();
     }
     @Override
     public Object getItem(int position) {
-        return employeeArrayList.get(position);
+        return userArrayList.get(position);
     }
     @Override
     public long getItemId(int position) {
         return position;
     }
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
         if(listItemView==null){
             listItemView = LayoutInflater.from(context).inflate(R.layout.list_student_items,parent,false);
@@ -90,8 +90,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
                         }
                         else if (i == R.id.delete){
                             //do something
-                            deleteStudent(currentStudent.getUser_id());
-                            notifyDataSetChanged();
+                            deleteStudent(currentStudent.getUser_id(),position);
                             return true;
                         }
                         else if (i == R.id.viewprofile) {
@@ -119,7 +118,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
              final FilterResults oReturn = new FilterResults();
              final ArrayList<User> results = new ArrayList<User>();
              if (orig == null)
-                 orig = employeeArrayList;
+                 orig = userArrayList;
              if (constraint != null) {
                  if (orig != null && orig.size() > 0) {
                      for (final User g : orig) {
@@ -137,7 +136,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
          @Override
          protected void publishResults(CharSequence constraint,
                                        FilterResults results) {
-             employeeArrayList = (ArrayList<User>) results.values;
+             userArrayList = (ArrayList<User>) results.values;
              notifyDataSetChanged();
          }
      };
@@ -164,7 +163,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         replaceFragment(fConv);
     }
 
-    private void deleteStudent(int userID){
+    private void deleteStudent(int userID, final int index){
         Map<String,String> parameter=new HashMap<>();
         parameter.put("user_id",String.valueOf(userID));
 
@@ -175,6 +174,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
                     Result res=(Result) obj;
                     if(res.getError()==0){
                         //Sucdess
+                        userArrayList.remove(index);
                         notifyDataSetChanged();
                         Toast.makeText(context,"Success",Toast.LENGTH_LONG).show();
 

@@ -4,6 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
@@ -12,23 +15,35 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
+import com.itsdl.androidtutorials.activities.MainActivity;
 import com.itsdl.androidtutorials.networks.AddStudentRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
 import com.itsdl.androidtutorials.utils.CustomDialog;
 import com.itsdl.androidtutorials.utils.Result;
+import com.itsdl.androidtutorials.utils.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class AddStudentDialog extends AppCompatDialogFragment {
+public class AddStudentDialog extends AppCompatDialogFragment  {
     private EditText edtStudentCode;
     private EditText edtEmail;
+    private ExampleDialogListener listener;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-
+        try {
+            listener = (ExampleDialogListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() +
+                    "must implement ExampleDialogListener");
+        }
+    }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.add_student_dialog, null);
@@ -50,10 +65,12 @@ public class AddStudentDialog extends AppCompatDialogFragment {
                             }
                             if(!edtStudentCode.getText().toString().isEmpty()){
                                 String student_code = edtStudentCode.getText().toString();
-                                addStudent(student_code,email);
+
+                                listener.applyTexts(student_code, email);
+                               // addStudent(student_code,email);
                             }
                             else{
-                                showDialog("Student code not is empty");
+                             //   showDialog("Student code not is empty");
                             }
 
                         }catch (Exception e){
@@ -65,10 +82,11 @@ public class AddStudentDialog extends AppCompatDialogFragment {
         return builder.create();
     }
 
-    public void addStudent(String student_code,String email) {
+    /*public void addStudent(String student_code,String email) {
         Map<String, String> parameter = new HashMap<>();
         parameter.put("student_code", student_code);
         parameter.put("email",email);
+
         AddStudentRequest request = new AddStudentRequest(new SeverRequest.SeverRequestListener() {
             @Override
             public void completed(Object obj) {
@@ -76,17 +94,20 @@ public class AddStudentDialog extends AppCompatDialogFragment {
                     Result res=(Result) obj;
                     if(res.getError()==0){
                       // Toast.makeText(getContext(),"Add stdent success",Toast.LENGTH_LONG).show();
+                        showDialog("Add stdent success");
+                       // StudentManagementFragment fConv=new StudentManagementFragment();
+                        //replaceFragment(fConv);
                     }
                     else{
-                        Toast.makeText(getContext(),"Error",Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getContext(),"Error",Toast.LENGTH_LONG).show();
                     }
                 }
             }
         });
         request.execute(parameter);
-    }
+    }*/
 
-    private void showDialog(String message) {
+   /* private void showDialog(String message) {
         final CustomDialog dialog = new CustomDialog(getContext());
         dialog.setLblMessageHint(message);
         dialog.setLblTitleHint("Notification");
@@ -99,5 +120,11 @@ public class AddStudentDialog extends AppCompatDialogFragment {
             }
         });
         dialog.show();
+    }*/
+
+
+    public interface ExampleDialogListener {
+        void applyTexts(String username, String password);
     }
+
 }
