@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.adapters.ContentMainAdapter;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.NonSwipeableViewPager;
 
 public class ContentMainFragment extends Fragment {
@@ -35,6 +36,9 @@ public class ContentMainFragment extends Fragment {
      * addControl: add controls with layout
      * @param root view contain control in layout*/
     private void addControl(View root) {
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
         //add tool bar
         toolbar = root.findViewById(R.id.add_content_toolbar);
         ((AppCompatActivity )getActivity()).setSupportActionBar(toolbar);

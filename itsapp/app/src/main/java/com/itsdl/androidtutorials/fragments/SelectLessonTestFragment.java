@@ -21,6 +21,7 @@ import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.networks.GetOpeningLessonRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
 import com.itsdl.androidtutorials.utils.CustomDialog;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.Global;
 import com.itsdl.androidtutorials.utils.Lesson;
 import com.itsdl.androidtutorials.utils.Result;
@@ -80,6 +81,9 @@ public class SelectLessonTestFragment extends Fragment {
                         if(Global.lessons.size()>0){
                             addDataToSpinner();
                         }
+                        else {
+                            showDialogNonChooseLesson("You must study first");
+                        }
                     }
                     else {
                         Toast.makeText(getContext(),"Get opening fail. Please to try again!",Toast.LENGTH_LONG).show();
@@ -103,6 +107,9 @@ public class SelectLessonTestFragment extends Fragment {
     }
 
     private void addControls(View root) {
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
         context = getContext();
         btnSelectLesson = root.findViewById(R.id.btnSelectLesson);
         toolbar = root.findViewById(R.id.toolbar);

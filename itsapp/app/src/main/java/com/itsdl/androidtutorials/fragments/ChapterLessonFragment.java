@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.adapters.ChapterLessonAdapter;
 import com.itsdl.androidtutorials.utils.ChapterLesson;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,9 @@ public class ChapterLessonFragment extends Fragment {
     }
 
     private void getViews(){
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
          //anh xa ListChapterLesson
         listChapterLesson = root.findViewById(R.id.listChapterLesson);
         //

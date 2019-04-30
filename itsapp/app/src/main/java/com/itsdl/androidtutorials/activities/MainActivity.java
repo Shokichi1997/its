@@ -16,34 +16,34 @@ import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.fragments.ChangePasswordFragment;
-import com.itsdl.androidtutorials.fragments.FunctionsFragment;
 import com.itsdl.androidtutorials.fragments.HelpFragment;
 import com.itsdl.androidtutorials.fragments.LoginFragment;
 import com.itsdl.androidtutorials.fragments.UserProfileFragment;
 import com.itsdl.androidtutorials.fragments.VersionInfoFragment;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.Global;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-    DrawerLayout drawer;
+        implements NavigationView.OnNavigationItemSelectedListener,DrawerLocker {
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = ( Toolbar ) findViewById(R.id.toolbar);
+        Toolbar toolbar = ( Toolbar ) findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
 
-        drawer = ( DrawerLayout ) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = ( DrawerLayout ) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-
-
         toggle.syncState();
-
+        drawer.requestLayout();
         NavigationView navigationView = ( NavigationView ) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
+        navigationView.setNavigationItemSelectedListener(MainActivity.this);
+        setDrawerEnabled(true);
+        navigationView.bringToFront();
 
         //Test adapter
         Fragment fragment = new LoginFragment();
@@ -65,14 +65,13 @@ public class MainActivity extends AppCompatActivity
         }
 
         if(getSupportFragmentManager().getBackStackEntryCount()<1) {
-            Toast.makeText(getApplicationContext(), "" + getSupportFragmentManager().getBackStackEntryCount(),
-                    Toast.LENGTH_LONG).show();
-            //getSupportFragmentManager().popBackStack();
             System.exit(0);
         }
         if(getSupportFragmentManager().findFragmentById(R.id.frContainer) != null){
             if (getSupportFragmentManager().findFragmentById(R.id.frContainer).getTag().equals("LOGIN")){
-                System.exit(0);
+                if (getSupportFragmentManager().findFragmentById(R.id.frContainer2)==null){
+                    System.exit(0);
+                }
             }
         }
 
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-
+        DrawerLayout drawer = ( DrawerLayout ) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -148,9 +147,17 @@ public class MainActivity extends AppCompatActivity
         if(getSupportFragmentManager()!=null){
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.add(R.id.frContainer, fConv,tag);
+            transaction.replace(R.id.frContainer, fConv,tag);
             transaction.addToBackStack(null);
             transaction.commit();
         }
+    }
+
+    @Override
+    public void setDrawerEnabled(boolean enabled) {
+        int lockMode = enabled ? DrawerLayout.LOCK_MODE_UNLOCKED :
+                DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
+        DrawerLayout drawer = ( DrawerLayout ) findViewById(R.id.drawer_layout);
+        drawer.setDrawerLockMode(lockMode);
     }
 }

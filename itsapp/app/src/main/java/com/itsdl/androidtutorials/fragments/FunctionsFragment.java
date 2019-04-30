@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.adapters.Functions_adapter;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.FunctionUser;
 import com.itsdl.androidtutorials.utils.Global;
 import com.itsdl.androidtutorials.utils.ProfileUser;
@@ -34,6 +35,9 @@ public class FunctionsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_functions,container,false);
 
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
         gridFunction = root.findViewById(R.id.gridFunction);
         ArrayList<FunctionUser> function = new ArrayList<>();
         if(ProfileUser.getInstance().getRole()==3){

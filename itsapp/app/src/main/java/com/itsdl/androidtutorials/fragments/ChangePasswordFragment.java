@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.utils.CustomDialog;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.Extension;
 import com.itsdl.androidtutorials.utils.ProfileUser;
 
@@ -47,6 +48,9 @@ public class ChangePasswordFragment extends Fragment {
     }
     public void getViews(){
         //add tool bar
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
         toolbar = root.findViewById(R.id.change_password_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Change password");

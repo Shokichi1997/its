@@ -35,6 +35,7 @@ import com.itsdl.androidtutorials.networks.GetProblemRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
 import com.itsdl.androidtutorials.utils.Answer;
 import com.itsdl.androidtutorials.utils.CustomDialog;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.ProfileUser;
 import com.itsdl.androidtutorials.utils.Question;
 import com.itsdl.androidtutorials.utils.Result;
@@ -122,6 +123,9 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
     }
     /**addControls add Views to fragment*/
     private void addControls() {
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
         //add tool bar
         context = getContext();
         checkArr = new ArrayList<>();

@@ -19,6 +19,7 @@ import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.adapters.ExamplesAdapter;
 import com.itsdl.androidtutorials.networks.GetExamplesRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.Example;
 import com.itsdl.androidtutorials.utils.Global;
 import com.itsdl.androidtutorials.utils.Result;
@@ -70,6 +71,9 @@ public class ExampleLessonFragment extends Fragment {
     }
 
     private void addControls(View root) {
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
         examples = new ArrayList<>();
         recExamples = root.findViewById(R.id.recExample);
         recExamples.setHasFixedSize(true);

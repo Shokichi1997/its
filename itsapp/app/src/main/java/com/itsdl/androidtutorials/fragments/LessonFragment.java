@@ -21,6 +21,7 @@ import com.itsdl.androidtutorials.networks.CheckLessonOpeningRequest;
 import com.itsdl.androidtutorials.networks.GetLessonRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
 import com.itsdl.androidtutorials.utils.CustomDialog;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.Global;
 import com.itsdl.androidtutorials.utils.Lesson;
 import com.itsdl.androidtutorials.utils.LessonItems;
@@ -66,6 +67,9 @@ public class LessonFragment extends Fragment {
     }
 
     private void getViews() {
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
         //add tool bar
             toolbar = root.findViewById(R.id.lesson_toolbar);
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);

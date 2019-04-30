@@ -15,6 +15,7 @@ import android.widget.Toolbar;
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.networks.SeverRequest;
 import com.itsdl.androidtutorials.networks.UpdateStudentRequest;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.Result;
 import com.itsdl.androidtutorials.utils.User;
 
@@ -67,6 +68,9 @@ public class UserProfileFragment extends Fragment {
         return root;
     }
     public void getViews(){
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
         //add tool bar
         toolbar=root.findViewById(R.id.app_bar_profile_user);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);

@@ -31,6 +31,7 @@ import com.itsdl.androidtutorials.adapters.ChapterLessonAdapter;
 import com.itsdl.androidtutorials.adapters.UserAdapter;
 import com.itsdl.androidtutorials.networks.GetListStudentRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.Example;
 import com.itsdl.androidtutorials.utils.Result;
 import com.itsdl.androidtutorials.utils.User;
@@ -79,6 +80,9 @@ public class StudentManagementFragment extends Fragment
     }
 
     public void getViews(){
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
        listStudent= root.findViewById(R.id.list_Student);
        toolbar= root.findViewById(R.id.student_toolbar1);
         //set tool bar app

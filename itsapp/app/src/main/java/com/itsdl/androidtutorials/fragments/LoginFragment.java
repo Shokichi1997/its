@@ -19,6 +19,7 @@ import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.networks.SeverRequest;
 import com.itsdl.androidtutorials.networks.SignInRequest;
 import com.itsdl.androidtutorials.utils.CustomDialog;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.Extension;
 import com.itsdl.androidtutorials.utils.ProfileUser;
 import com.itsdl.androidtutorials.utils.Result;
@@ -56,6 +57,9 @@ public class LoginFragment extends Fragment {
         return view;
     }
     public void getViews(){
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(false);
+        }
 
         edtStudentCode=view.findViewById(R.id.edtStudentCode);
         edtPassword=view.findViewById(R.id.edtPassword);

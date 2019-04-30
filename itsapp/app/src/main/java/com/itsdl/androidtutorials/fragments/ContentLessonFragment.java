@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.ProfileUser;
 
 
@@ -104,6 +105,9 @@ public class ContentLessonFragment extends Fragment {
      * addControl: add controls with layout
      *  root view contain control in layout*/
     private void addControl() {
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
         //get Bundle
         Bundle args = getArguments();
         lessonIDItem = 1;

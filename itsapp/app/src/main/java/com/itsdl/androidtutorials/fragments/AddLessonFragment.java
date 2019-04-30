@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.itsdl.androidtutorials.R;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 
 public class AddLessonFragment extends Fragment {
     private Toolbar toolbar;
@@ -24,7 +25,9 @@ public class AddLessonFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_add_lesson,container,false);
-
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
         toolbar = root.findViewById(R.id.add_lesson_toolbar);
         ((AppCompatActivity )getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Add lesson");

@@ -17,6 +17,7 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import com.itsdl.androidtutorials.R;
+import com.itsdl.androidtutorials.utils.DrawerLocker;
 
 public class ExampleContentFragment extends Fragment{
     private WebView wv_example_content;
@@ -35,6 +36,9 @@ public class ExampleContentFragment extends Fragment{
     }
 
     private void addControls(View root) {
+        if(getActivity()!=null){
+            ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
         example_id = 1;
         Bundle args = getArguments();
         if(args!=null && args.containsKey("example_id")){
