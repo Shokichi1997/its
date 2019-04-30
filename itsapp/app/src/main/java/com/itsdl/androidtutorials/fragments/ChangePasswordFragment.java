@@ -14,6 +14,7 @@ import android.widget.EditText;
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.utils.CustomDialog;
 import com.itsdl.androidtutorials.utils.Extension;
+import com.itsdl.androidtutorials.utils.ProfileUser;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -66,8 +67,24 @@ public class ChangePasswordFragment extends Fragment {
         btnUpdate_pass     = root.findViewById(R.id.btnUpdatePassword);
         btnCancel          = root.findViewById(R.id.btnCancel);
     }
-    public void changePassword(){
+    public void addEvents(){
+        btnUpdate_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePassword();
+            }
+        });
+     }
 
+    public void changePassword(){
+          if(checkData()){
+              if(edtPassword_old.getText().toString().trim().toLowerCase()==
+                      ProfileUser.getInstance().getPassword().toLowerCase())
+              return;
+          }else{
+              showMessage("Password old, password new, password repeat is not empty!");
+              return;
+          }
     }
     private void showMessage(String message) {
         final CustomDialog dialog = new CustomDialog(getContext());
@@ -88,5 +105,10 @@ public class ChangePasswordFragment extends Fragment {
         messageDigest.update(pass.getBytes());
         byte[] digest = messageDigest.digest();
         return Extension.toHexString(digest);
+    }
+    public boolean checkData(){
+        return !edtPassword_old.getText().toString().isEmpty() &&
+               !edtPassword_new.getText().toString().isEmpty() &&
+               !edtPassword_repeat.getText().toString().isEmpty();
     }
 }
