@@ -42,7 +42,7 @@ public class Functions_adapter extends ArrayAdapter<FunctionUser> {
             imgFUIcon.setVisibility(View.GONE);
         }
 
-
+        listItemView.setId(currentFunctionUser.getFunction_id());
 
         return listItemView;
     }

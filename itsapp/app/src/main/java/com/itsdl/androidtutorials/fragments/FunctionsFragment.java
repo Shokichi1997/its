@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.adapters.Functions_adapter;
@@ -62,56 +63,50 @@ public class FunctionsFragment extends Fragment {
         gridFunction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                switch (position){
-                    case 0:
-                        Fragment contentMainFragment = new ContentMainFragment();
-                        showFragment(contentMainFragment, Global.MAIN_CONTENT);
-                        break;
-                    case 1:
-                        Fragment testLessonFragment = new SelectLessonTestFragment();
-                        showFragment(testLessonFragment,Global.SELECT_LESSON);
-                        break;
-                    case 2:
-                        //Todo
-                        Fragment fragmentStudent = new StudentManagementFragment();
-                        //Fragment fragmentStudent = new StudentManagementFragment();
-                        showFragment(fragmentStudent,Global.STUDENT_MANAGER);
-                        break;
-                    case 3:
-                        //Todo
-                        Fragment a = new ChangePasswordFragment();
-                        showFragment(a,Global.INTRODUCE);
-                        break;
-                    case 4:
-                        if (getFragmentManager() != null) {
-                            Fragment loginFragment = getFragmentManager().findFragmentByTag(Global.LOGIN);
-                            if(loginFragment!=null){
-                                FragmentManager fragmentManager = getFragmentManager();
-                                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                                fragmentManager.popBackStack();
-                                transaction.replace(R.id.frContainer,loginFragment,Global.LOGIN)
-                                        .addToBackStack(null)
-                                        .commit();
-                            }
-                            else {
-                                LoginFragment fragment = new LoginFragment();
-                                FragmentManager fragmentManager = getFragmentManager();
-                                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                                fragmentManager.popBackStack();
-                                transaction.replace(R.id.frContainer,fragment,Global.LOGIN)
-                                        .addToBackStack(null)
-                                        .commit();
-                            }
-                        }
-                        break;
-                    default:
-                        //TODO
-                        break;
+                int ID_FC = view.getId();
+                Toast.makeText(getContext(),String.valueOf(ID_FC), Toast.LENGTH_SHORT).show();
+                if(ID_FC == 1){
+                    Fragment contentMainFragment = new ContentMainFragment();
+                    showFragment(contentMainFragment, Global.MAIN_CONTENT);
+                    return;
                 }
-
-
-
+                if(ID_FC == 2){
+                    Fragment testLessonFragment = new SelectLessonTestFragment();
+                    showFragment(testLessonFragment,Global.SELECT_LESSON);
+                    return;
+                }
+                if(ID_FC == 3){
+                    Fragment fragmentStudent = new StudentManagementFragment();
+                    //Fragment fragmentStudent = new StudentManagementFragment();
+                    showFragment(fragmentStudent,Global.STUDENT_MANAGER);
+                    return;
+                }
+                if(ID_FC == 4){
+                    Fragment a = new ChangePasswordFragment();
+                    showFragment(a,Global.INTRODUCE);
+                }
+                if(ID_FC == 5){
+                    if (getFragmentManager() != null) {
+                        Fragment loginFragment = getFragmentManager().findFragmentByTag(Global.LOGIN);
+                        if(loginFragment!=null){
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+                            fragmentManager.popBackStack();
+                            transaction.replace(R.id.frContainer,loginFragment,Global.LOGIN)
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+                        else {
+                            LoginFragment fragment = new LoginFragment();
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+                            fragmentManager.popBackStack();
+                            transaction.replace(R.id.frContainer,fragment,Global.LOGIN)
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+                    }
+                }
             }
         });
     }

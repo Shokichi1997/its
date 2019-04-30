@@ -46,9 +46,9 @@ public class ChangePasswordFragment extends Fragment {
     }
     public void getViews(){
         //add tool bar
-        toolbar = root.findViewById(R.id.lesson_toolbar);
+        toolbar = root.findViewById(R.id.change_password_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Lesson");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Change password");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
