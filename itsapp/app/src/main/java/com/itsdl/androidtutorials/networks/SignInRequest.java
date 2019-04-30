@@ -53,9 +53,20 @@ public class SignInRequest extends SeverRequest {
             JSONObject json = null;
             json = new JSONObject(data);
             JSONObject object= json.getJSONObject("data"); //Có thể bị Value null at data
-            User profile = gson.fromJson(String.valueOf(object), User.class);
-            res.setData(profile);
-
+            if(object!=null){
+                ProfileUser profileUser=ProfileUser.getInstance();
+                profileUser.setFull_name(object.getString("full_name"));
+                // profileUser.setDate_create(object.getStr());
+                profileUser.setEmail(object.getString("email"));
+                profileUser.setUser_id(object.getInt("user_id"));
+                profileUser.setStudent_code(object.getString("student_code"));
+                profileUser.setRole(object.getInt("role"));
+                profileUser.setPassword(object.getString("password"));
+                res.setData(profileUser);
+            }
+            else{
+                res.setData(null);
+            }
             return res;
         } catch (Exception e) {
             e.printStackTrace();

@@ -128,19 +128,7 @@ public class LoginFragment extends Fragment {
                 public void completed(Object obj) {
                     if(obj!=null){
                         Result res=(Result) obj;
-                        if(res.getError()==0&&res.getData()!=null){
-                            User user=(User) res.getData();
-
-                            ProfileUser profileUser=ProfileUser.getInstance();
-                            profileUser.setFull_name(user.getFull_name());
-                            profileUser.setDate_create(user.getDate_create());
-                            profileUser.setEmail(user.getEmail());
-                            profileUser.setUser_id(user.getUser_id());
-                            profileUser.setStudent_code(user.getStudent_code());
-                            profileUser.setRole(user.getRole());
-                            FunctionsFragment fConv = new FunctionsFragment();
-
-
+                        if(res.getError()==0){
                             goToFunctionsMain();
                         }
 

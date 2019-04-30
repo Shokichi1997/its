@@ -21,6 +21,18 @@ public class ProfileUser {
     public int user_id;
     @SerializedName("role")
     public int role;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @SerializedName("password")
+
+    public String password;
     public String getStudent_code() {
         return student_code;
     }
@@ -77,12 +89,15 @@ public class ProfileUser {
     public String getFull_name() {
         return full_name;
     }
+
     public int getRole() {
         return role;
     }
-     public void setRole(int role) {
+
+    public void setRole(int role) {
         this.role = role;
     }
+
 
 
         private static ProfileUser myObj;
