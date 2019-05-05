@@ -15,4 +15,6 @@ public class Global {
     public static final String INTRODUCE = "INTRODUCE";
     public static final String LOGIN = "LOGIN";
     public static final String EXAMPLE_CONTENT = "EXAMPLE_CONTENT";
+    public static String STUDENT_CODE="";
+    public static String EMAIL="";
 }

@@ -13,11 +13,10 @@ public class AddStudentRequest extends SeverRequest {
     public AddStudentRequest(SeverRequestListener listener) {
         super(listener);
     }
-
     @Override
     protected Request prepare(Map<String, String> parameter) {
-       String student_code=parameter.get("student_code");
-       String email       =parameter.get("email");
+       String student_code= parameter.get("student_code");
+       String email       = parameter.get("email");
         RequestBody body =new MultipartBody.Builder()
                 .addFormDataPart("student_code",student_code)
                 .addFormDataPart("email",email)
@@ -30,7 +29,6 @@ public class AddStudentRequest extends SeverRequest {
                 .build();
         return request;
     }
-
     @Override
     protected Object process(String data) {
         try{

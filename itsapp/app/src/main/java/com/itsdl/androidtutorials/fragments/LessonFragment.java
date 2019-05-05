@@ -25,6 +25,7 @@ import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.Global;
 import com.itsdl.androidtutorials.utils.Lesson;
 import com.itsdl.androidtutorials.utils.LessonItems;
+import com.itsdl.androidtutorials.utils.ProfileUser;
 import com.itsdl.androidtutorials.utils.Result;
 
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class LessonFragment extends Fragment {
         Map<String, String> parameter = new HashMap<>();
         parameter.put("chapter_id", String.valueOf(chapter_id));
         // @TODO get user_id
-        parameter.put("user_id","1");
+        parameter.put("user_id",String.valueOf(ProfileUser.getInstance().getUser_id()));
         progressBarLesson.setVisibility(View.VISIBLE);
         GetLessonRequest request = new GetLessonRequest(new SeverRequest.SeverRequestListener() {
             @Override
@@ -155,7 +156,7 @@ public class LessonFragment extends Fragment {
                 Map<String, String> parameter = new HashMap<>();
                 parameter.put("lesson_id", String.valueOf(lessonID));
                 // TODO get user_id
-                parameter.put("user_id","1");
+                parameter.put("user_id",String.valueOf(ProfileUser.getInstance().user_id));
                 progressBarLesson.setVisibility(View.VISIBLE);
                 CheckLessonOpeningRequest request = new CheckLessonOpeningRequest(new SeverRequest.SeverRequestListener() {
                     @Override

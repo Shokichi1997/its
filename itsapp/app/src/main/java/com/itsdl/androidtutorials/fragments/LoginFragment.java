@@ -135,10 +135,15 @@ public class LoginFragment extends Fragment {
                         if(res.getError()==0){
                             goToFunctionsMain();
                         }
-
+                        if(res.getError()==1){
+                            showDialog("User is not exist");
+                        }
+                        if(res.getError()==2){
+                            showDialog("Password invalid");
+                        }
 
                     }else{
-
+                          showDialog("User is not exist!");
                     }
                     mLoginProgress.dismiss();
                 }
@@ -156,6 +161,19 @@ public class LoginFragment extends Fragment {
         byte[] digest = messageDigest.digest();
         return Extension.toHexString(digest);
     }
-
+    private void showDialog(String message) {
+        final CustomDialog dialog = new CustomDialog(getContext());
+        dialog.setLblMessageHint(message);
+        dialog.setLblTitleHint("Notification");
+        dialog.setImgIconHint(R.drawable.tick_green);
+        dialog.setBtnCloseHint(R.drawable.background_card);
+        dialog.setEventsClose(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
 }
