@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.activities.MainActivity;
+import com.itsdl.androidtutorials.fragments.ScoresFragment;
 import com.itsdl.androidtutorials.fragments.UserProfileFragment;
 import com.itsdl.androidtutorials.networks.DeleteStudentRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
@@ -85,7 +86,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
                         int i = item.getItemId();
                         if (i == R.id.update) {
                             //do something
-                            function(currentStudent);
+                            gotoUserProfileFragment(currentStudent);
                             return true;
                         }
                         else if (i == R.id.delete){
@@ -95,7 +96,7 @@ public class UserAdapter extends BaseAdapter implements Filterable {
                         }
                         else if (i == R.id.viewprofile) {
                             //do something
-                            function(currentStudent);
+                            gotoScoresFragment(currentStudent);
                             return true;
                         }
                         else {
@@ -151,7 +152,18 @@ public class UserAdapter extends BaseAdapter implements Filterable {
       transaction.commit();
   }
 
-    private void function(User currentChapterLesson){
+    private void gotoScoresFragment(User currentChapterLesson){
+        Toast.makeText(context,"Click me",Toast.LENGTH_SHORT).show();
+        User us = currentChapterLesson;
+        Bundle bundle = new Bundle();
+        bundle.putInt("UserID", us.getUser_id());
+        bundle.putString("FullName",us.getFull_name());
+        bundle.putString("Email",us.getEmail());
+        ScoresFragment fConv = new ScoresFragment();
+        fConv.setArguments(bundle);
+        replaceFragment(fConv);
+    }
+    private void gotoUserProfileFragment(User currentChapterLesson){
         Toast.makeText(context,"Click me",Toast.LENGTH_SHORT).show();
         User us = currentChapterLesson;
         Bundle bundle = new Bundle();
@@ -162,7 +174,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
         fConv.setArguments(bundle);
         replaceFragment(fConv);
     }
-
     private void deleteStudent(int userID, final int index){
         Map<String,String> parameter=new HashMap<>();
         parameter.put("user_id",String.valueOf(userID));

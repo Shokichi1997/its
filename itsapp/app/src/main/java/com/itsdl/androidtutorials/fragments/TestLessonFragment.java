@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.networks.GetProblemRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.networks.UpdateScoreRequest;
 import com.itsdl.androidtutorials.utils.Answer;
 import com.itsdl.androidtutorials.utils.CustomDialog;
 import com.itsdl.androidtutorials.utils.DrawerLocker;
@@ -193,7 +194,7 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
     private void addNewProblem() {
         Map<String, String> parameter = new HashMap<>();
         parameter.put("lessonID", String.valueOf(lesson_id));
-        parameter.put("user_id", "1");
+        parameter.put("user_id", String.valueOf(ProfileUser.getInstance().getUser_id()));
         progressBarProblem.setVisibility(View.VISIBLE);
         GetProblemRequest request = new GetProblemRequest(new SeverRequest.SeverRequestListener() {
             @Override
@@ -510,10 +511,10 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
     private void updateScoreLesson(float scoreProblem){
         Map<String, String> parameter = new HashMap<>();
         parameter.put("lesson_id", "1");
-        parameter.put("user_id", "1");
+        parameter.put("user_id", String.valueOf(ProfileUser.getInstance().user_id));
         parameter.put("score", String.valueOf(scoreProblem));
 
-        GetProblemRequest request = new GetProblemRequest(new SeverRequest.SeverRequestListener() {
+        UpdateScoreRequest request = new UpdateScoreRequest(new SeverRequest.SeverRequestListener() {
             @Override
             public void completed(Object obj) {
                 if(obj!=null){

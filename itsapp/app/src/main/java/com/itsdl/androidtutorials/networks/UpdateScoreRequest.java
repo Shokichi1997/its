@@ -19,7 +19,7 @@ public class UpdateScoreRequest extends SeverRequest {
         String user_id = parameter.get("user_id");
         String score = parameter.get("score");
         return new Request.Builder()
-                .url(URL + "update_score.php?lesson_id="+lessonID+"&user_id="+user_id+"&score"+score)
+                .url(URL + "update_score.php?lesson_id="+lessonID+"&user_id="+user_id+"&score="+score)
                 .get()
                 .build();
     }

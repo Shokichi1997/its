@@ -4,6 +4,7 @@ package com.itsdl.androidtutorials.fragments;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.solver.GoalRow;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -29,10 +30,13 @@ import com.itsdl.androidtutorials.R;
 import com.itsdl.androidtutorials.activities.MainActivity;
 import com.itsdl.androidtutorials.adapters.ChapterLessonAdapter;
 import com.itsdl.androidtutorials.adapters.UserAdapter;
+import com.itsdl.androidtutorials.networks.AddStudentRequest;
 import com.itsdl.androidtutorials.networks.GetListStudentRequest;
 import com.itsdl.androidtutorials.networks.SeverRequest;
+import com.itsdl.androidtutorials.utils.CustomDialog;
 import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.Example;
+import com.itsdl.androidtutorials.utils.Global;
 import com.itsdl.androidtutorials.utils.Result;
 import com.itsdl.androidtutorials.utils.User;
 
@@ -44,7 +48,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StudentManagementFragment extends Fragment implements AddStudentDialog.ExampleDialogListener
+public class StudentManagementFragment extends Fragment
  {
 
    View root;
@@ -108,8 +112,18 @@ public class StudentManagementFragment extends Fragment implements AddStudentDia
         imgAddstudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 openDialog();
-                getlistStudent();
+                if(!Global.STUDENT_CODE.equals("")){
+                    String myCode=Global.STUDENT_CODE;
+                    String myEmail=Global.EMAIL;
+
+                    addStudent(myCode,myEmail);
+                    getlistStudent();
+                }else{
+
+                }
+
             }
         });
     }
@@ -169,9 +183,6 @@ public class StudentManagementFragment extends Fragment implements AddStudentDia
 
      private void setupSearchView()
      {
-        // searchView.setIconifiedByDefault(false);
-        // mSearchView.setOnQueryTextListener(this);
-        // searchView.setSubmitButtonEnabled(true);
          searchView.setQueryHint("Search Here");
        //  searchView.setIconifiedByDefault(false);
          searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
@@ -201,8 +212,40 @@ public class StudentManagementFragment extends Fragment implements AddStudentDia
      }
 
 
-     @Override
-     public void applyTexts(String username, String password) {
-         Toast.makeText(getContext(),username,Toast.LENGTH_LONG).show();
+    public void addStudent(String student_code,String email) {
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("student_code", student_code);
+        parameter.put("email",email);
+        AddStudentRequest request = new AddStudentRequest(new SeverRequest.SeverRequestListener() {
+            @Override
+            public void completed(Object obj) {
+                if(obj!=null){
+                    Result res=(Result) obj;
+                    if(res.getError()==0){
+                      // Toast.makeText(getContext(),"Add stdent success",Toast.LENGTH_LONG).show();
+                        showDialog("Add stdent success");
+
+                    }
+                    else{
+                        Toast.makeText(getContext(),"Error",Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+        request.execute(parameter);
+    }
+     private void showDialog(String message) {
+         final CustomDialog dialog = new CustomDialog(getContext());
+         dialog.setLblMessageHint(message);
+         dialog.setLblTitleHint("Notification");
+         dialog.setImgIconHint(R.drawable.tick_green);
+         dialog.setBtnCloseHint(R.drawable.background_card);
+         dialog.setEventsClose(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 dialog.dismiss();
+             }
+         });
+         dialog.show();
      }
  }
