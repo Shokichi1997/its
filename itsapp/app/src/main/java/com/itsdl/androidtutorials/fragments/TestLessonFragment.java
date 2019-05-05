@@ -110,14 +110,6 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_test_lesson,container,false);
-        Bundle args = getArguments();
-        if(args!=null && args.containsKey("lesson_id")){
-            lesson_id = args.getInt("lesson_id");
-            lesson_name=args.getString("lesson_name");
-        }
-        else {
-            lesson_id = 1;
-        }
         addControls();
         addEvents();
         return root;
@@ -126,6 +118,15 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
     private void addControls() {
         if(getActivity()!=null){
             ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
+        }
+
+        Bundle args = getArguments();
+        if(args!=null && args.containsKey("lesson_id")){
+            lesson_id = args.getInt("lesson_id");
+            lesson_name=args.getString("lesson_name");
+        }
+        else {
+            lesson_id = 1;
         }
         //add tool bar
         context = getContext();
@@ -510,7 +511,7 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
      * @param scoreProblem current question score*/
     private void updateScoreLesson(float scoreProblem){
         Map<String, String> parameter = new HashMap<>();
-        parameter.put("lesson_id", "1");
+        parameter.put("lesson_id", String.valueOf(lesson_id));
         parameter.put("user_id", String.valueOf(ProfileUser.getInstance().user_id));
         parameter.put("score", String.valueOf(scoreProblem));
 

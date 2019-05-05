@@ -153,7 +153,6 @@ public class UserAdapter extends BaseAdapter implements Filterable {
   }
 
     private void gotoScoresFragment(User currentChapterLesson){
-        Toast.makeText(context,"Click me",Toast.LENGTH_SHORT).show();
         User us = currentChapterLesson;
         Bundle bundle = new Bundle();
         bundle.putInt("UserID", us.getUser_id());

@@ -32,12 +32,9 @@ import java.util.Map;
 public class UserProfileFragment extends Fragment {
     View root;
     android.support.v7.widget.Toolbar toolbar;
-    EditText edtStudentName;
-    EditText edtEmail;
-    EditText edtStudentCode;
+    EditText edtStudentName, edtEmail, edtStudentCode,pphonenb, edtDateCreate;
     Button btnSave;
     User user;
-    EditText edtDateCreate;
     String date=null;
     Button btnClear;
     public UserProfileFragment() {
@@ -91,6 +88,9 @@ public class UserProfileFragment extends Fragment {
         edtDateCreate  = root.findViewById(R.id.pDateCreate);
         btnSave        = root.findViewById(R.id.btsave);
         btnClear       = root.findViewById(R.id.btnClear);
+        pphonenb = root.findViewById(R.id.pphonenb);
+        pphonenb.setEnabled(false);
+        edtDateCreate.setEnabled(false);
     }
 
     public void getProfileUser(){
@@ -156,9 +156,9 @@ public class UserProfileFragment extends Fragment {
     }
 
     public boolean checkDataInput(){
-        return  edtStudentName.getText().toString()!=null&&
-                edtStudentCode.getText().toString()!=null&&
-                edtEmail.getText().toString()!=null;
+        return  !edtStudentName.getText().toString().isEmpty()&&
+                !edtStudentCode.getText().toString().isEmpty()&&
+                !edtEmail.getText().toString().isEmpty();
     }
     private void replaceFragment(Fragment fConv) {
 

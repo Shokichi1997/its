@@ -37,4 +37,5 @@
     <string name="version_info">Version info</string>
     <string name="help">help</string>
     <string name="support">Support</string>
+    <string name="score">Score:</string>
 </resources>

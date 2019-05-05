@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -34,11 +35,12 @@ import java.util.Map;
 public class ScoresFragment extends Fragment {
 
     View root;
-    Toolbar toolbar;
-    int user_id=-1;
-    ListView listScoresStudent;
-    ScoresAdapter adapter;
-    ArrayList<Scores> arrScores=null;
+    private Toolbar toolbar;
+    private int user_id=-1;
+    private ListView listScoresStudent;
+    private ScoresAdapter adapter;
+    private ArrayList<Scores> arrScores=null;
+
     public ScoresFragment() {
         // Required empty public constructor
     }
@@ -48,7 +50,7 @@ public class ScoresFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        root= inflater.inflate(R.layout.fragment_scores, container, false);
+        root = inflater.inflate(R.layout.fragment_scores, container, false);
         getViews();
         Bundle args = getArguments();
         if(args!=null && args.containsKey("UserID")){
@@ -83,10 +85,13 @@ public class ScoresFragment extends Fragment {
     public void loadScores(ArrayList<Scores>data){
 
             //load danhs sach hoc vien vafo list view
+        if(user_id!=-1){
             adapter = new ScoresAdapter(root.getContext(),data);
             listScoresStudent.setAdapter(adapter);
             listScoresStudent.setTextFilterEnabled(true);
             // event listviewStudent item click
+        }
+
     }
 
     //get lít student
@@ -97,11 +102,13 @@ public class ScoresFragment extends Fragment {
             @Override
             public void completed(Object obj) {
                 Result res=(Result) obj;
-                if(res.getError()==0){
-                    final ArrayList<Scores>  arr_scores=(ArrayList<Scores>) res.getData();
-                    loadScores(arr_scores);
-                }else{
+                if(res!=null){
+                    if(res.getError()==0){
+                        final ArrayList<Scores>  arr_scores=(ArrayList<Scores>) res.getData();
+                        loadScores(arr_scores);
+                    }
                 }
+
             }
         });
         request.execute(parameter);

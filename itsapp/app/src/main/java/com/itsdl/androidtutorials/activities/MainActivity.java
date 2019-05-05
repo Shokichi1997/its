@@ -19,9 +19,11 @@ import com.itsdl.androidtutorials.fragments.ChangePasswordFragment;
 import com.itsdl.androidtutorials.fragments.HelpFragment;
 import com.itsdl.androidtutorials.fragments.LoginFragment;
 import com.itsdl.androidtutorials.fragments.UserProfileFragment;
+import com.itsdl.androidtutorials.fragments.UserProfileFragmentForStudent;
 import com.itsdl.androidtutorials.fragments.VersionInfoFragment;
 import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.Global;
+import com.itsdl.androidtutorials.utils.ProfileUser;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,DrawerLocker {
@@ -139,7 +141,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void navProfile() {
-        UserProfileFragment fConv = new UserProfileFragment();
+        Fragment fConv = new UserProfileFragmentForStudent();
         replaceFragment(fConv,"Profile");
     }
 

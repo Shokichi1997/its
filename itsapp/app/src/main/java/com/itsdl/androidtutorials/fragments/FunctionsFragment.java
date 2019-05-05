@@ -81,21 +81,27 @@ public class FunctionsFragment extends Fragment {
                 }
                 if(ID_FC == 3){
                     Fragment fragmentStudent = new StudentManagementFragment();
-                    //Fragment fragmentStudent = new StudentManagementFragment();
                     showFragment(fragmentStudent,Global.STUDENT_MANAGER);
                     return;
                 }
                 if(ID_FC == 4){
-                    Fragment a = new ChangePasswordFragment();
+                    Fragment a = new VersionInfoFragment();
                     showFragment(a,Global.INTRODUCE);
                 }
                 if(ID_FC == 5){
+                    Global.lessons.clear();
+                    Global.numberOpenningLesson = -1;
+
                     if (getFragmentManager() != null) {
                         Fragment loginFragment = getFragmentManager().findFragmentByTag(Global.LOGIN);
                         if(loginFragment!=null){
                             FragmentManager fragmentManager = getFragmentManager();
                             FragmentTransaction transaction = fragmentManager.beginTransaction();
-                            fragmentManager.popBackStack();
+                            if(fragmentManager.getBackStackEntryCount()>0){
+                                for(int i = 0;i<fragmentManager.getBackStackEntryCount();i++){
+                                    fragmentManager.popBackStackImmediate();
+                                }
+                            }
                             transaction.replace(R.id.frContainer,loginFragment,Global.LOGIN)
                                     .addToBackStack(null)
                                     .commit();
@@ -104,7 +110,11 @@ public class FunctionsFragment extends Fragment {
                             LoginFragment fragment = new LoginFragment();
                             FragmentManager fragmentManager = getFragmentManager();
                             FragmentTransaction transaction = fragmentManager.beginTransaction();
-                            fragmentManager.popBackStack();
+                            if(fragmentManager.getBackStackEntryCount()>0){
+                                for(int i = 0;i<fragmentManager.getBackStackEntryCount();i++){
+                                    fragmentManager.popBackStackImmediate();
+                                }
+                            }
                             transaction.replace(R.id.frContainer,fragment,Global.LOGIN)
                                     .addToBackStack(null)
                                     .commit();

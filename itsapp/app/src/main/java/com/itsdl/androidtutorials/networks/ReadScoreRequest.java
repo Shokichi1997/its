@@ -24,7 +24,7 @@ public class ReadScoreRequest extends SeverRequest {
     protected Request prepare(Map<String, String> parameter) {
         String user_id = parameter.get("user_id");
         return new Request.Builder()
-                .url(URL + "read_sorce.php?user_id=1")
+                .url(URL + "read_sorce.php?user_id="+user_id)
                 .get()
                 .build();
     }

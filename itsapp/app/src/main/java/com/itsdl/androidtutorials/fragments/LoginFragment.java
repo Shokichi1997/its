@@ -122,6 +122,7 @@ public class LoginFragment extends Fragment {
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
+
             Map<String, String> parameter = new HashMap<>();
             parameter.put("student_code", student_code);
             parameter.put("password", sha256OfPassword);

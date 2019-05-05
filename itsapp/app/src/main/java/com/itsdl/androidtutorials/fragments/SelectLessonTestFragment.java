@@ -24,6 +24,7 @@ import com.itsdl.androidtutorials.utils.CustomDialog;
 import com.itsdl.androidtutorials.utils.DrawerLocker;
 import com.itsdl.androidtutorials.utils.Global;
 import com.itsdl.androidtutorials.utils.Lesson;
+import com.itsdl.androidtutorials.utils.ProfileUser;
 import com.itsdl.androidtutorials.utils.Result;
 
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class SelectLessonTestFragment extends Fragment {
 
     private void callRequestGetOpeningLesson() {
         Map<String, String> parameter = new HashMap<>();
-        parameter.put("user_id", "1");
+        parameter.put("user_id", String.valueOf(ProfileUser.getInstance().getUser_id()));
         progressBarSelectLesson.setVisibility(View.VISIBLE);
         GetOpeningLessonRequest request = new GetOpeningLessonRequest(new SeverRequest.SeverRequestListener() {
             @Override
