@@ -27,10 +27,11 @@ public class VersionInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(getActivity()!=null){
+         if(getActivity()!=null){
             ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
         }
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment .......
+
         View root = inflater.inflate(R.layout.fragment_version_infor, container, false);
         version_toolbar = root.findViewById(R.id.version_toolbar);
 

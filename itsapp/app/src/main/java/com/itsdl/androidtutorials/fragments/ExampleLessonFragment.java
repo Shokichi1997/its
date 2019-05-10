@@ -42,7 +42,6 @@ public class ExampleLessonFragment extends Fragment {
             Example example = examples.get(position);
             int example_id = example.getId();
 
-            Toast.makeText(getContext(),"You click "+position+" has example_id = "+example_id,Toast.LENGTH_SHORT).show();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             Fragment fragment = new ExampleContentFragment();
@@ -94,7 +93,7 @@ public class ExampleLessonFragment extends Fragment {
                         prepareListExample(examples);
                     }
                     else {
-                        Toast.makeText(getContext(),"Add score not successfully!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),"Example is not available",Toast.LENGTH_LONG).show();
                     }
                 }
                 progressExample.setVisibility(View.GONE);

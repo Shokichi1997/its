@@ -31,10 +31,9 @@ public class HelpFragment extends Fragment {
         if(getActivity()!=null){
             ((DrawerLocker ) getActivity()).setDrawerEnabled(true);
         }
-        View root = inflater.inflate(R.layout.fragment_version_infor, container, false);
-        help_toolbar = root.findViewById(R.id.version_toolbar);
+        View root = inflater.inflate(R.layout.fragment_help, container, false);
+        help_toolbar = root.findViewById(R.id.help_toolbar);
 
-        help_toolbar= root.findViewById(R.id.student_toolbar1);
         //set tool bar app
         ((AppCompatActivity )getActivity()).setSupportActionBar(help_toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Support Info");

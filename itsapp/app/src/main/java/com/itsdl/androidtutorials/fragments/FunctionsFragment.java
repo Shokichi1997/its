@@ -68,7 +68,6 @@ public class FunctionsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int ID_FC = view.getId();
-                Toast.makeText(getContext(),String.valueOf(ID_FC), Toast.LENGTH_SHORT).show();
                 if(ID_FC == 1){
                     Fragment contentMainFragment = new ContentMainFragment();
                     showFragment(contentMainFragment, Global.MAIN_CONTENT);

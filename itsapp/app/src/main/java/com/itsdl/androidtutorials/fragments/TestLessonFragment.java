@@ -374,10 +374,10 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
      * checkAnswerForEditText check answer type of the question to fill in*/
     private void checkAnswerForEditText() {
         if(edtAnswerUser!=null){
-            String answerUser = edtAnswerUser.getText().toString().trim();
+            String answerUser = edtAnswerUser.getText().toString().trim().toLowerCase();
             if(!answerUser.isEmpty()){
                 ArrayList<Answer> answers = questionAll.getAnswers();
-                if(answerUser.equals(answers.get(0).getContent())){
+                if(answerUser.equals(answers.get(0).getContent().toLowerCase())){
                     edtAnswerUser.setBackgroundColor(Color.GREEN);
                     updateScoreLesson(1);
                 }
@@ -424,7 +424,7 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
                 root.findViewWithTag("checkbox"+(100+i)).setClickable(false);
             }
 
-            if(numberTrue==answers.size()){
+            if(numberTrue==trueAnswerBox.size()){
                 updateScoreLesson(1);
             }
             else {
@@ -521,10 +521,10 @@ public class TestLessonFragment extends Fragment implements View.OnClickListener
                 if(obj!=null){
                     Result res = (Result) obj;
                     if(res.getError()==0){
-                        Toast.makeText(getContext(),"Add score successfully!",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(),"Add score successfully!",Toast.LENGTH_LONG).show();
                     }
                     else {
-                        Toast.makeText(getContext(),"Add score not successfully!",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(),"Add score not successfully!",Toast.LENGTH_LONG).show();
                     }
                 }
             }

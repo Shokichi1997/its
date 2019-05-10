@@ -18,6 +18,11 @@ public class Question {
         this.answers = new ArrayList<>();
     }
 
+    public Question()
+    {
+
+    }
+
 
     public void setAnswers(ArrayList<Answer> answers) {
         this.answers = answers;
